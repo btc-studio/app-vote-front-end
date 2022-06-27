@@ -1,8 +1,10 @@
 import React from 'react';
-import BtnGroup from './components/BtnGroup/BtnGroup';
 import ListItem from './components/ListItem/ListItem';
 import Modal from './components/Modal/Modal';
+import Button from './components/Button/Button';
+import BtnGroup from './components/BtnGroup/BtnGroup';
 import { login, logout } from './near/utils';
+import AnswerCard from './components/AnswerCard/AnswerCard';
 
 const App: React.FC = () => {
   // if not signed in, return early with sign-in prompt
@@ -29,9 +31,15 @@ const App: React.FC = () => {
   // );
   return (
     <div className="bg-primary-100 w-screen h-screen flex justify-center items-center">
-      <ListItem />
-      <Modal title="Bình chọn MVP tháng 6" />
-      {/* <BtnGroup /> */}
+      {/* <ListItem />
+      <Modal title="Bình chọn MVP tháng 6">
+        <BtnGroup>
+          <Button title="Desciption" upcase={false} outline={false} group={true} active={true} />
+          <Button title="Anwser" upcase={false} outline={false} group={true} active={false} />
+          <Button title="Setting" upcase={false} outline={false} group={true} active={false} />
+        </BtnGroup>
+      </Modal> */}
+      <AnswerCard title="BTC Studio employees" content="Nhân viên BTCS trừ CDO" />
     </div>
   );
 };
