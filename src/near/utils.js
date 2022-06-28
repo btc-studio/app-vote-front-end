@@ -1,6 +1,7 @@
 import { connect, Contract, keyStores, WalletConnection } from 'near-api-js';
 import getConfig from './config';
 
+window.Buffer = window.Buffer || require('buffer').Buffer;
 const nearConfig = getConfig(process.env.NODE_ENV || 'development');
 
 // Initialize contract & set global variables
