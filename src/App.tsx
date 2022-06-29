@@ -5,7 +5,6 @@ import CreatePoll from './pages/CreatePoll';
 import DefaultLayout from './components/Layout/DefaultLayout';
 import YourPolls from './pages/YourPolls';
 import Organization from './pages/Organization';
-import Button from './components/Button/Button';
 
 const App: React.FC = () => {
   return (
