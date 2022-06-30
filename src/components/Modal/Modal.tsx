@@ -1,7 +1,5 @@
-import BtnGroup from '../BtnGroup/BtnGroup';
-import Button from '../Button/Button';
-import { idCardOutline } from 'ionicons/icons';
 import Avatar from '../Avatar/Avatar';
+import { IoRocket } from 'react-icons/io5';
 
 interface props {
   title?: string;
@@ -13,11 +11,16 @@ interface props {
 const Modal: React.FC<props> = ({ title, children, avatar, icon }) => {
   return (
     <div>
-      {avatar && <Avatar name="BTC Studio" />}
+      {avatar && <Avatar name="BTC Studio" size="big" css="mb-8" />}
       <div className="p-[34px] w-[434px] h-[648px] rounded-2xl bg-primary-20 relative">
-        <div className="text-2xl font-bold text-white text-center flex justify-center">
+        <div className="text-2xl font-bold text-white text-start flex ">
           {icon}
-          {title && <h1>{title}</h1>}
+          {title && (
+            <h1 className="flex items-center">
+              <IoRocket className="mr-2" />
+              {title}
+            </h1>
+          )}
         </div>
         {children}
       </div>
