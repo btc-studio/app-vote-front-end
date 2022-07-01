@@ -1,3 +1,4 @@
+import { ListCriterias } from '../Data_Dummy';
 export const HomeDescription = () => {
   return (
     <section className="w-[366px] min-h-[472px]">
@@ -7,8 +8,11 @@ export const HomeDescription = () => {
       <div className="text-[14px]  font-[400] leading-[26px]">
         <p className="mb-[8px]">Đến hẹn lại lên ,BTC Studio đi tìm chủ nhân cho giải thưởng #MVP062022</p>
         <p className="mb-[8px]">Hãy cùng Team Accounting khám phá các tiêu chí bình chọn tháng này nhé ^^</p>
-        <p>#1 Lực sĩ - người gánh đồng đội trên lưng</p>
-        <p>#2 Gia sư - người âm thầm truyền thụ kiến thức</p>
+        {ListCriterias?.map((criterial, index) => (
+          <p key={criterial.id}>
+            #{index + 1} {criterial.description}
+          </p>
+        ))}
       </div>
     </section>
   );

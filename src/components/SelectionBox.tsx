@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
 import people from '../assets/images/people.svg';
+import { selectOption } from './HomeVote';
 interface Props {
   listoption: {
     id: number;
     name: string;
     description: string;
   }[];
+  selected: selectOption | undefined;
+  setSelected: React.Dispatch<React.SetStateAction<selectOption | undefined>>;
 }
 
 export const SelectionBox = (props: Props) => {
-  const { listoption } = props;
+  const { listoption, selected, setSelected } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
+
+  const handleChoseOption = (option: any): void => {
+    setSelected(option);
+    setIsActive(false);
+  };
 
   return (
     <div className="mt-[10px] w-[100%] h-[40px] rounded-[8px]">
@@ -21,21 +29,30 @@ export const SelectionBox = (props: Props) => {
       flex items-center justify-between"
         onClick={() => setIsActive(!isActive)}
       >
-        {/* <p>Select an item</p> */}
-        <div className="flex items-center">
-          <img src={people} className="w-[24px] h-[24px]" alt="" />
-          <div>
-            <p className="text-[14px] font-bold text-[#fff]">Nam Bùi</p>
-            <p className="text-[8px]">Team lead dự án Full-Kaiten</p>
-          </div>
+        <div className="flex items-center min-h-[40px]">
+          {!selected ? (
+            <p>Select an item</p>
+          ) : (
+            <>
+              <img src={people} className="w-[24px] h-[24px]" alt="" />
+              <div>
+                <p className="text-[14px] font-bold text-[#fff]">{selected.name}</p>
+                <p className="text-[8px]">{selected.description}</p>
+              </div>
+            </>
+          )}
         </div>
         <IoChevronDown className="text-[16px]" />
       </div>
       <div className={`absolute w-[100%] mt-[2px] bg-[#05293C] rounded-[8px]`}>
         {isActive && (
-          <div className="">
+          <div className="bg-[#05293C]">
             {listoption?.map((option) => (
-              <div className="flex items-center px-[20px] py-[8px] cursor-pointer" key={option.id}>
+              <div
+                className="flex items-center px-[20px] py-[8px] cursor-pointer hover:opacity-[0.8]"
+                key={option.id}
+                onClick={() => handleChoseOption(option)}
+              >
                 <img src={people} className="w-[24px] h-[24px]" alt="" />
                 <div>
                   <p className="text-[14px] font-bold text-[#fff]">{option.name}</p>
