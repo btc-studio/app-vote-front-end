@@ -1,5 +1,6 @@
 import { connect, Contract, keyStores, WalletConnection } from 'near-api-js';
 import getConfig from './config';
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const nearConfig = getConfig(process.env.NODE_ENV || 'development');
 
@@ -22,29 +23,33 @@ export async function initContract() {
     // Test only
     // View methods are read only. They don't modify the state, but usually return some value.
     viewMethods: [
-      'get_all_collections_for_owner',
-      'get_all_collections',
-      'get_collections_by_name',
-      'get_all_schemas_by_collection',
-      'get_all_templates_by_collection',
-      'nft_tokens_for_owner',
-      'get_all_drops_by_collection',
-      'nft_token',
-      'get_all_lootboxes_by_collection',
-      'get_all_drops',
-      'get_drop_by_id',
+      'get_all_users',
+      'get_user_by_id',
+      'get_all_criterias',
+      'get_criteria_by_id',
+      'get_all_polls',
+      'get_poll_by_id',
+      'get_all_poll_options',
+      'get_poll_options_by_id',
+      'get_all_result',
+      'get_result_by_id',
     ],
     // Change methods can modify the state. But you don't receive the returned value when called.
     changeMethods: [
-      'create_collection',
-      'create_schema',
-      'create_template',
-      'nft_mint',
-      'create_lootbox',
-      'create_drop',
-      'mint_lootbox',
-      'unbox_lootbox',
-      'claim_drop',
+      'create_user',
+      'create_criteria',
+      'create_poll',
+      'create_poll_option',
+      'create_result',
+      'update_user',
+      'update_criteria',
+      'update_poll',
+      'update_result',
+      'delete_user',
+      'delete_criteria',
+      'delete_poll',
+      'delete_poll_option',
+      'delete_result',
     ],
   });
 }
@@ -62,15 +67,3 @@ export function login() {
   // the private key in localStorage.
   window.walletConnection.requestSignIn(nearConfig.contractName);
 }
-
-// export async function set_greeting(message) {
-//   let response = await window.contract.set_greeting({
-//     args: { message: message },
-//   });
-//   return response;
-// }
-
-// export async function get_greeting() {
-//   let greeting = await window.contract.get_greeting();
-//   return greeting;
-// }
