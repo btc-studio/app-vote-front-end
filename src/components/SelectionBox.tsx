@@ -44,12 +44,12 @@ export const SelectionBox = (props: Props) => {
         </div>
         <IoChevronDown className="text-[16px]" />
       </div>
-      <div className={`absolute w-[100%] mt-[2px] bg-[#05293C] rounded-[8px]`}>
+      <div className={`absolute w-[100%] mt-[2px] bg-[#05293C] rounded-[8px] z-10`}>
         {isActive && (
-          <div className="bg-[#05293C]">
+          <div className=" rounded-[4px] overflow-hidden">
             {listoption?.map((option) => (
               <div
-                className="flex items-center px-[20px] py-[8px] cursor-pointer hover:opacity-[0.8]"
+                className="flex items-center px-[20px] py-[8px] cursor-pointer hover:opacity-[0.8] border-b-[0.5px] border-[rgba(255,255,255,0.2)]  "
                 key={option.id}
                 onClick={() => handleChoseOption(option)}
               >

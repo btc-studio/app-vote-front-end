@@ -28,10 +28,10 @@ function Trending() {
           {HomeState === 'result' && <HomeResult />}
           <hr className="w-[100%] border-[rgba(255,255,255,0.4)] my-[18px] " />
           {/* vote Footer */}
-          <div className="flex w-[100%] justify-center items-center">
-            <div className="min-w-[96px] min-h-[32px] flex items-center p-[4px] text-[14px] bg-[rgba(255,255,255,0.2)] rounded-md">
+          <div className="flex w-[100%]  justify-center items-center">
+            <div className="min-w-[96px] min-h-[40px] flex items-center p-[4px] text-[14px] bg-[rgba(255,255,255,0.2)] rounded-md">
               <button
-                className={`min-w-[88px]  mr-[4px] rounded-[6px] ${
+                className={`min-w-[88px] min-h-[32px]  mr-[4px] rounded-[6px] ${
                   HomeState === 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 }`}
                 onClick={() => setHomeState('description')}
@@ -39,7 +39,7 @@ function Trending() {
                 Description
               </button>
               <button
-                className={`min-w-[88px]  rounded-[6px] flex items-center justify-center ${
+                className={`min-w-[88px] min-h-[32px]  rounded-[6px] flex items-center justify-center ${
                   HomeState !== 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 } `}
                 onClick={() => setHomeState('vote')}
