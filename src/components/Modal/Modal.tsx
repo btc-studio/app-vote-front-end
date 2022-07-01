@@ -16,8 +16,8 @@ const Modal: React.FC<props> = ({ title, children, avatar, icon }) => {
         <div className="text-2xl font-bold text-white text-start flex ">
           {icon}
           {title && (
-            <h1 className="flex items-center">
-              <IoRocket className="mr-2" />
+            <h1 className="flex text-start">
+              <IoRocket className="mr-2 h-8" />
               {title}
             </h1>
           )}

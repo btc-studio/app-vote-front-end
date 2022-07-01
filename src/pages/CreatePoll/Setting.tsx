@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import { IoTimeOutline, IoEyeOffOutline, IoGlobeOutline } from 'react-icons/io5';
 import Switch from 'react-switch';
+import { Poll } from '../../recoil/PollsState';
+import { useRecoilState } from 'recoil';
+import { formatDate } from '../../utils/HandleDate';
 
 const Setting: React.FC = () => {
-  const [check, setCheck] = useState<any>(true);
+  const [checkDate, setCheckDate] = useState<any>(true);
+  const [checkAnonymous, setCheckAnonymous] = useState<any>(true);
+  const [poll, setPoll] = useRecoilState(Poll);
+
   return (
     <>
       <h2 className="mt-10 text-2xl font-bold text-white">Setting</h2>
       <div className="mt-5 w-full h-[194px] rounded-lg bg-primary-10 px-3 py-4">
-        {/* Row-1 */}
+        {/* End Date */}
         <div>
           <div className="flex items-center w-full">
             <div className="p-[2px] rounded bg-greenL">
@@ -19,9 +25,10 @@ const Setting: React.FC = () => {
               <Switch
                 width={31}
                 height={18}
-                checked={check}
+                checked={checkDate}
                 onChange={() => {
-                  setCheck(!check);
+                  setCheckDate(!checkDate);
+                  setPoll({ ...poll, endDate: '', endHours: '' });
                 }}
                 uncheckedIcon={false}
                 checkedIcon={false}
@@ -31,11 +38,25 @@ const Setting: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-between ml-8 mt-3">
-            <input type="time" className="bg-primary-20 text-sm flex-2 mr-3 h-10 py-2 px-3 rounded-lg" />
-            <input type="date" className="bg-primary-20 text-sm flex-1 h-10 py-2 px-3 rounded-lg" />
+            <input
+              type="time"
+              value={poll.endHours}
+              className="bg-primary-20 text-sm flex-2 mr-3 h-10 py-2 px-3 rounded-lg"
+              onChange={(e) => {
+                setPoll({ ...poll, endHours: e.target.value });
+              }}
+            />
+            <input
+              type="date"
+              value={poll.endDate}
+              className="bg-primary-20 text-sm flex-1 h-10 py-2 px-3 rounded-lg"
+              onChange={(e) => {
+                setPoll({ ...poll, endDate: e.target.value });
+              }}
+            />
           </div>
         </div>
-        {/* Row-2 */}
+        {/* Anonymous */}
         <div className="mt-4 py-1">
           <div className="flex items-center w-full">
             <div className="p-[2px] rounded bg-orangeN">
@@ -46,9 +67,9 @@ const Setting: React.FC = () => {
               <Switch
                 width={31}
                 height={18}
-                checked={check}
+                checked={checkAnonymous}
                 onChange={() => {
-                  setCheck(!check);
+                  setCheckAnonymous(!checkAnonymous);
                 }}
                 uncheckedIcon={false}
                 checkedIcon={false}
@@ -58,18 +79,18 @@ const Setting: React.FC = () => {
             </div>
           </div>
         </div>
-        {/* Row-3 */}
+        {/* Who can vote */}
         <div className="mt-0 ">
           <div className="flex items-center w-full">
             <div className="p-[2px] rounded bg-blueN">
               <IoGlobeOutline className="text-blueN bg-white rounded-full " />
             </div>
             <div className="ml-2 flex justify-between flex-1 items-center py-2 border-t-[1px] border-primary-20">
-              <span className="text-sm">Anonymous Poll</span>
+              <span className="text-sm">Who can vote</span>
               <select name="employee" className="bg-transparent rounded-xl text-sm">
                 <option value={1}>Organization</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
+                <option value={2}>Organization2</option>
+                <option value={3}>Organization3</option>
               </select>
             </div>
           </div>

@@ -5,13 +5,14 @@ import Description from './Description';
 import Answer from './Answer';
 import Setting from './Setting';
 import { useRecoilState } from 'recoil';
-import { SwitchContentState } from '../../recoil/CreatePollState';
-import { nextState } from '../../untils/CreatePollHandle';
+import { SwitchContentCreatePoll, Poll } from '../../recoil/PollsState';
+import { nextState } from '../../utils/CreatePollHandle';
 const CreatePoll: React.FC = () => {
-  const [switchContentState, setSwitchContentState] = useRecoilState(SwitchContentState);
+  const [switchContentState, setSwitchContentState] = useRecoilState(SwitchContentCreatePoll);
+  const [poll] = useRecoilState(Poll);
   return (
     <div className="pb-6">
-      <Modal avatar={true} title={switchContentState.description === true ? '' : 'Bình chọn MVP tháng 6'}>
+      <Modal avatar={true} title={switchContentState.description === true ? '' : poll.title}>
         {switchContentState.description ? <Description /> : <></>}
         {switchContentState.answer ? <Answer /> : <></>}
         {switchContentState.setting ? <Setting /> : <></>}
