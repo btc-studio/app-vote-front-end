@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { PollModel, OptionModel, CriteriaModel } from '../Model/Poll';
+import { PollModel, OptionModel, CriteriaModel } from '../../Model/Poll';
 
 export const SwitchContentCreatePoll = atom({
   key: 'SWITCH_CONTENT_CREATE_POLL',

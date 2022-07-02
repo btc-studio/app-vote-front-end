@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IoTimeOutline, IoEyeOffOutline, IoGlobeOutline } from 'react-icons/io5';
 import Switch from 'react-switch';
-import { Poll } from '../../recoil/PollsState';
+import { Poll } from '../../recoil/create-poll/PollsState';
 import { useRecoilState } from 'recoil';
 
 const Setting: React.FC = () => {

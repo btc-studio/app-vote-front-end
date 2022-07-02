@@ -1,5 +1,5 @@
 import { IoImageOutline } from 'react-icons/io5';
-import { Poll } from '../../recoil/PollsState';
+import { Poll } from '../../recoil/create-poll/PollsState';
 import { useRecoilState } from 'recoil';
 import { useRef } from 'react';
 

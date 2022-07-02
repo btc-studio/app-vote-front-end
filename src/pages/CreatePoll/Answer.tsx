@@ -1,7 +1,7 @@
 import { IoAdd, IoPencil, IoTrash, IoChevronDown, IoChevronUp } from 'react-icons/io5';
 import Avatar from '../../components/Avatar/Avatar';
 import { useRef, useState } from 'react';
-import { Criterias, Options } from '../../recoil/PollsState';
+import { Criterias, Options } from '../../recoil/create-poll/PollsState';
 import { useRecoilState } from 'recoil';
 import { CriteriaModel } from '../../Model/Poll';
 

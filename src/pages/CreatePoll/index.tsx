@@ -5,7 +5,7 @@ import Description from './Description';
 import Answer from './Answer';
 import Setting from './Setting';
 import { useRecoilState } from 'recoil';
-import { SwitchContentCreatePoll, Poll } from '../../recoil/PollsState';
+import { SwitchContentCreatePoll, Poll } from '../../recoil/create-poll/PollsState';
 import { nextState } from '../../utils/CreatePollHandle';
 const CreatePoll: React.FC = () => {
   const [switchContentState, setSwitchContentState] = useRecoilState(SwitchContentCreatePoll);
