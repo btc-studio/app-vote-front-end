@@ -3,6 +3,7 @@ import Avatar from '../../components/Avatar/Avatar';
 import { useRef, useState } from 'react';
 import { Criterias, Options } from '../../recoil/PollsState';
 import { useRecoilState } from 'recoil';
+import { CriteriaModel } from '../../Model/Poll';
 
 interface propsPollItem {
   title: string;
@@ -22,8 +23,11 @@ const PollItem: React.FC<propsPollItem> = ({ title, order }) => {
         placeholder={`Poll ${order}`}
         value={title}
         onChange={() => {
-          let newCriterias = [...criterias];
-          newCriterias[order - 1] = refInput.current?.value;
+          let newCriterias: CriteriaModel[] = [];
+          criterias.forEach((device, index) => {
+            newCriterias[index] = { ...device };
+          });
+          newCriterias[order - 1].description = refInput.current?.value ? refInput.current?.value : '';
           setCriterias(newCriterias);
         }}
       />
@@ -45,7 +49,7 @@ const Answer: React.FC = () => {
   const [criterias, setCriterias] = useRecoilState(Criterias);
   const [options, setOptions] = useRecoilState(Options);
   const handleAddPoll = () => {
-    setCriterias([...criterias, '']);
+    setCriterias([...criterias, { description: '' }]);
   };
   const handleSelectOption = (index: number) => {
     let newOptions = [...options];
@@ -85,12 +89,13 @@ const Answer: React.FC = () => {
           hidden={!(hideOptions && true)}
         >
           {options.map((item, index) => {
-            if (index != 0)
+            if (index !== 0)
               return (
                 <div key={index} onClick={() => handleSelectOption(index)}>
                   <Avatar name={item.title} size="small" note={item.description} css="px-2 hover:bg-primary-100 py-1" />
                 </div>
               );
+            else return null;
           })}
         </div>
       </div>
@@ -98,7 +103,7 @@ const Answer: React.FC = () => {
       {/* List tiêu chí */}
       <div className="mt-8 max-h-[280px] overflow-y-auto ">
         {criterias.map((item, index) => {
-          return <PollItem title={item} key={index} order={index + 1} />;
+          return <PollItem title={item.description} key={index} order={index + 1} />;
         })}
       </div>
       <button
