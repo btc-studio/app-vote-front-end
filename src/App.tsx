@@ -5,6 +5,7 @@ import CreatePoll from './pages/CreatePoll';
 import DefaultLayout from './components/Layout/DefaultLayout';
 import YourPolls from './pages/YourPolls';
 import Organization from './pages/Organization';
+import TestCreatePoll from './components/Example/TestCreatePoll';
 
 const App: React.FC = () => {
   return (
@@ -36,6 +37,14 @@ const App: React.FC = () => {
             }
           />
           <Route path="/organization" element={<Organization />} />
+          <Route
+            path="/test-create-poll"
+            element={
+              <DefaultLayout>
+                <TestCreatePoll />
+              </DefaultLayout>
+            }
+          />
         </Routes>
       </div>
     </Router>

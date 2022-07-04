@@ -54,6 +54,14 @@ function Sidebar() {
             <IoIceCream className="mr-[8px] text-[32px]" />
             Organization
           </Link>
+          <Link
+            to={'/test-create-poll'}
+            className={`flex items-center mb-[20px] font-bold text-[20px] ${
+              window.location.pathname === '/test-create-poll' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+            }`}
+          >
+            <BsStars className="mr-[8px] text-[32px]" /> Test Create Poll
+          </Link>
         </>
       )}
     </div>
