@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IoChevronDown } from 'react-icons/io5';
-import people from '../assets/images/people.svg';
+import people from '../../../assets/images/people.svg';
 import { selectOption } from './HomeVote';
 interface Props {
   listoption: {

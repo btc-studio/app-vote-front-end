@@ -1,5 +1,5 @@
 import { IoShieldCheckmark } from 'react-icons/io5';
-import people from '../../src/assets/images/people.svg';
+import people from '../../../assets/images/people.svg';
 export const HomeResult = () => {
   return (
     <section className="min-h-[472px] w-[366px]">

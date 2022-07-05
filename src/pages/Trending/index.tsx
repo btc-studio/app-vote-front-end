@@ -2,9 +2,9 @@ import { IoRocket, IoPizza, IoShieldCheckmark, IoMegaphone } from 'react-icons/i
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import people from '../../assets/images/people.svg';
-import { HomeDescription } from '../../components/HomeDescription';
-import { HomeResult } from '../../components/HomeResult';
-import { HomeVote } from '../../components/HomeVote';
+import { HomeDescription } from './TrendingStates/HomeDescription';
+import { HomeResult } from './TrendingStates/HomeResult';
+import { HomeVote } from './TrendingStates/HomeVote';
 import { HomeUserState } from '../../recoil/HomeUserState';
 import api from '../../utils/request';
 function Trending() {

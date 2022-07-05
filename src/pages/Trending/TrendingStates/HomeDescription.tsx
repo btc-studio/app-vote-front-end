@@ -1,4 +1,4 @@
-import { ListCriterias } from '../Data_Dummy';
+import { ListCriterias } from '../../../Data_Dummy';
 export const HomeDescription = () => {
   return (
     <section className="w-[366px] min-h-[472px]">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IoSave } from 'react-icons/io5';
 import { useSetRecoilState } from 'recoil';
-import { HomeUserState } from '../recoil/HomeUserState';
+import { HomeUserState } from '../../../recoil/HomeUserState';
 import { SelectionBox } from './SelectionBox';
 
 export interface selectOption {
