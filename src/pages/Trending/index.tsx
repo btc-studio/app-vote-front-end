@@ -1,13 +1,21 @@
 import { IoRocket, IoPizza, IoShieldCheckmark, IoMegaphone } from 'react-icons/io5';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import people from '../../assets/images/people.svg';
 import { HomeDescription } from '../../components/HomeDescription';
 import { HomeResult } from '../../components/HomeResult';
 import { HomeVote } from '../../components/HomeVote';
 import { HomeUserState } from '../../recoil/HomeUserState';
+import api from '../../utils/request';
 function Trending() {
   const [HomeState, setHomeState] = useRecoilState(HomeUserState);
-
+  const getUser = async () => {
+    const listUser = await api.get('/users');
+    console.log(listUser.data);
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <div className="min-w-[669px] min-h-[754px] p-[34px] ">
       <div className="min-w-[229px] h-[75px] flex items-center ">
