@@ -13,7 +13,12 @@ module.exports = {
         "primary-70": 'rgba(255, 255, 255, 0.7)',
         "primary-80": 'rgba(255, 255, 255, 0.8)',
         "primary-90": 'rgba(255, 255, 255, 0.9)',
-        "primary-100": '#05293C'
+        "primary-100": '#05293C',
+        "orangeN": '#F59E0B',
+        "orangeM": '#F78166',
+        "greenM": '#11DBC5',
+        "greenL": '#22C55E',
+        "blueN": '#3B82F6'
       }
     },
   },
