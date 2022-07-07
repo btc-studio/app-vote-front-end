@@ -12,7 +12,9 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order }) => {
   const [criterias, setCriterias] = useRecoilState(Criterias);
   let refInput = useRef<HTMLInputElement>(null);
 
-  const handleCreateCriteria = (title: string) => {};
+  const handleCreateCriteria = (title: string) => {
+    console.log(title);
+  };
 
   return (
     <div className="flex justify-between mb-4 items-center pr-1">

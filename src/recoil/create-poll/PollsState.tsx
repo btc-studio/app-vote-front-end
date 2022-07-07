@@ -13,7 +13,7 @@ export const SwitchContentCreatePoll = atom({
 const initialPollsState: PollModel = {
   title: '',
   description: '',
-  end_at: '',
+  end_at: 0,
 };
 
 export const Poll = atom({

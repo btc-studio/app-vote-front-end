@@ -3,6 +3,7 @@ import { IoTimeOutline, IoEyeOffOutline, IoGlobeOutline } from 'react-icons/io5'
 import Switch from 'react-switch';
 import { Poll } from '../../recoil/create-poll/PollsState';
 import { useRecoilState } from 'recoil';
+import { convertDate, convertHours, convertDateSeconds } from '../../utils/HandleDate';
 
 const Setting: React.FC = () => {
   const [checkDate, setCheckDate] = useState<any>(true);
@@ -27,7 +28,7 @@ const Setting: React.FC = () => {
                 checked={checkDate}
                 onChange={() => {
                   setCheckDate(!checkDate);
-                  setPoll({ ...poll, end_at: '' });
+                  setPoll({ ...poll, end_at: 0 });
                 }}
                 uncheckedIcon={false}
                 checkedIcon={false}
@@ -39,18 +40,19 @@ const Setting: React.FC = () => {
           <div className="flex justify-between ml-8 mt-3">
             <input
               type="time"
-              value={poll.end_at?.split(' ')[1]}
+              value={convertHours(poll.end_at)}
               className="bg-primary-20 text-sm flex-2 mr-3 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
+                convertHours(poll.end_at);
                 // setPoll({ ...poll, ae});
               }}
             />
             <input
               type="date"
-              value={poll.end_at}
+              value={convertDate(poll.end_at)}
               className="bg-primary-20 text-sm flex-1 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
-                setPoll({ ...poll, end_at: e.target.value });
+                setPoll({ ...poll, end_at: convertDateSeconds(e.target.value) });
               }}
             />
           </div>

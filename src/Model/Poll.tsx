@@ -4,8 +4,8 @@ export interface PollModel {
   description: string;
   criteria_ids?: number[];
   created_by?: number;
-  start_at?: string;
-  end_at?: string;
+  start_at?: number;
+  end_at?: number;
   updated_at?: Date;
   created_at?: Date;
 }
