@@ -1,5 +1,5 @@
 import { BsStars, BsLightningChargeFill } from 'react-icons/bs';
-import { IoBeer, IoIceCream, IoFastFood } from 'react-icons/io5';
+import { IoBeer, IoIceCream, IoFastFood, IoPaperPlane } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { login } from '../../../../near/utils';
 function Sidebar() {
@@ -21,6 +21,14 @@ function Sidebar() {
           }`}
         >
           <IoBeer className="mr-[8px] text-[32px]" /> Create a poll
+        </Link>
+        <Link
+          to={'/createCriteria'}
+          className={`flex items-center mb-[20px] font-bold text-[20px] ${
+            window.location.pathname === '/createCriteria' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+          }`}
+        >
+          <IoPaperPlane className="mr-[8px] text-[32px]" /> Create criterias
         </Link>
       </>
       {!window.walletConnection.isSignedIn() ? (

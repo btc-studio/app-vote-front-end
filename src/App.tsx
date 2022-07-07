@@ -5,8 +5,19 @@ import CreatePoll from './pages/CreatePoll';
 import DefaultLayout from './components/Layout/DefaultLayout';
 import YourPolls from './pages/YourPolls';
 import Organization from './pages/Organization';
-
+import CreateCriteria from './pages/CreateCriteria';
+import { useEffect } from 'react';
+import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/CriteriaStates';
+import { useRecoilState } from 'recoil';
 const App: React.FC = () => {
+  const [criteriasCall, setCriteriasCall] = useRecoilState(CriteriasCall);
+  useEffect(() => {
+    const getCriterias = async () => {
+      const allCriterias = await getAllCriterias();
+      setCriteriasCall(allCriterias);
+    };
+    getCriterias();
+  }, []);
   return (
     <Router>
       <div>
@@ -24,6 +35,14 @@ const App: React.FC = () => {
             element={
               <DefaultLayout>
                 <CreatePoll />
+              </DefaultLayout>
+            }
+          />
+          <Route
+            path="/createCriteria"
+            element={
+              <DefaultLayout>
+                <CreateCriteria />
               </DefaultLayout>
             }
           />

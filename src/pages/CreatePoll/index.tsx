@@ -7,12 +7,18 @@ import Setting from './Setting';
 import { useRecoilState } from 'recoil';
 import { SwitchContentCreatePoll, Poll } from '../../recoil/create-poll/PollsState';
 import { nextState } from '../../utils/CreatePollHandle';
+import { IoRocket } from 'react-icons/io5';
+
 const CreatePoll: React.FC = () => {
   const [switchContentState, setSwitchContentState] = useRecoilState(SwitchContentCreatePoll);
   const [poll] = useRecoilState(Poll);
   return (
-    <div className="pb-6">
-      <Modal avatar={true} title={switchContentState.description === true ? '' : poll.title}>
+    <div>
+      <Modal
+        avatar={true}
+        title={switchContentState.description === true ? '' : poll.title}
+        icon={<IoRocket className="mt-1 mr-2"></IoRocket>}
+      >
         {switchContentState.description ? <Description /> : <></>}
         {switchContentState.answer ? <Answer /> : <></>}
         {switchContentState.setting ? <Setting /> : <></>}

@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { PollModel, OptionModel, CriteriaModel } from '../../Model/Poll';
+import { PollModel, OptionModel } from '../../Model/Poll';
 
 export const SwitchContentCreatePoll = atom({
   key: 'SWITCH_CONTENT_CREATE_POLL',
@@ -13,18 +13,12 @@ export const SwitchContentCreatePoll = atom({
 const initialPollsState: PollModel = {
   title: '',
   description: '',
-  endAt: '',
+  end_at: '',
 };
 
 export const Poll = atom({
   key: 'POLL',
   default: initialPollsState,
-});
-
-const initialCriteriasState: CriteriaModel[] = [];
-export const Criterias = atom({
-  key: 'CRITERIAS',
-  default: initialCriteriasState,
 });
 
 const initialOptionsState: OptionModel[] = [

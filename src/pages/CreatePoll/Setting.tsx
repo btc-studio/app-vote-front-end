@@ -27,7 +27,7 @@ const Setting: React.FC = () => {
                 checked={checkDate}
                 onChange={() => {
                   setCheckDate(!checkDate);
-                  setPoll({ ...poll, endAt: '' });
+                  setPoll({ ...poll, end_at: '' });
                 }}
                 uncheckedIcon={false}
                 checkedIcon={false}
@@ -39,7 +39,7 @@ const Setting: React.FC = () => {
           <div className="flex justify-between ml-8 mt-3">
             <input
               type="time"
-              value={poll.endAt?.split(' ')[1]}
+              value={poll.end_at?.split(' ')[1]}
               className="bg-primary-20 text-sm flex-2 mr-3 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
                 // setPoll({ ...poll, ae});
@@ -47,10 +47,10 @@ const Setting: React.FC = () => {
             />
             <input
               type="date"
-              value={poll.endAt}
+              value={poll.end_at}
               className="bg-primary-20 text-sm flex-1 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
-                setPoll({ ...poll, endAt: e.target.value });
+                setPoll({ ...poll, end_at: e.target.value });
               }}
             />
           </div>

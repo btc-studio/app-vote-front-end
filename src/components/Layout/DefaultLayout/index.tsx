@@ -6,7 +6,7 @@ interface Props {
 }
 function DefaultLayout({ children }: Props) {
   return (
-    <div className="flex items-center flex-col">
+    <div className="flex items-center flex-col pb-8">
       <Header />
       <div className="w-[1085px] mt-[40px] flex ">
         <Sidebar />

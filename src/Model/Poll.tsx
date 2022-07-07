@@ -2,25 +2,26 @@ export interface PollModel {
   id?: number;
   title: string;
   description: string;
-  criteriaIds?: number[];
-  createdBy?: number;
-  startAt?: string;
-  endAt?: string;
-  updatedAt?: Date;
-  createdAt?: Date;
+  criteria_ids?: number[];
+  created_by?: number;
+  start_at?: string;
+  end_at?: string;
+  updated_at?: Date;
+  created_at?: Date;
 }
 
 export interface OptionModel {
   title: string;
   description: string;
   id?: number;
-  userIds?: number[];
-  createdBy?: number;
-  updatedAt?: Date;
-  createdAt?: Date;
+  user_ids?: number[];
+  created_by?: number;
+  updated_at?: Date;
+  created_at?: Date;
 }
 
 export interface CriteriaModel {
-  createBy?: number;
+  id?: number;
+  created_by?: number;
   description: string;
 }
