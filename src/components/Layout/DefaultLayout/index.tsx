@@ -6,11 +6,11 @@ interface Props {
 }
 function DefaultLayout({ children }: Props) {
   return (
-    <div className="flex items-center flex-col pb-8">
+    <div className="flex items-center flex-col ">
       <Header />
-      <div className="w-[1085px] mt-[40px] flex ">
+      <div className="w-[1085px] mt-[40px] flex relavtive min-h-screen">
         <Sidebar />
-        <div className=" flex-[1] flex justify-center">
+        <div className=" flex-[1] flex justify-center absolute left-1/2 -translate-x-1/2">
           <div>{children}</div>
         </div>
       </div>

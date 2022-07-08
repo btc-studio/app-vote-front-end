@@ -29,6 +29,8 @@ const App: React.FC = () => {
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
+      console.log(userData);
+
       setUserInfo({
         id: userData.id,
         name: userData.name,
@@ -37,10 +39,11 @@ const App: React.FC = () => {
       });
     };
     const getPoll = async () => {
-      const polls = await window.contract.get_all_polls();
+      const polls = await window.contract.get_all_users();
+      console.log(polls);
     };
     if (window.accountId) {
-      getUserInfo('duongnh.testnet');
+      getUserInfo('duongnh222.testnet');
     }
     getOptions();
     getCriterias();

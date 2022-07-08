@@ -5,13 +5,14 @@ import Description from './Description';
 import Answer from './Answer';
 import Setting from './Setting';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { SwitchContentCreatePoll, Poll } from '../../recoil/create-poll/PollsState';
+import { Poll } from '../../recoil/create-poll/PollsState';
 import { nextState } from '../../utils/CreatePollHandle';
 import { IoRocket } from 'react-icons/io5';
 import { UserInfo } from '../../recoil/UserInfo';
+import { useState } from 'react';
 
 const CreatePoll: React.FC = () => {
-  const [switchContentState, setSwitchContentState] = useRecoilState(SwitchContentCreatePoll);
+  const [switchContentState, setSwitchContentState] = useState({ description: true, answer: false, setting: false });
   const userInfo = useRecoilValue(UserInfo);
   const [poll] = useRecoilState(Poll);
 
@@ -19,7 +20,7 @@ const CreatePoll: React.FC = () => {
     await window.contract.create_poll({
       args: {
         criteria_ids: poll.criteria_ids,
-        created_by: 1,
+        created_by: userInfo.id,
         title: poll.title,
         description: poll.description,
         start_at: new Date().getTime(),
@@ -61,6 +62,7 @@ const CreatePoll: React.FC = () => {
               outline={false}
               upcase={false}
               group={true}
+              idDisable={!poll.title || !poll.description}
               handle={() => {
                 setSwitchContentState({
                   description: false,
@@ -75,6 +77,7 @@ const CreatePoll: React.FC = () => {
               outline={false}
               upcase={false}
               group={true}
+              idDisable={!poll.title || !poll.description || !poll.criteria_ids || poll.criteria_ids.length <= 0}
               handle={() => {
                 setSwitchContentState({
                   description: false,
@@ -91,7 +94,15 @@ const CreatePoll: React.FC = () => {
             upcase={true}
             handle={() => {
               const newState = nextState(switchContentState);
-              setSwitchContentState(newState);
+              if (switchContentState.description && (!poll.title || !poll.description)) {
+                alert('Title and description is not empty!');
+                return;
+              } else if (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) {
+                alert('Please choose criterias!');
+                return;
+              } else {
+                setSwitchContentState(newState);
+              }
               if (switchContentState.setting) {
                 handlePostPoll();
               }

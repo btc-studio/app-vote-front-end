@@ -16,7 +16,6 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order }) => {
   let refInput = useRef<HTMLInputElement>(null);
 
   const handleCreateCriteria = async (title: string) => {
-    localStorage.setItem('riteria', title);
     try {
       const newCriteria = await window.contract.create_criteria({
         args: {
