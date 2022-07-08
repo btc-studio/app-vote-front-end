@@ -15,6 +15,6 @@ export const getAllOptions = async () => {
     // const allCriterias = await window.contract.get_all_options();
     return options.data.data;
   } catch (error) {
-    alert(error);
+    console.log('Error options axios: ', error);
   }
 };
