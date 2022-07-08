@@ -21,11 +21,17 @@ const App: React.FC = () => {
   // Get all criterias, options, info of user logined
   useEffect(() => {
     const getCriterias = async () => {
-      const allCriterias = await getAllCriterias();
-      setCriteriasCall(allCriterias);
+      const allCriterias = await axios({
+        method: 'get',
+        url: 'http://api.app-vote.ai-studio-work.net/v1/criterias',
+      });
+      setCriteriasCall(allCriterias.data.criterias);
     };
     const getOptions = async () => {
-      const allOptions = await axios.get('http://api.app-vote.ai-studio-work.net/v1/options');
+      const allOptions = await axios({
+        method: 'get',
+        url: 'http://api.app-vote.ai-studio-work.net/v1/options',
+      });
       console.log(allOptions.data.data);
       setOptions(allOptions.data.data);
     };
