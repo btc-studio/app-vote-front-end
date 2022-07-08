@@ -16,8 +16,11 @@ export const CriteriasCall = atom({
 
 export const getAllCriterias = async () => {
   try {
-    const allCriterias = await axios.get('http://api.app-vote.ai-studio-work.net/v1/criterias');
-    return allCriterias.data.criterias;
+    // BE API
+    // const allCriterias = await axios.get('http://api.app-vote.ai-studio-work.net/v1/criterias');
+    // NEAR API
+    const allCriterias = await window.contract.get_all_criterias();
+    return allCriterias;
   } catch (error) {
     alert(error);
   }

@@ -32,7 +32,7 @@ const CreateCriteria: React.FC = () => {
         {content.create ? <Create /> : <></>}
         {content.list ? <List data={criteriasCall} /> : <></>}
         {/* ------ Control ------ */}
-        {criterias.length > 0 ? (
+        {criterias.length > 0 && content.create ? (
           <Button
             title="Delete all"
             outline={true}

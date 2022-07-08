@@ -1,8 +1,10 @@
 import { CriteriaModel } from '../../Model/Poll';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { Criterias } from '../../recoil/create-criterias/CriteriaStates';
 import { useRef } from 'react';
 import { IoCheckmark, IoTrash, IoAdd } from 'react-icons/io5';
+import { UserInfo } from '../../recoil/UserInfo';
+import axios from 'axios';
 
 interface propsCriteriaItem {
   title: string;
@@ -10,11 +12,34 @@ interface propsCriteriaItem {
 }
 const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order }) => {
   const [criterias, setCriterias] = useRecoilState(Criterias);
+  const userInfo = useRecoilValue(UserInfo);
   let refInput = useRef<HTMLInputElement>(null);
 
-  const handleCreateCriteria = (title: string) => {
-    console.log(title);
+  const handleCreateCriteria = async (title: string) => {
+    localStorage.setItem('riteria', title);
+    try {
+      const newCriteria = await window.contract.create_criteria({
+        args: {
+          created_by: userInfo.id,
+          description: title,
+        },
+        gas: '300000000000000', // attached GAS (optional)
+        amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
+  // const handleCreateCriteria = (title: string) => {
+  //   axios
+  //     .post('http://api.app-vote.ai-studio-work.net/v1/criterias', {
+  //       id: 5,
+  //       created_by: 1,
+  //       description: title,
+  //     })
+  //     .then((res) => console.log('Data: ', res.data))
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <div className="flex justify-between mb-4 items-center pr-1">
@@ -36,7 +61,9 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order }) => {
       <button className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-greenL rounded text-white mr-2">
         <IoCheckmark
           onClick={() => {
-            handleCreateCriteria(title);
+            if (title) {
+              handleCreateCriteria(title);
+            }
           }}
         />
       </button>

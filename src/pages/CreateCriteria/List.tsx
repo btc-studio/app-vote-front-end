@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { IoBookmark } from 'react-icons/io5';
 import { CriteriaModel } from '../../Model/Poll';
 interface propsItem {

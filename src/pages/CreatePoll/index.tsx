@@ -4,14 +4,31 @@ import Button from '../../components/Button/Button';
 import Description from './Description';
 import Answer from './Answer';
 import Setting from './Setting';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { SwitchContentCreatePoll, Poll } from '../../recoil/create-poll/PollsState';
 import { nextState } from '../../utils/CreatePollHandle';
 import { IoRocket } from 'react-icons/io5';
+import { UserInfo } from '../../recoil/UserInfo';
 
 const CreatePoll: React.FC = () => {
   const [switchContentState, setSwitchContentState] = useRecoilState(SwitchContentCreatePoll);
+  const userInfo = useRecoilValue(UserInfo);
   const [poll] = useRecoilState(Poll);
+
+  const handlePostPoll = async () => {
+    await window.contract.create_poll({
+      args: {
+        criteria_ids: poll.criteria_ids,
+        created_by: 1,
+        title: poll.title,
+        description: poll.description,
+        start_at: new Date().getTime(),
+        end_at: poll.end_at,
+      },
+      gas: '300000000000000', // attached GAS (optional)
+      amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
+    });
+  };
   return (
     <div>
       <Modal
@@ -75,6 +92,9 @@ const CreatePoll: React.FC = () => {
             handle={() => {
               const newState = nextState(switchContentState);
               setSwitchContentState(newState);
+              if (switchContentState.setting) {
+                handlePostPoll();
+              }
             }}
           />
         </div>

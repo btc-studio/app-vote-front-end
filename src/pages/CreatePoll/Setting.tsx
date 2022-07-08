@@ -40,16 +40,16 @@ const Setting: React.FC = () => {
           <div className="flex justify-between ml-8 mt-3">
             <input
               type="time"
-              value={convertHours(poll.end_at)}
+              value={''}
               className="bg-primary-20 text-sm flex-2 mr-3 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
-                convertHours(poll.end_at);
+                // convertHours(poll.end_at);
                 // setPoll({ ...poll, ae});
               }}
             />
             <input
               type="date"
-              value={convertDate(poll.end_at)}
+              value={poll.end_at !== 0 ? convertDate(poll.end_at) : ''}
               className="bg-primary-20 text-sm flex-1 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
                 setPoll({ ...poll, end_at: convertDateSeconds(e.target.value) });

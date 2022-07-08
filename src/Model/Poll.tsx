@@ -1,7 +1,7 @@
 export interface PollModel {
   id?: number;
-  title: string;
-  description: string;
+  title: string | undefined;
+  description: string | undefined;
   criteria_ids?: number[];
   created_by?: number;
   start_at?: number;
@@ -11,8 +11,8 @@ export interface PollModel {
 }
 
 export interface OptionModel {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   id?: number;
   user_ids?: number[];
   created_by?: number;
