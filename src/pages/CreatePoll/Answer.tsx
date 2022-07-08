@@ -19,7 +19,7 @@ const ItemCheck: React.FC<propsItemCheck> = ({ id, description }) => {
     <div>
       <input
         type="checkbox"
-        name={`criteria-${id}`}
+        id={`criteria-${id}`}
         value={id}
         className="w-4 h-4 mr-2"
         onChange={(e) => {
@@ -34,7 +34,7 @@ const ItemCheck: React.FC<propsItemCheck> = ({ id, description }) => {
         }}
         checked={check}
       />
-      <label htmlFor={`criteria-${id}`} className="font-medium text-xl">
+      <label htmlFor={`criteria-${id}`} className="font-medium text-xl cursor-pointer">
         {description}
       </label>
     </div>

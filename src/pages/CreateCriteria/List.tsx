@@ -9,8 +9,8 @@ interface propsItem {
 
 const Item: React.FC<propsItem> = ({ order, id, description }) => {
   return (
-    <div className="w-full0 h-14 cursor-default	 bg-primary-30 rounded-xl pl-2 pr-4 py-2 relative mb-3">
-      <IoBookmark className="w-6 h-6 text-greenM absolute -top-1 right-2" />
+    <div className="w-full0 h-14 cursor-default	 bg-blueM rounded-xl pl-2 pr-4 py-2 relative mb-3 cursor-pointer hover:bg-opacity-70 ">
+      <IoBookmark className="w-6 h-6 text-orangeM absolute -top-1 right-2" />
       <h1 className="font-medium text-xl text-white flex items-center">
         #{id}. {description}
       </h1>

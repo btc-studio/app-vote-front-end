@@ -16,9 +16,11 @@ module.exports = {
         "primary-100": '#05293C',
         "orangeN": '#F59E0B',
         "orangeM": '#F78166',
+        "yellow-2.50": '#F2EB88',
         "greenM": '#11DBC5',
         "greenL": '#22C55E',
-        "blueN": '#3B82F6'
+        "blueN": '#3B82F6',
+        "blueM": '#024059'
       }
     },
   },

@@ -11,7 +11,7 @@ export const getAllOptions = async () => {
   try {
     // BE API
     let headers = { 'content-type': 'application/json' };
-    const options = await axios.get('http://api.app-vote.ai-studio-work.net/v1/options', { headers });
+    const options = await axios.get('http://api.app-vote.ai-studio-work.net/v1/options');
     // NEAR API
     // const allCriterias = await window.contract.get_all_options();
     return options.data.data;
