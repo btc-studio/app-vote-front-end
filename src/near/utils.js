@@ -1,9 +1,4 @@
-import {
-  connect,
-  Contract,
-  keyStores,
-  WalletConnection
-} from 'near-api-js';
+import { connect, Contract, keyStores, WalletConnection } from 'near-api-js';
 import getConfig from './config';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
@@ -13,7 +8,8 @@ const nearConfig = getConfig(process.env.REACT_APP_NODE_ENV || 'development');
 export async function initContract() {
   // Initialize connection to the NEAR testnet
   const near = await connect(
-    Object.assign({
+    Object.assign(
+      {
         deps: {
           keyStore: new keyStores.BrowserLocalStorageKeyStore(),
         },
@@ -44,7 +40,7 @@ export async function initContract() {
       'get_poll_options_by_id',
       'get_all_result',
       'get_result_by_id',
-      'get_user_by_wallet_address'
+      'get_user_by_wallet_address',
     ],
     // Change methods can modify the state. But you don't receive the returned value when called.
     changeMethods: [

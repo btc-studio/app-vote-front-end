@@ -11,7 +11,6 @@ import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/Criter
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
 import { useRecoilState } from 'recoil';
 import { UserInfo } from './recoil/UserInfo';
-import axios from 'axios';
 
 const App: React.FC = () => {
   const [criteriasCall, setCriteriasCall] = useRecoilState(CriteriasCall);
@@ -21,19 +20,12 @@ const App: React.FC = () => {
   // Get all criterias, options, info of user logined
   useEffect(() => {
     const getCriterias = async () => {
-      const allCriterias = await axios({
-        method: 'get',
-        url: 'http://api.app-vote.ai-studio-work.net/v1/criterias',
-      });
-      setCriteriasCall(allCriterias.data.criterias);
+      const allCriterias = await getAllCriterias();
+      setCriteriasCall(allCriterias);
     };
     const getOptions = async () => {
-      const allOptions = await axios({
-        method: 'get',
-        url: 'http://api.app-vote.ai-studio-work.net/v1/options',
-      });
-      console.log(allOptions.data.data);
-      setOptions(allOptions.data.data);
+      const allOptions = await getAllCriterias();
+      setOptions(allOptions);
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
