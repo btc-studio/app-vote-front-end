@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const request = axios.create({
-  baseURL: 'https://api.vote.ai-studio-work.net/',
+  baseURL: 'https://api.vote.ai-studio-work.net/v1/',
 });
 
 // request.interceptors.response.use(

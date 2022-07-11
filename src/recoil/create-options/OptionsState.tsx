@@ -10,7 +10,8 @@ export const OptionsCall = atom({
 export const getAllOptions = async () => {
   try {
     // BE API
-    const options = await request.get('options');
+    const options = await request.get('/options');
+
     return options.data.data;
     // NEAR API
     // const options = await window.contract.get_all_poll_options();
