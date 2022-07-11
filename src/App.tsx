@@ -9,13 +9,13 @@ import CreateCriteria from './pages/CreateCriteria';
 import { useEffect } from 'react';
 import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/CriteriaStates';
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { UserInfo } from './recoil/UserInfo';
 
 const App: React.FC = () => {
-  const [criteriasCall, setCriteriasCall] = useRecoilState(CriteriasCall);
-  const [options, setOptions] = useRecoilState(OptionsCall);
-  const [userInfo, setUserInfo] = useRecoilState(UserInfo);
+  const setCriteriasCall = useSetRecoilState(CriteriasCall);
+  const setOptions = useSetRecoilState(OptionsCall);
+  const setUserInfo = useSetRecoilState(UserInfo);
 
   // Get all criterias, options, info of user logined
   useEffect(() => {
@@ -24,7 +24,7 @@ const App: React.FC = () => {
       setCriteriasCall(allCriterias);
     };
     const getOptions = async () => {
-      const allOptions = await getAllCriterias();
+      const allOptions = await getAllOptions();
       setOptions(allOptions);
     };
     const getUserInfo = async (accountId: String) => {
@@ -38,16 +38,11 @@ const App: React.FC = () => {
         role: userData.role,
       });
     };
-    const getPoll = async () => {
-      const polls = await window.contract.get_all_users();
-      console.log(polls);
-    };
     if (window.accountId) {
       getUserInfo('duongnh222.testnet');
     }
     getOptions();
     getCriterias();
-    getPoll();
   }, []);
   return (
     <Router>

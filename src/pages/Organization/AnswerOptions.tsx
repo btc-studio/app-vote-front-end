@@ -6,6 +6,13 @@ const AnswerOptions: React.FC = () => {
       <AnswerCard title="Football players" content="Best football players" />
       <AnswerCard title="Football players" content="Best football players" />
       <AnswerCard title="Football players" content="Best football players" />
+      <AnswerCard title="Football players" content="Best football players" />
+      <AnswerCard title="Football players" content="Best football players" />
+      <AnswerCard title="Football players" content="Best football players" />
+      <AnswerCard title="Football players" content="Best football players" />
+      <AnswerCard title="Football players" content="Best football players" />
+      <AnswerCard title="Football players" content="Best football players" />
+      <AnswerCard title="Football players" content="Best football players" />
     </div>
   );
 };

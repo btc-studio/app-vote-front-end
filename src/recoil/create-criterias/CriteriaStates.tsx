@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import axios from 'axios';
+import request from '../../utils/request';
 import { CriteriaModel } from '../../Model/Poll';
 
 const initialCriteriasState: CriteriaModel[] = [];
@@ -17,12 +17,11 @@ export const CriteriasCall = atom({
 export const getAllCriterias = async () => {
   try {
     // BE API
-    let allCriterias = await fetch('http://api.app-vote.ai-studio-work.net/v1/criterias');
-    let data = await allCriterias.json();
-
+    let allCriterias = await request.get('criterias');
+    return allCriterias.data.criterias;
     // NEAR API
     // const allCriterias = await window.contract.get_all_criterias();
-    return data.criterias;
+    // return allCriterias;
   } catch (error) {
     console.warn('Error axios: ', error);
   }

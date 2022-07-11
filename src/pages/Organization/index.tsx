@@ -4,7 +4,8 @@ import Header from '../../components/Layout/DefaultLayout/Header';
 import { IoHomeOutline, IoPeopleOutline, IoBeerOutline, IoAlbumsOutline } from 'react-icons/io5';
 import { SwitchMenuOrganization } from '../../recoil/organization/OrganizationState';
 import { useRecoilState } from 'recoil';
-import AnswerOptions from '../../recoil/organization/AnswerOptions';
+import AnswerOptions from './AnswerOptions';
+import Polls from './Polls';
 function Organization() {
   const [switchMenuOrganization, setSwitchMenuOrganization] = useRecoilState(SwitchMenuOrganization);
 
@@ -97,6 +98,7 @@ function Organization() {
       </div>
       {/* Content */}
       <div className="w-full px-56">{switchMenuOrganization.answerOptions && <AnswerOptions />}</div>
+      <div className="w-full px-56">{switchMenuOrganization.polls && <Polls />}</div>
     </div>
   );
 }
