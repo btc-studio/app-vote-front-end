@@ -5,6 +5,7 @@ import { OptionsCall } from '../../recoil/create-options/OptionsState';
 import { Poll } from '../../recoil/create-poll/PollsState';
 import { useRecoilState } from 'recoil';
 import { CriteriasCall } from '../../recoil/create-criterias/CriteriaStates';
+import { Link } from 'react-router-dom';
 interface propsItemCheck {
   id: number | undefined;
   description: string;
@@ -115,12 +116,13 @@ const Answer: React.FC = () => {
             >
               <IoRefresh />
             </button>
-            <button
+            <Link
+              to={'/createCriteria'}
               className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded text-primary-80"
               title="Add criteria"
             >
               <IoAdd />
-            </button>
+            </Link>
           </div>
         </div>
         <div>

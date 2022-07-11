@@ -9,27 +9,34 @@ import CreateCriteria from './pages/CreateCriteria';
 import { useEffect } from 'react';
 import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/CriteriaStates';
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
+import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useSetRecoilState } from 'recoil';
 import { UserInfo } from './recoil/UserInfo';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
   const setOptions = useSetRecoilState(OptionsCall);
+  const setPolls = useSetRecoilState(PollsCall);
   const setUserInfo = useSetRecoilState(UserInfo);
 
   // Get all criterias, options, info of user logined
   useEffect(() => {
     const getCriterias = async () => {
       const allCriterias = await getAllCriterias();
+      console.log(allCriterias);
+
       setCriteriasCall(allCriterias);
     };
     const getOptions = async () => {
       const allOptions = await getAllOptions();
       setOptions(allOptions);
     };
+    const getPolls = async () => {
+      const allPolls = await getAllPolls();
+      setPolls(allPolls);
+    };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
-      console.log(userData);
 
       setUserInfo({
         id: userData.id,
@@ -41,6 +48,7 @@ const App: React.FC = () => {
     if (window.accountId) {
       getUserInfo('duongnh222.testnet');
     }
+    getPolls();
     getOptions();
     getCriterias();
   }, []);

@@ -17,11 +17,11 @@ export const CriteriasCall = atom({
 export const getAllCriterias = async () => {
   try {
     // BE API
-    let allCriterias = await request.get('criterias');
-    return allCriterias.data.criterias;
+    // let allCriterias = await request.get('criterias');
+    // return allCriterias.data.criterias;
     // NEAR API
-    // const allCriterias = await window.contract.get_all_criterias();
-    // return allCriterias;
+    const allCriterias = await window.contract.get_all_criterias();
+    return allCriterias;
   } catch (error) {
     console.warn('Error axios: ', error);
   }

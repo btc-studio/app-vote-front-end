@@ -49,10 +49,12 @@ const Setting: React.FC = () => {
             />
             <input
               type="date"
-              value={poll.end_at !== 0 ? convertDate(poll.end_at) : ''}
+              disabled={!checkDate}
+              value={poll.end_at !== 0 ? convertDate(poll.end_at as number) : ''}
               className="bg-primary-20 text-sm flex-1 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
                 setPoll({ ...poll, end_at: convertDateSeconds(e.target.value) });
+                // setPoll({ ...poll });
               }}
             />
           </div>

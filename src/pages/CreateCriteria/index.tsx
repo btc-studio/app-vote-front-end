@@ -4,7 +4,6 @@ import BtnGroup from '../../components/BtnGroup/BtnGroup';
 import Button from '../../components/Button/Button';
 import Create from './Create';
 import List from './List';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { CriteriasCall, Criterias, getAllCriterias } from '../../recoil/create-criterias/CriteriaStates';

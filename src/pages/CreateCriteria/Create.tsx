@@ -17,7 +17,7 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order }) => {
 
   const handleCreateCriteria = async (title: string) => {
     try {
-      const newCriteria = await window.contract.create_criteria({
+      await window.contract.create_criteria({
         args: {
           created_by: userInfo.id,
           description: title,

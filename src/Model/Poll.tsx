@@ -3,9 +3,10 @@ export interface PollModel {
   title: string | undefined;
   description: string | undefined;
   criteria_ids?: number[];
+  option_id: number | undefined;
   created_by?: number;
   start_at?: number;
-  end_at?: number;
+  end_at?: number | string;
   updated_at?: Date;
   created_at?: Date;
 }
