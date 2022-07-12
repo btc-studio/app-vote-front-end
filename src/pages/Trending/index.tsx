@@ -51,7 +51,7 @@ function Trending() {
   }, []);
 
   return (
-    <div className="min-w-[669px] min-h-[754px] p-[34px] ">
+    <div className="min-w-[669px] min-h-[754px] px-[34px] ">
       {allPolls.length !== 0 ? (
         allPolls?.map((pollInfo: any, index) => <Poll key={index} pollInfo={pollInfo} />)
       ) : (
