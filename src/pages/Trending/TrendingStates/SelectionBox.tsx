@@ -21,7 +21,7 @@ export const SelectionBox = (props: Props) => {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleChoseOption = (option: any, indexCriteria: number, criteriaId: number): void => {
-    let newSelected: selectOption[] = [...selected];
+    let listSelected: selectOption[] = [...selected];
     let newOption = {
       poll_id: pollId,
       criteria_id: criteriaId,
@@ -30,20 +30,17 @@ export const SelectionBox = (props: Props) => {
       indexCriteria: indexCriteria,
     };
 
-    if (newSelected.length === lengthCriterial) {
-      newSelected.splice(indexCriteria, 1, newOption);
-      setSelected(newSelected);
-      console.log(selected);
+    if (listSelected.length === lengthCriterial) {
+      listSelected.splice(indexCriteria, 1, newOption);
+      setSelected(listSelected);
     } else {
-      // newSelected.splice(indexCriteria, 0, newOption);
-      newSelected[indexCriteria] = newOption;
-      setSelected(newSelected);
-      console.log(selected);
+      // listSelected.splice(indexCriteria, 0, newOption);
+      listSelected[indexCriteria] = newOption;
+      setSelected(listSelected);
     }
-
     setIsActive(false);
   };
-
+  console.log(selected);
   return (
     <div className="mt-[10px] w-[100%] h-[40px] rounded-[8px]">
       <div
@@ -53,7 +50,7 @@ export const SelectionBox = (props: Props) => {
         onClick={() => setIsActive(!isActive)}
       >
         <div className="flex items-center min-h-[40px]">
-          {selected.filter(item => item.poll_id) && !selected[indexCriteria] ? (
+          {selected.filter((item) => item.poll_id) && !selected[indexCriteria] ? (
             <p>Select an item</p>
           ) : (
             <>

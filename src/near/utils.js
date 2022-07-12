@@ -37,8 +37,8 @@ export async function initContract() {
       'get_all_polls',
       'get_poll_by_id',
       'get_all_poll_options',
-      'get_poll_options_by_id',
-      'get_all_result',
+      'get_poll_option_by_id',
+      'get_all_results',
       'get_result_by_id',
     ],
     // Change methods can modify the state. But you don't receive the returned value when called.

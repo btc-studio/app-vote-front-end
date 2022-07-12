@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { IoSave } from 'react-icons/io5';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
+import { listPolls } from '../../../recoil/trending/AllPoll';
+import { allUserState } from '../../../recoil/trending/AllUser';
 import { SelectedState, selectOption } from '../../../recoil/trending/Selected';
 import api from '../../../utils/request';
 import { SelectionBox } from './SelectionBox';
@@ -17,44 +19,42 @@ interface Props {
   // pollOptionId: number;
   pollId: number;
   criteriaIds: number[];
-  // HandleSetHomeState: () => {}
+  optionId: number;
+  setHomeState: React.Dispatch<React.SetStateAction<string>>;
+  isVoted: number[];
+  setIsVoted: React.Dispatch<React.SetStateAction<number[]>>;
 }
 interface users {
   id: number;
   name: string;
 }
 export const HomeVote = (props: Props) => {
-  const { criteriaIds, pollId } = props;
+  const { criteriaIds, pollId, optionId, setHomeState, isVoted, setIsVoted } = props;
   const [selected, setSelected] = useState<selectOption[]>([]);
-  const [allOption, setAllOption] = useState([]);
   const [userOptions, setUserOptions] = useState<users[]>([]);
-
   const allCriteria = useRecoilValue(allCriteriaState);
+  const [arrUserId, setArrUserId] = useState<number[]>([]);
+  const allUser = useRecoilValue(allUserState);
 
-  // useEffect(() => {
-  //   const getAllOptions = async () => {
-  //     const options = await api.get(`/user_options/${pollOptionId}`);
-  //     setAllOption(options.data.user_option);
-  //   };
-  //   getAllOptions();
-  // }, [pollOptionId]);
   useEffect(() => {
-    const getUserOption = async () => {
-      if (allOption) {
-        const newListOption: users[] = [];
-        allOption.map(async (option: any) => {
-          const users = await api.get(`/users/${option.user_id}`);
-          newListOption.push(users.data.user);
-        });
-        setUserOptions(newListOption);
-      }
+    const getOptionById = async () => {
+      const OptionById = await window.contract.get_poll_option_by_id({ poll_option_id: optionId });
+      setArrUserId(OptionById.user_ids);
     };
-    getUserOption();
-  }, [allOption]);
+    getOptionById();
+  }, []);
+
+  useEffect(() => {
+    const handleGetOptionById = (arrUserId: number[], allUser: any[]) => {
+      let newArr = allUser.filter((User) => {
+        return arrUserId.indexOf(User.id as number) >= 0;
+      });
+      return setUserOptions(newArr);
+    };
+    handleGetOptionById(arrUserId, allUser);
+  }, [arrUserId, allUser]);
 
   const handleVoted = () => {
-    console.log('voted');
-
     selected.map(async (item: selectOption) => {
       await api
         .post('/polls/vote', {
@@ -63,12 +63,22 @@ export const HomeVote = (props: Props) => {
           user_id: item.id,
         })
         .then((res) => {
-          // setHomeState('result');
-          console.log('post data', res);
+          setHomeState('result');
+          let newIsVoted = [...isVoted];
+          newIsVoted.push(pollId);
+          setIsVoted((prev: any) => {
+            const newArrVoted = newIsVoted
+            const jsonVoted = JSON.stringify(newArrVoted);
+            console.log(jsonVoted);
+
+            localStorage.setItem('IdPollIsVoted', jsonVoted);
+            return newArrVoted;
+          });
         })
         .catch((err) => console.log('post fail', err));
     });
   };
+
   return (
     <section className="min-h-[472px] w-[366px]  relative">
       {/* vote Option */}

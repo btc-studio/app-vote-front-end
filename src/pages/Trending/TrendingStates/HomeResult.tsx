@@ -13,14 +13,14 @@ export const HomeResult = (props: Props) => {
   const selected = useRecoilValue(SelectedState);
   return (
     <section className="min-h-[472px] w-[366px]">
-      <div className="w-[373px] h-[101px] py-[15px] mb-[34px] rounded-[8px] bg-[rgba(255,255,255,0.3)] flex flex-col justify-center items-center">
+      <div className=" h-[100px] py-[15px] mb-[34px] rounded-[8px] bg-[rgba(255,255,255,0.3)] flex flex-col justify-center items-center">
         <div className="flex items-center justify-center mb-[8px]">
           <IoShieldCheckmark className="text-[42px] text-[#11DBC5] mr-[13px]" />
           <p className="text-[24px] font-[400]">Voted</p>
         </div>
         <p className="text-[14px] font-[400]">Your vote is saved on NEAR Blockchain</p>
       </div>
-      <div>
+      {/* <div>
         {criteriaIds &&
           getCriteriasById(criteriaIds, allCriteria).map((criteria: criterias, index: number) => (
             <>
@@ -42,7 +42,7 @@ export const HomeResult = (props: Props) => {
               })}
             </>
           ))}
-      </div>
+      </div> */}
     </section>
   );
 };
