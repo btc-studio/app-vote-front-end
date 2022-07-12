@@ -36,6 +36,7 @@ export async function initContract() {
       'get_criteria_by_id',
       'get_all_polls',
       'get_poll_by_id',
+      'get_all_poll_options',
       'get_poll_options_by_id',
       'get_all_result',
       'get_result_by_id',
