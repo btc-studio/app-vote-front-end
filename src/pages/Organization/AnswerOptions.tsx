@@ -1,18 +1,15 @@
 import AnswerCard from '../../components/AnswerCard/AnswerCard';
+import { useRecoilValue } from 'recoil';
+import { OptionsCall } from '../../recoil/create-options/OptionsState';
+
 const AnswerOptions: React.FC = () => {
+  const options = useRecoilValue(OptionsCall);
   return (
     <div className="grid grid-cols-3 gap-y-10 mt-[42px]">
-      <AnswerCard title="BTC Studio employees" content="Nhân viên  BTC Studio ngoại trừ BOD" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
-      <AnswerCard title="Football players" content="Best football players" />
+      {options &&
+        options.map((option) => {
+          return <AnswerCard key={option.id} title={option.title} content={option.description} />;
+        })}
     </div>
   );
 };

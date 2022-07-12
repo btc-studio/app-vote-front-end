@@ -10,7 +10,7 @@ function DefaultLayout({ children }: Props) {
       <Header />
       <div className="w-[1085px] mt-[40px] flex relavtive min-h-screen pb-8">
         <Sidebar />
-        <div className=" flex-[1] flex justify-center absolute left-1/2 -translate-x-1/2">
+        <div className=" flex justify-center ml-36">
           <div>{children}</div>
         </div>
       </div>

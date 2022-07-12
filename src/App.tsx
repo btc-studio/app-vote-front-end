@@ -23,8 +23,6 @@ const App: React.FC = () => {
   useEffect(() => {
     const getCriterias = async () => {
       const allCriterias = await getAllCriterias();
-      console.log(allCriterias);
-
       setCriteriasCall(allCriterias);
     };
     const getOptions = async () => {
@@ -33,9 +31,6 @@ const App: React.FC = () => {
     };
     const getPolls = async () => {
       const allPolls = await getAllPolls();
-      const poll = await window.contract.get_poll_by_id({ poll_id: 1 });
-      console.log(poll);
-
       setPolls(allPolls);
     };
     const getUserInfo = async (accountId: String) => {
@@ -49,7 +44,7 @@ const App: React.FC = () => {
       });
     };
     if (window.accountId) {
-      getUserInfo('duongnh222.testnet');
+      getUserInfo(window.accountId);
     }
     getPolls();
     getOptions();

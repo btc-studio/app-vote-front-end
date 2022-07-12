@@ -7,7 +7,7 @@ const initialPollsState: PollModel = {
   description: '',
   end_at: 0,
   criteria_ids: [],
-  option_id: undefined,
+  poll_option_id: undefined,
 };
 
 const initialPollsCallState: PollModel[] = [];

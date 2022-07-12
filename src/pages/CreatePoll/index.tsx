@@ -10,13 +10,12 @@ import { nextState } from '../../utils/CreatePollHandle';
 import { IoRocket } from 'react-icons/io5';
 import { UserInfo } from '../../recoil/UserInfo';
 import { useState } from 'react';
-import { OptionsCall } from '../../recoil/create-options/OptionsState';
 
 const CreatePoll: React.FC = () => {
   const [switchContentState, setSwitchContentState] = useState({ description: true, answer: false, setting: false });
   const userInfo = useRecoilValue(UserInfo);
-  const options = useRecoilValue(OptionsCall);
   const [poll] = useRecoilState(Poll);
+  const [checkDate, setCheckDate] = useState<any>(true);
   const handlePostPoll = async () => {
     // console.log(poll);
     // return;
@@ -28,7 +27,7 @@ const CreatePoll: React.FC = () => {
         description: poll.description,
         start_at: new Date().getTime(),
         end_at: poll.end_at,
-        options_id: options[0].id,
+        poll_option_id: poll.poll_option_id,
       },
       gas: '300000000000000', // attached GAS (optional)
       amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
@@ -43,7 +42,7 @@ const CreatePoll: React.FC = () => {
       >
         {switchContentState.description ? <Description /> : <></>}
         {switchContentState.answer ? <Answer /> : <></>}
-        {switchContentState.setting ? <Setting /> : <></>}
+        {switchContentState.setting ? <Setting checkDate={checkDate} setCheckDate={setCheckDate} /> : <></>}
         <div className=" w-[364px] flex absolute bottom-0 py-3 justify-between border-t-[1px] border-primary-60">
           <BtnGroup>
             <Button
@@ -104,12 +103,10 @@ const CreatePoll: React.FC = () => {
               } else if (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) {
                 alert('Please choose criterias!');
                 return;
-              }
-              // else if (switchContentState.setting && poll.end_at === 0) {
-              // alert('Please input end date!');
-              // return;
-              // }
-              else {
+              } else if (switchContentState.setting && poll.end_at === 0 && checkDate) {
+                alert('Please input end date!');
+                return;
+              } else {
                 setSwitchContentState(newState);
               }
               if (switchContentState.setting) {

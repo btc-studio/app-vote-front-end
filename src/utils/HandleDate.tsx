@@ -20,9 +20,12 @@ export const convertDate = function (seconds: number | undefined): string {
   return today;
 };
 
-export const convertDateSeconds = function (date: string | undefined): number {
+export const convertDateSeconds = function (date: string): number {
   if (date === undefined) return 0;
-  const newDate = new Date(date);
+  let dateStr: number[] = date.split('-').map(function (item) {
+    return parseInt(item, 10);
+  });
+  const newDate = new Date(dateStr[0], dateStr[1] - 1, dateStr[2]);
   return newDate.getTime();
 };
 
@@ -35,8 +38,10 @@ export const convertHours = function (seconds: number | undefined): string {
   return hours + '-' + minus;
 };
 
-export const convertHoursSeconds = function (hours: string | undefined): number {
-  if (hours === undefined) return 0;
-  const newDate = new Date(hours);
-  return newDate.getTime();
+export const convertHoursSeconds = function (hours: string): number {
+  var arrInt = hours.split(':').map(function (item) {
+    return parseInt(item, 10);
+  });
+  var second: number = (arrInt[0] * 60 + arrInt[1]) * 60 * 1000;
+  return second;
 };
