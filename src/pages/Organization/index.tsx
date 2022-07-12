@@ -10,7 +10,7 @@ function Organization() {
   const [switchMenuOrganization, setSwitchMenuOrganization] = useRecoilState(SwitchMenuOrganization);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-8">
       <Header />
       {/* Tag menu */}
       <div className=" mt-[42px] px-56 border-b-[1px] border-primary-20">

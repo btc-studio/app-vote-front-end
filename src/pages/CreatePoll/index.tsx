@@ -98,13 +98,13 @@ const CreatePoll: React.FC = () => {
             handle={() => {
               const newState = nextState(switchContentState);
               if (switchContentState.description && (!poll.title || !poll.description)) {
-                alert('Title and description is not empty!');
+                alert('Please enter title and description!');
                 return;
               } else if (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) {
-                alert('Please choose criterias!');
+                alert('Please select criterias!');
                 return;
               } else if (switchContentState.setting && poll.end_at === 0 && checkDate) {
-                alert('Please input end date!');
+                alert('Please enter the end date!');
                 return;
               } else {
                 setSwitchContentState(newState);
