@@ -2,7 +2,7 @@ import { IoRocket, IoPizza, IoShieldCheckmark, IoMegaphone } from 'react-icons/i
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import people from '../../assets/images/people.svg';
-import { HomeDescription } from './TrendingStates/HomeDescription';
+import HomeDescription from './TrendingStates/HomeDescription';
 import { HomeResult } from './TrendingStates/HomeResult';
 import { HomeVote } from './TrendingStates/HomeVote';
 import { HomeUserState } from '../../recoil/HomeUserState';
@@ -17,7 +17,7 @@ function Trending() {
     getUser();
   }, []);
   return (
-    <div className="min-w-[669px] min-h-[754px] p-[34px] ">
+    <div className="min-w-[669px] min-h-[754px] ">
       <div className="min-w-[229px] h-[75px] flex items-center ">
         <div className="w-[75px] h-[75px] bg-[#fff]  mr-[14px] rounded-full flex justify-center items-center relative overflow-hidden">
           <img className="absolute bottom-0" src={people} alt="people" />
@@ -58,7 +58,7 @@ function Trending() {
           </div>
         </div>
         {/* Extra info */}
-        <div className="flex-[1] h-[100%] pl-[20px]">
+        {/* <div className="flex-[1] h-[100%] pl-[20px]">
           <div className="text-[16px] font-[400] py-[20px] min-w-[200px] text-[rgba(255,255,225,0.4)]">
             <p className="flex items-center mb-[28px]">
               <IoShieldCheckmark className="text-[#11DBC5] text-[24px] mr-[6px]" />
@@ -80,7 +80,7 @@ function Trending() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
+import React from 'react';
 import { ListCriterias } from '../../../Data_Dummy';
-export const HomeDescription = () => {
+const HomeDescription: React.FC = () => {
   return (
     <section className="w-[366px] min-h-[472px]">
       <div className="w-[363px] min-h-[241px] rounded-[32px] object-cover overflow-hidden my-[20px] bg-[#ccc]">
@@ -17,3 +18,4 @@ export const HomeDescription = () => {
     </section>
   );
 };
+export default HomeDescription;
