@@ -19,7 +19,7 @@ module.exports = {
         greenM: '#11DBC5',
         greenL: '#22C55E',
         blueN: '#3B82F6',
-      }
+      },
     },
   },
   plugins: [],
