@@ -1,8 +1,8 @@
 import { avatarIcon } from '../../assets/images/index';
 
 interface props {
-  title: string;
-  content: string;
+  title: string | undefined;
+  content: string | undefined;
 }
 
 const AnswerCard: React.FC<props> = ({ title, content }) => {

@@ -4,18 +4,45 @@ import Button from '../../components/Button/Button';
 import Description from './Description';
 import Answer from './Answer';
 import Setting from './Setting';
-import { useRecoilState } from 'recoil';
-import { SwitchContentCreatePoll, Poll } from '../../recoil/create-poll/PollsState';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { Poll } from '../../recoil/create-poll/PollsState';
 import { nextState } from '../../utils/CreatePollHandle';
+import { IoRocket } from 'react-icons/io5';
+import { UserInfo } from '../../recoil/UserInfo';
+import { useState } from 'react';
+
 const CreatePoll: React.FC = () => {
-  const [switchContentState, setSwitchContentState] = useRecoilState(SwitchContentCreatePoll);
+  const [switchContentState, setSwitchContentState] = useState({ description: true, answer: false, setting: false });
+  const userInfo = useRecoilValue(UserInfo);
   const [poll] = useRecoilState(Poll);
+  const [checkDate, setCheckDate] = useState<any>(true);
+  const handlePostPoll = async () => {
+    // console.log(poll);
+    // return;
+    await window.contract.create_poll({
+      args: {
+        criteria_ids: poll.criteria_ids,
+        created_by: userInfo.id,
+        title: poll.title,
+        description: poll.description,
+        start_at: new Date().getTime(),
+        end_at: poll.end_at,
+        poll_option_id: poll.poll_option_id,
+      },
+      gas: '300000000000000', // attached GAS (optional)
+      amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
+    });
+  };
   return (
-    <div className="pb-6">
-      <Modal avatar={true} title={switchContentState.description === true ? '' : poll.title}>
+    <div>
+      <Modal
+        avatar={true}
+        title={switchContentState.description === true ? '' : poll.title}
+        icon={<IoRocket className="mt-1 mr-2"></IoRocket>}
+      >
         {switchContentState.description ? <Description /> : <></>}
         {switchContentState.answer ? <Answer /> : <></>}
-        {switchContentState.setting ? <Setting /> : <></>}
+        {switchContentState.setting ? <Setting checkDate={checkDate} setCheckDate={setCheckDate} /> : <></>}
         <div className=" w-[364px] flex absolute bottom-0 py-3 justify-between border-t-[1px] border-primary-60">
           <BtnGroup>
             <Button
@@ -38,6 +65,7 @@ const CreatePoll: React.FC = () => {
               outline={false}
               upcase={false}
               group={true}
+              idDisable={!poll.title || !poll.description}
               handle={() => {
                 setSwitchContentState({
                   description: false,
@@ -52,6 +80,7 @@ const CreatePoll: React.FC = () => {
               outline={false}
               upcase={false}
               group={true}
+              idDisable={!poll.title || !poll.description || !poll.criteria_ids || poll.criteria_ids.length <= 0}
               handle={() => {
                 setSwitchContentState({
                   description: false,
@@ -68,7 +97,21 @@ const CreatePoll: React.FC = () => {
             upcase={true}
             handle={() => {
               const newState = nextState(switchContentState);
-              setSwitchContentState(newState);
+              if (switchContentState.description && (!poll.title || !poll.description)) {
+                alert('Please enter title and description!');
+                return;
+              } else if (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) {
+                alert('Please select criterias!');
+                return;
+              } else if (switchContentState.setting && poll.end_at === 0 && checkDate) {
+                alert('Please enter the end date!');
+                return;
+              } else {
+                setSwitchContentState(newState);
+              }
+              if (switchContentState.setting) {
+                handlePostPoll();
+              }
             }}
           />
         </div>

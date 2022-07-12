@@ -17,6 +17,7 @@
     "eslint-visitor-keys": "^3.3.0",
     "ionicons": "^6.0.2",
     "near-api-js": "^0.45.1",
+    "near-cli": "^3.4.0",
     "postcss": "^8.4.14",
     "react": "^18.2.0",
     "react-day-picker": "^8.0.7",

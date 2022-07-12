@@ -1,51 +1,35 @@
 import { atom } from 'recoil';
-import { PollModel, OptionModel, CriteriaModel } from '../../Model/Poll';
-
-export const SwitchContentCreatePoll = atom({
-  key: 'SWITCH_CONTENT_CREATE_POLL',
-  default: {
-    description: true,
-    answer: false,
-    setting: false,
-  },
-});
+import { PollModel } from '../../Model/Poll';
+import request from '../../utils/request';
 
 const initialPollsState: PollModel = {
   title: '',
   description: '',
-  endAt: '',
+  end_at: 0,
+  criteria_ids: [],
+  poll_option_id: undefined,
 };
+
+const initialPollsCallState: PollModel[] = [];
 
 export const Poll = atom({
   key: 'POLL',
   default: initialPollsState,
 });
 
-const initialCriteriasState: CriteriaModel[] = [];
-export const Criterias = atom({
-  key: 'CRITERIAS',
-  default: initialCriteriasState,
+export const PollsCall = atom({
+  key: 'POLLS_CALL',
+  default: initialPollsCallState,
 });
-
-const initialOptionsState: OptionModel[] = [
-  {
-    title: 'BTC Studio employees',
-    description: 'Nhân viên BTC Studio ngoại trừ BOD',
-  },
-  {
-    title: 'Các sếp',
-    description: 'Các sếp',
-  },
-  {
-    title: 'BTC Studio ',
-    description: 'Nhân viên BTC Studio',
-  },
-  {
-    title: 'Developer',
-    description: 'Developer của BTC Studio',
-  },
-];
-export const Options = atom({
-  key: 'OPTIONS',
-  default: initialOptionsState,
-});
+export const getAllPolls = async () => {
+  try {
+    // BE API
+    // const polls = await request.get('/polls');
+    // return polls.data.data;
+    // NEAR API
+    const allPolls = await window.contract.get_all_polls();
+    return allPolls;
+  } catch (error) {
+    console.log('Error options axios: ', error);
+  }
+};
