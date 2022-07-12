@@ -106,7 +106,7 @@ const Answer: React.FC = () => {
       <div className="mt-10 flex justify-between mb-1 flex-col">
         <div className="flex justify-between">
           <label>Choose Answer Criterias</label>
-          <div className="flex">
+          <div className="flex ">
             <button
               className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded text-primary-80 mr-2"
               title="Reset all"
@@ -125,7 +125,7 @@ const Answer: React.FC = () => {
             </Link>
           </div>
         </div>
-        <div>
+        <div className="max-h-[340px] overflow-auto">
           {criteriasCall.length > 0 ? (
             criteriasCall.map((item) => {
               return <ItemCheck key={item.id} id={item.id} description={item.description} />;

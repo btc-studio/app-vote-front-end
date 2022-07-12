@@ -26,14 +26,14 @@ function Trending() {
   return (
     <div>
       {polls &&
-        polls.map((poll) => {
+        polls.map((poll, index) => {
           return (
-            <div className="border-2 mb-4">
+            <div className="border-2 mb-4" key={index}>
               <h1 className="text-2xl">{poll.title}</h1>
               <p className="text-xl">{poll.description}</p>
               <div>
                 {getDesCri(poll.criteria_ids as number[], criterias).map((criteria) => {
-                  return <h5>{criteria.description}</h5>;
+                  return <h5 key={criteria.id}>{criteria.description}</h5>;
                 })}
               </div>
             </div>

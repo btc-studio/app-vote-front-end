@@ -20,9 +20,9 @@ export const getAllCriterias = async () => {
     // let allCriterias = await request.get('criterias');
     // return allCriterias.data.criterias;
     // NEAR API
-    const allCriterias = await window.contract.get_all_criterias();
+    const allCriterias = await window.contract.get_all_criterias({ limit: 20 });
     return allCriterias;
   } catch (error) {
-    console.warn('Error axios: ', error);
+    console.warn('Error call API Criterias: ', error);
   }
 };
