@@ -1,6 +1,16 @@
 import { IoShieldCheckmark } from 'react-icons/io5';
+import { useRecoilValue } from 'recoil';
 import people from '../../../assets/images/people.svg';
-export const HomeResult = () => {
+import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
+import { SelectedState, selectOption } from '../../../recoil/trending/Selected';
+import { criterias } from './HomeVote';
+interface Props {
+  criteriaIds: number[];
+}
+export const HomeResult = (props: Props) => {
+  const { criteriaIds } = props;
+  const allCriteria = useRecoilValue(allCriteriaState);
+  const selected = useRecoilValue(SelectedState);
   return (
     <section className="min-h-[472px] w-[366px]">
       <div className="w-[373px] h-[101px] py-[15px] mb-[34px] rounded-[8px] bg-[rgba(255,255,255,0.3)] flex flex-col justify-center items-center">
@@ -11,14 +21,27 @@ export const HomeResult = () => {
         <p className="text-[14px] font-[400]">Your vote is saved on NEAR Blockchain</p>
       </div>
       <div>
-        <p className="text-[16px] font-bold">#1 Lực sĩ - người gánh đồng đội trên lưng</p>
-        <div className="flex items-center w-[100%] h-[40px] rounded-[8px] bg-[rgba(17,219,197,0.4)] px-[14px] py-[4px] mt-[10px]">
-          <img src={people} className="w-[24px] h-[24px]" alt="" />
-          <div>
-            <p className="text-[14px] font-bold text-[#fff]">Nam Bùi</p>
-            <p className="text-[8px]">Team lead dự án Full-Kaiten</p>
-          </div>
-        </div>
+        {criteriaIds &&
+          getCriteriasById(criteriaIds, allCriteria).map((criteria: criterias, index: number) => (
+            <>
+              <p className="text-[16px] font-bold">
+                #{index} {criteria.description}
+              </p>
+              {selected.map((item: selectOption, index: number) => {
+                if (item.indexCriteria === index) {
+                  return (
+                    <div className="flex items-center w-[100%] h-[40px] rounded-[8px] bg-[rgba(17,219,197,0.4)] px-[14px] py-[4px] mt-[10px]">
+                      <img src={people} className="w-[24px] h-[24px]" alt="" />
+                      <div>
+                        <p className="text-[14px] font-bold text-[#fff]">{item.name}</p>
+                        <p className="text-[8px]">Team lead dự án Full-Kaiten</p>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+            </>
+          ))}
       </div>
     </section>
   );
