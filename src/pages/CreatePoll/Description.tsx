@@ -26,7 +26,7 @@ const Description: React.FC = () => {
           <IoImageOutline className="w-10 h-10" />
           Add a cover
         </label>
-        <input type="file" className="w-full h-full opacity-0 absolute top-0 outline-none" />
+        <input type="file" disabled={true} className="w-full h-full opacity-0 absolute top-0 outline-none" />
       </div>
       <textarea
         ref={refText}
