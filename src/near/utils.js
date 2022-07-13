@@ -52,7 +52,7 @@ export async function initContract() {
       'update_user',
       'update_criteria',
       'update_poll',
-      'update_result',
+      'vote',
       'delete_user',
       'delete_criteria',
       'delete_poll',

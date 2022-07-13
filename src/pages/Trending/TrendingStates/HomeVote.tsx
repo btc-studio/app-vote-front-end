@@ -54,28 +54,47 @@ export const HomeVote = (props: Props) => {
     handleGetOptionById(arrUserId, allUser);
   }, [arrUserId, allUser]);
 
+  // const handleVoted = () => {
+  //   selected.map(async (item: selectOption) => {
+  //     await api
+  //       .post('/polls/vote', {
+  //         poll_id: pollId,
+  //         criteria_id: item.criteria_id,
+  //         user_id: item.id,
+  //       })
+  //       .then((res) => {
+  //         setHomeState('result');
+  //         let newIsVoted = [...isVoted];
+  //         newIsVoted.push(pollId);
+  //         setIsVoted((prev: any) => {
+  //           const newArrVoted = newIsVoted
+  //           const jsonVoted = JSON.stringify(newArrVoted);
+  //           console.log(jsonVoted);
+
+  //           localStorage.setItem('IdPollIsVoted', jsonVoted);
+  //           return newArrVoted;
+  //         });
+  //       })
+  //       .catch((err) => console.log('post fail', err));
+  //   });
+  // };
   const handleVoted = () => {
     selected.map(async (item: selectOption) => {
-      await api
-        .post('/polls/vote', {
-          poll_id: pollId,
-          criteria_id: item.criteria_id,
-          user_id: item.id,
-        })
-        .then((res) => {
-          setHomeState('result');
-          let newIsVoted = [...isVoted];
-          newIsVoted.push(pollId);
-          setIsVoted((prev: any) => {
-            const newArrVoted = newIsVoted
-            const jsonVoted = JSON.stringify(newArrVoted);
-            console.log(jsonVoted);
+      await window.contract.vote({
+        poll_id: pollId,
+        criteria_id: item.criteria_id,
+        user_id: item.id,
+      });
 
-            localStorage.setItem('IdPollIsVoted', jsonVoted);
-            return newArrVoted;
-          });
-        })
-        .catch((err) => console.log('post fail', err));
+      setHomeState('result');
+      let newIsVoted = [...isVoted];
+      newIsVoted.push(pollId);
+      setIsVoted((prev) => {
+        const newArrVoted = newIsVoted;
+        const jsonVoted = JSON.stringify(newArrVoted);
+        localStorage.setItem('IdPollIsVoted', jsonVoted);
+        return newArrVoted;
+      });
     });
   };
 
