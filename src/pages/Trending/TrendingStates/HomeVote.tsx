@@ -87,10 +87,8 @@ export const HomeVote = (props: Props) => {
       });
 
       setHomeState('result');
-      let newIsVoted = [...isVoted];
-      newIsVoted.push(pollId);
       setIsVoted((prev) => {
-        const newArrVoted = newIsVoted;
+        const newArrVoted = [...prev, pollId];
         const jsonVoted = JSON.stringify(newArrVoted);
         localStorage.setItem('IdPollIsVoted', jsonVoted);
         return newArrVoted;

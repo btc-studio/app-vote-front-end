@@ -15,7 +15,9 @@ interface Props {
 function Poll(props: Props) {
   const { pollInfo } = props;
   const [homeState, setHomeState] = useState('description');
-  const localStorageIsVoted: number[] = JSON.parse(localStorage.getItem('IdPollIsVoted') || '');
+  //get Id poll isVoted from localStorage
+  const storageIdVoted = localStorage.getItem('IdPollIsVoted');
+  const localStorageIsVoted = JSON.parse(storageIdVoted as string);
   const [isVoted, setIsVoted] = useState<number[]>(localStorageIsVoted || []);
 
   const HandleSetHomeState = (state: string) => {
