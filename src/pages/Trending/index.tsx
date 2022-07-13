@@ -25,7 +25,6 @@ function Trending() {
   const setListCriterias = useSetRecoilState(allCriteriaState);
   const setAllUser = useSetRecoilState(allUserState);
 
-  console.log(allPolls);
 
   useEffect(() => {
     const getAllPolls = async () => {

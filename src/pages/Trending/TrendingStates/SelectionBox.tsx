@@ -40,7 +40,6 @@ export const SelectionBox = (props: Props) => {
     }
     setIsActive(false);
   };
-  console.log(selected);
   return (
     <div className="mt-[10px] w-[100%] h-[40px] rounded-[8px]">
       <div

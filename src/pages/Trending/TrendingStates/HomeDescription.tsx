@@ -16,7 +16,6 @@ export const HomeDescription = (props: Props) => {
   const pollInfos: any = useRecoilValue(PollInfoState);
   const [allCriteria, setAllCriteria] = useRecoilState(allCriteriaState);
 
-  
   return (
     <section className="w-[366px] min-h-[472px]">
       {pollInfos && (
