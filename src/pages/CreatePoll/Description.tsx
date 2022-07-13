@@ -2,6 +2,7 @@ import { IoImageOutline } from 'react-icons/io5';
 import { Poll } from '../../recoil/create-poll/PollsState';
 import { useRecoilState } from 'recoil';
 import { useRef } from 'react';
+import { desImage } from '../../assets/images';
 
 const Description: React.FC = () => {
   const [poll, setPoll] = useRecoilState(Poll);
@@ -21,12 +22,15 @@ const Description: React.FC = () => {
         value={poll.title}
       />
       {/* Upload file input */}
-      <div className="w-full h-[94px] mt-11 border-[1px] border-primary-80 border-dashed rounded-2xl relative">
+      {/* <div className="w-full h-[94px] mt-11 border-[1px] border-primary-80 border-dashed rounded-2xl relative">
         <label className="h-full flex justify-center items-center flex-col opacity-80">
           <IoImageOutline className="w-10 h-10" />
           Add a cover
         </label>
         <input type="file" disabled={true} className="w-full h-full opacity-0 absolute top-0 outline-none" />
+      </div> */}
+      <div className="mt-8">
+        <img src={desImage} title="Description image" />
       </div>
       <textarea
         ref={refText}

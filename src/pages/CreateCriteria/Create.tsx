@@ -3,8 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { Criterias } from '../../recoil/create-criterias/CriteriaStates';
 import { useRef } from 'react';
 import { IoCheckmark, IoTrash, IoAdd } from 'react-icons/io5';
-import { UserInfo } from '../../recoil/UserInfo';
-import axios from 'axios';
+import { UserInfo } from '../../recoil/users/UserInfo';
 
 interface propsCriteriaItem {
   title: string;

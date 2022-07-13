@@ -30,6 +30,6 @@ export const getAllPolls = async () => {
     const allPolls = await window.contract.get_all_polls();
     return allPolls;
   } catch (error) {
-    console.log('Error options axios: ', error);
+    console.log('Error call API polls: ', error);
   }
 };

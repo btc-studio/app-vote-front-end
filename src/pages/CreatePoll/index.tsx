@@ -2,13 +2,13 @@ import Modal from '../../components/Modal/Modal';
 import BtnGroup from '../../components/BtnGroup/BtnGroup';
 import Button from '../../components/Button/Button';
 import Description from './Description';
-import Answer from './Answer';
+import { Answer } from './Answer';
 import Setting from './Setting';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Poll } from '../../recoil/create-poll/PollsState';
 import { nextState } from '../../utils/CreatePollHandle';
 import { IoRocket } from 'react-icons/io5';
-import { UserInfo } from '../../recoil/UserInfo';
+import { UserInfo } from '../../recoil/users/UserInfo';
 import { useState } from 'react';
 
 const CreatePoll: React.FC = () => {

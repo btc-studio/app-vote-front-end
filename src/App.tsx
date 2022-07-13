@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Trending from './pages/Trending';
 import CreatePoll from './pages/CreatePoll';
 import DefaultLayout from './components/Layout/DefaultLayout';
-import YourPolls from './pages/YourPolls';
+import CreateOptions from './pages/CreateOptions';
 import Organization from './pages/Organization';
 import CreateCriteria from './pages/CreateCriteria';
 import { useEffect } from 'react';
@@ -11,45 +11,29 @@ import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/Criter
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
 import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useSetRecoilState } from 'recoil';
-import { UserInfo } from './recoil/UserInfo';
+import { UserInfo, getAllUsers, ListUsers } from './recoil/users/UserInfo';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
   const setOptions = useSetRecoilState(OptionsCall);
   const setPolls = useSetRecoilState(PollsCall);
   const setUserInfo = useSetRecoilState(UserInfo);
+  const setListUsers = useSetRecoilState(ListUsers);
 
   // Get all criterias, options, info of user logined
   useEffect(() => {
-    const getCriterias = async () => {
+    const getPolls = async () => {
       const allCriterias = await getAllCriterias();
-
-      // await window.contract.create_user({
-      //   args: {
-      //     name: 'Huyen',
-      //     role: 'Admin',
-      //     email: 'test@gmail.com',
-      //     blockchain_type: 'Near',
-      //     wallet_address: 'huyendt.testnet',
-      //   },
-      //   gas: '300000000000000', // attached GAS (optional)
-      //   amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
-      // });
-      await getAllCriterias();
-
       setCriteriasCall(allCriterias);
-    };
-    const getOptions = async () => {
       const allOptions = await getAllOptions();
       setOptions(allOptions);
-    };
-    const getPolls = async () => {
       const allPolls = await getAllPolls();
       setPolls(allPolls);
+      const allUsers = await getAllUsers();
+      setListUsers(allUsers);
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
-
       setUserInfo({
         id: userData.id,
         name: userData.name,
@@ -61,8 +45,6 @@ const App: React.FC = () => {
       getUserInfo(window.accountId);
     }
     getPolls();
-    getOptions();
-    getCriterias();
   }, []);
   return (
     <Router>
@@ -93,10 +75,10 @@ const App: React.FC = () => {
             }
           />
           <Route
-            path="/yourpolls"
+            path="/createOptions"
             element={
               <DefaultLayout>
-                <YourPolls />
+                <CreateOptions />
               </DefaultLayout>
             }
           />

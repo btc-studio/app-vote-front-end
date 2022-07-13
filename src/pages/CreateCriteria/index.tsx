@@ -1,5 +1,5 @@
 import Modal from '../../components/Modal/Modal';
-import { IoBookmark } from 'react-icons/io5';
+import { IoPaperPlane } from 'react-icons/io5';
 import BtnGroup from '../../components/BtnGroup/BtnGroup';
 import Button from '../../components/Button/Button';
 import Create from './Create';
@@ -27,7 +27,7 @@ const CreateCriteria: React.FC = () => {
   }, []);
   return (
     <div>
-      <Modal title="Create criterias" avatar={true} icon={<IoBookmark className="mt-1 mr-2"></IoBookmark>}>
+      <Modal title="Create criterias" avatar={true} icon={<IoPaperPlane className="mt-1 mr-2"></IoPaperPlane>}>
         {content.create ? <Create /> : <></>}
         {content.list ? <List data={criteriasCall} /> : <></>}
         {/* ------ Control ------ */}
@@ -46,7 +46,7 @@ const CreateCriteria: React.FC = () => {
           <></>
         )}
 
-        <div className=" w-[364px] flex absolute bottom-0 py-3 justify-center border-t-[1px] border-primary-60 justify-center">
+        <div className=" w-[364px] flex absolute bottom-0 py-3 border-t-[1px] border-primary-60 justify-center">
           <BtnGroup>
             <Button
               title="Create"

@@ -1,8 +1,8 @@
 import { BsStars, BsLightningChargeFill } from 'react-icons/bs';
-import { IoBeer, IoIceCream, IoFastFood, IoPaperPlane } from 'react-icons/io5';
+import { IoBeer, IoIceCream, IoPeople, IoPaperPlane } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { login } from '../../../../near/utils';
-import { UserInfo } from '../../../../recoil/UserInfo';
+import { UserInfo } from '../../../../recoil/users/UserInfo';
 import { useRecoilValue } from 'recoil';
 function Sidebar() {
   const userInfo = useRecoilValue(UserInfo);
@@ -38,6 +38,16 @@ function Sidebar() {
             <IoPaperPlane className="mr-[8px] text-[32px]" /> Create criterias
           </Link>
         )}
+        {isAdmin && (
+          <Link
+            to={'/createOptions'}
+            className={`flex items-center mb-[20px] font-bold text-[20px] ${
+              window.location.pathname === '/createOptions' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+            }`}
+          >
+            <IoPeople className="mr-[8px] text-[32px]" /> Create options
+          </Link>
+        )}
       </>
       {!window.walletConnection.isSignedIn() ? (
         <>
@@ -52,7 +62,7 @@ function Sidebar() {
         </>
       ) : (
         <>
-          <Link
+          {/* <Link
             to={'/yourpolls'}
             className={`flex items-center mb-[20px] font-bold text-[20px] ${
               window.location.pathname === '/yourpolls' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
@@ -60,7 +70,7 @@ function Sidebar() {
           >
             <IoFastFood className="mr-[8px] text-[32px]" />
             Your polls
-          </Link>
+          </Link> */}
           <Link
             to={'/organization'}
             className={`flex items-center mb-[20px] font-bold text-[20px] ${
