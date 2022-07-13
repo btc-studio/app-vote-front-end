@@ -1,30 +1,15 @@
 import { IoRocket, IoPizza, IoShieldCheckmark, IoMegaphone } from 'react-icons/io5';
-import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import people from '../../assets/images/people.svg';
 import HomeDescription from './TrendingStates/HomeDescription';
 import { HomeResult } from './TrendingStates/HomeResult';
 import { HomeVote } from './TrendingStates/HomeVote';
 import { HomeUserState } from '../../recoil/HomeUserState';
-import api from '../../utils/request';
+import Avatar from '../../components/Avatar/Avatar';
 function Trending() {
   const [HomeState, setHomeState] = useRecoilState(HomeUserState);
-  const getUser = async () => {
-    const listUser = await api.get('/users');
-    console.log(listUser.data);
-  };
-  useEffect(() => {
-    getUser();
-  }, []);
   return (
     <div className="min-w-[669px] min-h-[754px] ">
-      <div className="min-w-[229px] h-[75px] flex items-center ">
-        <div className="w-[75px] h-[75px] bg-[#fff]  mr-[14px] rounded-full flex justify-center items-center relative overflow-hidden">
-          <img className="absolute bottom-0" src={people} alt="people" />
-        </div>
-        <p className="text-[24px] font-semibold ">BTC Studio</p>
-      </div>
-
+      <Avatar name="BTC Studio" size="big" />
       <div className="flex min-w-[434px]  h-[100%] mt-[33px] ">
         <div className="w-[65%] h-[100%] bg-[rgba(255,255,255,0.2)] px-[30px] py-[20px] rounded-[16px]">
           <h1 className="flex items-center text-[24px] font-semibold mb-[20px]">

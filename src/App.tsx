@@ -23,6 +23,20 @@ const App: React.FC = () => {
   useEffect(() => {
     const getCriterias = async () => {
       const allCriterias = await getAllCriterias();
+
+      // await window.contract.create_user({
+      //   args: {
+      //     name: 'Huyen',
+      //     role: 'Admin',
+      //     email: 'test@gmail.com',
+      //     blockchain_type: 'Near',
+      //     wallet_address: 'huyendt.testnet',
+      //   },
+      //   gas: '300000000000000', // attached GAS (optional)
+      //   amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
+      // });
+      await getAllCriterias();
+
       setCriteriasCall(allCriterias);
     };
     const getOptions = async () => {
