@@ -27,7 +27,7 @@ export const getAllPolls = async () => {
     // const polls = await request.get('/polls');
     // return polls.data.data;
     // NEAR API
-    const allPolls = await window.contract.get_all_polls();
+    const allPolls = await window.contract.get_all_polls({ limit: 20 });
     return allPolls;
   } catch (error) {
     console.log('Error call API polls: ', error);

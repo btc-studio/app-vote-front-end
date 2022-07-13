@@ -6,6 +6,7 @@ import DefaultLayout from './components/Layout/DefaultLayout';
 import CreateOptions from './pages/CreateOptions';
 import Organization from './pages/Organization';
 import CreateCriteria from './pages/CreateCriteria';
+import VoteResult from './pages/Organization/VoteResult';
 import { useEffect } from 'react';
 import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/CriteriaStates';
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
