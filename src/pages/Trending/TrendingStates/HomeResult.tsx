@@ -5,6 +5,7 @@ import people from '../../../assets/images/people.svg';
 import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
 import { SelectedState, selectOption } from '../../../recoil/trending/Selected';
 import { ResultInterface } from '../Poll';
+import { Criteria } from './HomeDescription';
 import { criterias } from './HomeVote';
 interface Props {
   criteriaIds: number[];
@@ -12,11 +13,13 @@ interface Props {
   selected: selectOption[];
 }
 export const HomeResult = (props: Props) => {
-  const { criteriaIds, resultById } = props;
+  const { criteriaIds, resultById, selected } = props;
   const allCriteria = useRecoilValue(allCriteriaState);
-  const selected = useRecoilValue(SelectedState);
   console.log(selected);
-
+  const findCriteriaById = (id: number, listCriteria: Criteria[]) => {
+    let criteria = listCriteria.find((item) => item.id === id);
+    return criteria?.description;
+  };
   return (
     <section className="min-h-[472px] w-[366px]">
       <div className=" h-[100px] py-[15px] mb-[34px] rounded-[8px] bg-[rgba(255,255,255,0.3)] flex flex-col justify-center items-center">
@@ -27,26 +30,21 @@ export const HomeResult = (props: Props) => {
         <p className="text-[14px] font-[400]">Your vote is saved on NEAR Blockchain</p>
       </div>
       <div>
-        {criteriaIds &&
-          getCriteriasById(criteriaIds, allCriteria).map((criteria: criterias, index: number) => (
-            <Fragment key={index}>
+        {selected &&
+          selected.map((select: selectOption, index: number) => (
+            <div key={index} className="mb-[5px]">
               <p className="text-[16px] font-bold">
-                #{index +1} {criteria.description}
+                #{index + 1} {findCriteriaById(select.id as number, allCriteria)}
               </p>
-              {selected.map((item: selectOption, index: number) => {
-                if (item.indexCriteria === index) {
-                  return (
-                    <div className="flex items-center w-[100%] h-[40px] rounded-[8px] bg-[rgba(17,219,197,0.4)] px-[14px] py-[4px] mt-[10px]">
-                      <img src={people} className="w-[24px] h-[24px]" alt="" />
-                      <div>
-                        <p className="text-[14px] font-bold text-[#fff]">{item.name}</p>
-                        {/* <p className="text-[8px]">Team lead dự án Full-Kaiten</p> */}
-                      </div>
-                    </div>
-                  );
-                }
-              })}
-            </Fragment>
+
+              <div className="flex items-center w-[100%] h-[40px] rounded-[8px] bg-[rgba(17,219,197,0.4)] px-[14px] py-[4px] mt-[10px]">
+                <img src={people} className="w-[24px] h-[24px]" alt="" />
+                <div>
+                  <p className="text-[14px] font-bold text-[#fff]">{select.name}</p>
+                  {/* <p className="text-[8px]">Team lead dự án Full-Kaiten</p> */}
+                </div>
+              </div>
+            </div>
           ))}
       </div>
     </section>

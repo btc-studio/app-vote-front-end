@@ -38,7 +38,7 @@ function Poll(props: Props) {
   const HandleSetHomeState = (state: string) => {
     setHomeState(state);
   };
-
+  
   const checkIsVoted = (id: number) => {
     let voted = isVoted.some((item: any) => item === id);
 
@@ -59,7 +59,6 @@ function Poll(props: Props) {
     });
     return newTotal;
   };
-console.log(isVoted);
 
   return (
     <div className="mb-[5rem] ">

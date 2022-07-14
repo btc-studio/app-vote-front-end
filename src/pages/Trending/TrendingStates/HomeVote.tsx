@@ -71,12 +71,12 @@ export const HomeVote = (props: Props) => {
 
       return newArrVoted;
     });
-    setSelected((prev: any) => {
-      const newArrSelected = [...prev, selected];
-      const jsonSelected = JSON.stringify(newArrSelected);
-      localStorage.setItem('pollSelected', jsonSelected);
-      return newArrSelected;
-    });
+    // setSelected((prev: any) => {
+    //   const newArrSelected = [...prev, selected];
+    //   const jsonSelected = JSON.stringify(newArrSelected);
+    //   localStorage.setItem('pollSelected', jsonSelected);
+    //   return newArrSelected;
+    // });
   };
 
   return (
