@@ -1,21 +1,19 @@
-import { Fragment } from 'react';
 import { IoShieldCheckmark } from 'react-icons/io5';
 import { useRecoilValue } from 'recoil';
 import people from '../../../assets/images/people.svg';
-import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
-import { SelectedState, selectOption } from '../../../recoil/trending/Selected';
+import { allCriteriaState } from '../../../recoil/trending/AllCriteria';
+import { selectOption } from '../../../recoil/trending/Selected';
 import { ResultInterface } from '../Poll';
 import { Criteria } from './HomeDescription';
-import { criterias } from './HomeVote';
+
 interface Props {
   criteriaIds: number[];
   resultById: ResultInterface[];
   selected: selectOption[];
 }
 export const HomeResult = (props: Props) => {
-  const { criteriaIds, resultById, selected } = props;
+  const { selected } = props;
   const allCriteria = useRecoilValue(allCriteriaState);
-  console.log(selected);
   const findCriteriaById = (id: number, listCriteria: Criteria[]) => {
     let criteria = listCriteria.find((item) => item.id === id);
     return criteria?.description;
@@ -34,7 +32,7 @@ export const HomeResult = (props: Props) => {
           selected.map((select: selectOption, index: number) => (
             <div key={index} className="mb-[5px]">
               <p className="text-[16px] font-bold">
-                #{index + 1} {findCriteriaById(select.id as number, allCriteria)}
+                #{index + 1} {findCriteriaById(select.criteria_id as number, allCriteria)}
               </p>
 
               <div className="flex items-center w-[100%] h-[40px] rounded-[8px] bg-[rgba(17,219,197,0.4)] px-[14px] py-[4px] mt-[10px]">

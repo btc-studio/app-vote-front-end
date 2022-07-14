@@ -30,15 +30,13 @@ function Poll(props: Props) {
   // const storageSelected = localStorage.getItem('pollSelected');
   // const localStorageSelected = JSON.parse(storageSelected as string);
   // console.log(localStorageSelected);
-
   const [selected, setSelected] = useState<selectOption[]>([]);
-  //
   const [resultById, setResultById] = useState<ResultInterface[]>([]);
 
   const HandleSetHomeState = (state: string) => {
     setHomeState(state);
   };
-  
+
   const checkIsVoted = (id: number) => {
     let voted = isVoted.some((item: any) => item === id);
 
@@ -50,10 +48,11 @@ function Poll(props: Props) {
       setResultById(ResultById);
     };
     getResultById();
-  }, []);
+  }, [pollInfo.id]);
 
   const getTotalVote = () => {
     let newTotal = 0;
+    // eslint-disable-next-line array-callback-return
     resultById.map((result: ResultInterface) => {
       newTotal = newTotal + result.total_vote;
     });

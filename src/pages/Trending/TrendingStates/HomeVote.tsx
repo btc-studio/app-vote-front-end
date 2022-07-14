@@ -43,7 +43,7 @@ export const HomeVote = (props: Props) => {
       setArrUserId(OptionById.user_ids);
     };
     getOptionById();
-  }, []);
+  }, [optionId]);
 
   useEffect(() => {
     const handleGetOptionById = (arrUserId: number[], allUser: any[]) => {
@@ -55,9 +55,9 @@ export const HomeVote = (props: Props) => {
     handleGetOptionById(arrUserId, allUser);
   }, [arrUserId, allUser]);
 
-  const handleVoted = () => {
-    selected.map(async (item: selectOption) => {
-      await window.contract.vote({
+  const handleVoted = async () => {
+    await selected.map((item: selectOption) => {
+      window.contract.vote({
         poll_id: pollId,
         criteria_id: item.criteria_id,
         user_id: item.id,
