@@ -1,4 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { descriptionImage } from '../../../assets/images';
 
 import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
 import { PollInfoState } from '../../../recoil/trending/AllPoll';
@@ -21,7 +22,7 @@ export const HomeDescription = (props: Props) => {
       {pollInfos && (
         <>
           <div className="w-[363px] min-h-[241px] rounded-[32px] object-cover overflow-hidden my-[20px] bg-[#ccc]">
-            {/* <img src="" alt="" /> */}
+            <img src={descriptionImage} alt="" />
           </div>
           <div className="text-[14px]  font-[400] leading-[26px]">
             <p className="mb-[8px]">{pollDescription}</p>

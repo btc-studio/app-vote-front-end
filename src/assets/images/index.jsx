@@ -1,3 +1,3 @@
 import avatarIcon from './avatar.svg';
-
-export { avatarIcon };
+import descriptionImage from './des-img.png';
+export { avatarIcon, descriptionImage };

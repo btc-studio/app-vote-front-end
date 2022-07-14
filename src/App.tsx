@@ -78,14 +78,14 @@ const App: React.FC = () => {
               </DefaultLayout>
             }
           />
-          <Route
+          {/* <Route
             path="/yourpolls"
             element={
               <DefaultLayout>
                 <YourPolls />
               </DefaultLayout>
             }
-          />
+          /> */}
           <Route path="/organization" element={<Organization />} />
         </Routes>
       </div>

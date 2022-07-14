@@ -34,12 +34,13 @@ export const SelectionBox = (props: Props) => {
       listSelected.splice(indexCriteria, 1, newOption);
       setSelected(listSelected);
     } else {
-      // listSelected.splice(indexCriteria, 0, newOption);
       listSelected[indexCriteria] = newOption;
       setSelected(listSelected);
     }
     setIsActive(false);
   };
+  console.log(selected);
+  
   return (
     <div className="mt-[10px] w-[100%] h-[40px] rounded-[8px]">
       <div
@@ -66,11 +67,11 @@ export const SelectionBox = (props: Props) => {
       </div>
       <div className={`absolute w-[100%] mt-[2px] bg-[#05293C] rounded-[8px] z-10`}>
         {isActive && (
-          <div className=" rounded-[4px] overflow-hidden">
+          <div className=" rounded-[4px] overflow-hidden h-[110px] overflow-y-auto">
             {listoption &&
               listoption?.map((option: any) => (
                 <div
-                  className="flex items-center px-[20px] py-[8px] cursor-pointer hover:opacity-[0.8] border-b-[0.5px] border-[rgba(255,255,255,0.2)]  "
+                  className="flex items-center  px-[20px] py-[8px] cursor-pointer hover:opacity-[0.8] border-b-[0.5px] border-[rgba(255,255,255,0.2)]  "
                   key={option?.id}
                   onClick={() => handleChoseOption(option, indexCriteria, criteriaId)}
                 >

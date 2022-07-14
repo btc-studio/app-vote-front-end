@@ -5,29 +5,61 @@ import people from '../../assets/images/people.svg';
 import { HomeDescription } from './TrendingStates/HomeDescription';
 import { HomeResult } from './TrendingStates/HomeResult';
 import { HomeVote } from './TrendingStates/HomeVote';
+// import { UserInfoModel } from '../../Model/User';
 import { useRecoilValue } from 'recoil';
-import { listPolls } from '../../recoil/trending/AllPoll';
+import { allUserState, findUserbyId } from '../../recoil/trending/AllUser';
+import { selectOption } from '../../recoil/trending/Selected';
 
 interface Props {
   pollInfo: any;
-  // optionId: number;
+}
+export interface ResultInterface {
+  poll_id: number;
+  user_id: number;
+  total_vote: number;
 }
 function Poll(props: Props) {
   const { pollInfo } = props;
   const [homeState, setHomeState] = useState('description');
+  const allUser = useRecoilValue(allUserState);
   //get Id poll isVoted from localStorage
   const storageIdVoted = localStorage.getItem('IdPollIsVoted');
   const localStorageIsVoted = JSON.parse(storageIdVoted as string);
   const [isVoted, setIsVoted] = useState<number[]>(localStorageIsVoted || []);
+  // get selected from localStorage
+  // const storageSelected = localStorage.getItem('pollSelected');
+  // const localStorageSelected = JSON.parse(storageSelected as string);
+  // console.log(localStorageSelected);
+
+  const [selected, setSelected] = useState<selectOption[]>([]);
+  //
+  const [resultById, setResultById] = useState<ResultInterface[]>([]);
 
   const HandleSetHomeState = (state: string) => {
     setHomeState(state);
   };
+
   const checkIsVoted = (id: number) => {
-    let voted = isVoted.some((item) => item === id);
+    let voted = isVoted.some((item: any) => item === id);
 
     return voted;
   };
+  useEffect(() => {
+    const getResultById = async () => {
+      const ResultById = await window.contract.get_all_results_by_poll_id({ poll_id: pollInfo.id });
+      setResultById(ResultById);
+    };
+    getResultById();
+  }, []);
+
+  const getTotalVote = () => {
+    let newTotal = 0;
+    resultById.map((result: ResultInterface) => {
+      newTotal = newTotal + result.total_vote;
+    });
+    return newTotal;
+  };
+console.log(isVoted);
 
   return (
     <div className="mb-[5rem] ">
@@ -46,7 +78,7 @@ function Poll(props: Props) {
           {/* content vote */}
 
           {checkIsVoted(pollInfo.id) ? (
-            <HomeResult criteriaIds={pollInfo.criteria_ids} />
+            <HomeResult criteriaIds={pollInfo.criteria_ids} resultById={resultById} selected={selected} />
           ) : (
             <>
               {homeState === 'description' && (
@@ -58,8 +90,9 @@ function Poll(props: Props) {
                   optionId={pollInfo.poll_option_id}
                   criteriaIds={pollInfo.criteria_ids}
                   setHomeState={setHomeState}
-                  isVoted={isVoted}
                   setIsVoted={setIsVoted}
+                  selected={selected}
+                  setSelected={setSelected}
                 />
               )}
             </>
@@ -99,7 +132,7 @@ function Poll(props: Props) {
             </p>
             <p className="flex items-center mb-[28px]">
               <IoPizza className="text-[rgba(255,255,255,0.8)] text-[24px] mr-[6px]" />
-              20 users has voted
+              {getTotalVote()} users has voted
             </p>
             <div>
               <p className="flex items-center">
@@ -107,9 +140,11 @@ function Poll(props: Props) {
                 quick view result
               </p>
               <div className="ml-[30px] mt-[13px]">
-                <p>#1 Nam Bùi</p>
-                <p>#2 Dưỡng HB</p>
-                <p>#3 Đỗ Thị Hồng Thảo</p>
+                {resultById.map((result: ResultInterface, index) => (
+                  <p key={index}>
+                    #{index + 1} <span> {findUserbyId(result.user_id, allUser)}</span>
+                  </p>
+                ))}
               </div>
             </div>
           </div>

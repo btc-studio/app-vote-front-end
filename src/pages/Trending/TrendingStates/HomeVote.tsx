@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { IoSave } from 'react-icons/io5';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
-import { listPolls } from '../../../recoil/trending/AllPoll';
+// import { listPolls } from '../../../recoil/trending/AllPoll';
 import { allUserState } from '../../../recoil/trending/AllUser';
-import { SelectedState, selectOption } from '../../../recoil/trending/Selected';
-import api from '../../../utils/request';
+import { selectOption } from '../../../recoil/trending/Selected';
+// import api from '../../../utils/request';
 import { SelectionBox } from './SelectionBox';
 
 export interface criterias {
@@ -21,16 +21,17 @@ interface Props {
   criteriaIds: number[];
   optionId: number;
   setHomeState: React.Dispatch<React.SetStateAction<string>>;
-  isVoted: number[];
   setIsVoted: React.Dispatch<React.SetStateAction<number[]>>;
+  selected: selectOption[];
+  setSelected: React.Dispatch<React.SetStateAction<selectOption[]>>;
 }
 interface users {
   id: number;
   name: string;
 }
 export const HomeVote = (props: Props) => {
-  const { criteriaIds, pollId, optionId, setHomeState, isVoted, setIsVoted } = props;
-  const [selected, setSelected] = useState<selectOption[]>([]);
+  const { criteriaIds, pollId, optionId, setHomeState, setIsVoted, selected, setSelected } = props;
+  // const [selected, setSelected] = useState<selectOption[]>([]);
   const [userOptions, setUserOptions] = useState<users[]>([]);
   const allCriteria = useRecoilValue(allCriteriaState);
   const [arrUserId, setArrUserId] = useState<number[]>([]);
@@ -54,30 +55,6 @@ export const HomeVote = (props: Props) => {
     handleGetOptionById(arrUserId, allUser);
   }, [arrUserId, allUser]);
 
-  // const handleVoted = () => {
-  //   selected.map(async (item: selectOption) => {
-  //     await api
-  //       .post('/polls/vote', {
-  //         poll_id: pollId,
-  //         criteria_id: item.criteria_id,
-  //         user_id: item.id,
-  //       })
-  //       .then((res) => {
-  //         setHomeState('result');
-  //         let newIsVoted = [...isVoted];
-  //         newIsVoted.push(pollId);
-  //         setIsVoted((prev: any) => {
-  //           const newArrVoted = newIsVoted
-  //           const jsonVoted = JSON.stringify(newArrVoted);
-  //           console.log(jsonVoted);
-
-  //           localStorage.setItem('IdPollIsVoted', jsonVoted);
-  //           return newArrVoted;
-  //         });
-  //       })
-  //       .catch((err) => console.log('post fail', err));
-  //   });
-  // };
   const handleVoted = () => {
     selected.map(async (item: selectOption) => {
       await window.contract.vote({
@@ -85,14 +62,20 @@ export const HomeVote = (props: Props) => {
         criteria_id: item.criteria_id,
         user_id: item.id,
       });
+    });
+    setHomeState('result');
+    setIsVoted((prev) => {
+      const newArrVoted = [...prev, pollId];
+      const jsonVoted = JSON.stringify(newArrVoted);
+      localStorage.setItem('IdPollIsVoted', jsonVoted);
 
-      setHomeState('result');
-      setIsVoted((prev) => {
-        const newArrVoted = [...prev, pollId];
-        const jsonVoted = JSON.stringify(newArrVoted);
-        localStorage.setItem('IdPollIsVoted', jsonVoted);
-        return newArrVoted;
-      });
+      return newArrVoted;
+    });
+    setSelected((prev: any) => {
+      const newArrSelected = [...prev, selected];
+      const jsonSelected = JSON.stringify(newArrSelected);
+      localStorage.setItem('pollSelected', jsonSelected);
+      return newArrSelected;
     });
   };
 

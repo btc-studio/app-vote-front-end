@@ -21,14 +21,19 @@ export interface PollInterface {
 
 function Trending() {
   const [allPolls, setAllPolls] = useRecoilState(listPolls);
-  // const [pollInfos, setPollInfos] = useRecoilState(PollInfoState);
   const setListCriterias = useSetRecoilState(allCriteriaState);
   const setAllUser = useSetRecoilState(allUserState);
-
 
   useEffect(() => {
     const getAllPolls = async () => {
       const ListPoll = await window.contract.get_all_polls();
+      if (window.accountId !== undefined) {
+        setAllPolls(
+          ListPoll.sort((a: any, b: any) => {
+            return b.created_at - a.created_at;
+          }),
+        );
+      }
 
       setAllPolls(ListPoll);
     };
@@ -48,13 +53,14 @@ function Trending() {
     };
     getAllCriterias();
   }, []);
-
+ console.log(allPolls);
+ 
   return (
-    <div className="min-w-[669px] min-h-[754px] px-[34px] ">
+    <div className="min-w-[669px] min-h-[754px]  ">
       {allPolls.length !== 0 ? (
         allPolls?.map((pollInfo: any, index) => <Poll key={index} pollInfo={pollInfo} />)
       ) : (
-        <p> chưa có Polls nào cả</p>
+        <p className="text-center"> Poll is empty</p>
       )}
     </div>
   );
