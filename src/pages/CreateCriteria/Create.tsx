@@ -3,23 +3,22 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { Criterias } from '../../recoil/create-criterias/CriteriaStates';
 import { useRef } from 'react';
 import { IoCheckmark, IoTrash, IoAdd } from 'react-icons/io5';
-import { UserInfo } from '../../recoil/users/UserInfo';
 
 interface propsCriteriaItem {
   title: string;
   order: number;
+  userId: number;
 }
-const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order }) => {
+const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order, userId }) => {
   const [criterias, setCriterias] = useRecoilState(Criterias);
-  const userInfo = useRecoilValue(UserInfo);
   let refInput = useRef<HTMLInputElement>(null);
 
   const handleCreateCriteria = async (title: string) => {
     try {
       await window.contract.create_criteria({
         args: {
-          created_by: userInfo.id,
-          description: title,
+          created_by: userId,
+          descriptions: [title],
         },
         gas: '300000000000000', // attached GAS (optional)
         amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
@@ -77,7 +76,7 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order }) => {
     </div>
   );
 };
-const Create: React.FC = () => {
+const Create: React.FC<{ userId: number }> = ({ userId }) => {
   const [criterias, setCriterias] = useRecoilState(Criterias);
   const handleAddPoll = () => {
     setCriterias([...criterias, { description: '' }]);
@@ -86,7 +85,7 @@ const Create: React.FC = () => {
     <div>
       <div className="mt-8 max-h-[340px] overflow-y-auto ">
         {criterias.map((item, index) => {
-          return <CriteriaItem title={item.description} key={index} order={index + 1} />;
+          return <CriteriaItem title={item.description} key={index} order={index + 1} userId={userId} />;
         })}
       </div>
       <button

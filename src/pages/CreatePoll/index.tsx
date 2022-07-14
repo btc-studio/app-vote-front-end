@@ -25,7 +25,6 @@ const CreatePoll: React.FC = () => {
         created_by: userInfo.id,
         title: poll.title,
         description: poll.description,
-
         start_at: new Date().getTime(),
         end_at: poll.end_at,
         poll_option_id: poll.poll_option_id,

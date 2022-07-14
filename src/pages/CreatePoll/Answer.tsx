@@ -35,7 +35,7 @@ const ItemCheck: React.FC<propsItemCheck> = ({ id, description }) => {
         }}
         checked={check}
       />
-      <label htmlFor={`criteria-${id}`} className="font-medium text-xl cursor-pointer">
+      <label htmlFor={`criteria-${id}`} className="font-medium text-base cursor-pointer">
         {description}
       </label>
     </div>
@@ -107,7 +107,7 @@ const Answer: React.FC = () => {
 
       {/* List tiêu chí */}
       <div className="mt-10 flex justify-between mb-1 flex-col">
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-1">
           <label>Choose Answer Criterias</label>
           <div className="flex ">
             <button

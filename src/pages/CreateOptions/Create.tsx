@@ -30,7 +30,7 @@ const ItemCheck: React.FC<propsItemCheck> = ({ id, description, option, setOptio
       />
       <label
         htmlFor={`options-${id}`}
-        className={`font-medium text-xl cursor-pointer ${!check ? 'text-primary-40' : ''}`}
+        className={`font-medium text-base cursor-pointer ${!check ? 'text-primary-40' : ''}`}
       >
         {description}
       </label>
@@ -57,7 +57,7 @@ const Create: React.FC = () => {
       {/* Select peoples */}
       <div className="mt-6">
         <div className="flex items-center justify-between mb-1">
-          <h3>Select people</h3>
+          <h3 className="">Select people</h3>
           <div className="flex">
             <button
               className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded text-primary-80 mr-2"

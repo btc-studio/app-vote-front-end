@@ -17,10 +17,10 @@ export const Item: React.FC<propsItem> = ({ order, id, description, css }) => {
     <div
       className={`w-full0 h-14 bg-primary-30 rounded-xl pl-2 pr-4 py-2 relative mb-3 cursor-pointer hover:bg-primary-30 ${css}`}
     >
-      <h1 className="font-medium text-xl text-white flex items-center">
+      <h1 className="font-medium text-base text-white flex items-center">
         #{id}. {description}
       </h1>
-      <h3 className="absolute bottom-1 right-2 text-sm text-primary-30 italic">
+      <h3 className="absolute bottom-1 right-2 text-xs text-primary-30 italic">
         Create by {getNameUser(order as number, listUsers)}
       </h3>
     </div>

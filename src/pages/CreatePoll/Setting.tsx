@@ -12,7 +12,6 @@ interface props {
 }
 
 const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
-  const [checkAnonymous, setCheckAnonymous] = useState<any>(true);
   const [poll, setPoll] = useRecoilState(Poll);
   const options = useRecoilValue(OptionsCall);
   const [hours, setHours] = useState<string>('');
@@ -22,7 +21,7 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
   }, [options]);
   return (
     <>
-      <h2 className="mt-10 text-2xl font-bold text-white">Setting</h2>
+      <h2 className="mt-10 text-xl font-bold text-white">Setting</h2>
       <div className="mt-5 w-full h-[160px] rounded-lg bg-primary-10 px-6 py-8">
         {/* End Date */}
         <div>
@@ -59,7 +58,7 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
                 let hoursStr = e.target.value;
                 let second: number = convertHoursSeconds(hoursStr);
                 setHours(hoursStr);
-                setPoll({ ...poll, end_at: second + (convertDateSeconds(date) | 0) });
+                setPoll({ ...poll, end_at: second + convertDateSeconds(date) });
               }}
             />
             <input
@@ -71,7 +70,7 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
                 let dateStr = e.target.value;
                 let second: number = convertDateSeconds(dateStr);
                 setDate(dateStr);
-                setPoll({ ...poll, end_at: second + (convertHoursSeconds(hours) | 0) });
+                setPoll({ ...poll, end_at: second + convertHoursSeconds(hours) });
               }}
             />
           </div>
