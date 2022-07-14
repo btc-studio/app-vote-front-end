@@ -6,6 +6,7 @@ import { UserInfo } from '../../../../recoil/users/UserInfo';
 import { useRecoilValue } from 'recoil';
 function Sidebar() {
   const userInfo = useRecoilValue(UserInfo);
+
   const isAdmin: boolean = userInfo.role === 'Admin';
   return (
     <div className="w-[199px] min-h-[200px]">

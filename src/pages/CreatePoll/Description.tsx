@@ -1,14 +1,27 @@
-import { IoImageOutline } from 'react-icons/io5';
+import { IoImageOutline, IoClose } from 'react-icons/io5';
 import { Poll } from '../../recoil/create-poll/PollsState';
 import { useRecoilState } from 'recoil';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { desImage } from '../../assets/images';
+import { create, Options } from 'ipfs-http-client';
+
+const client = create('https://ipfs.infura.io:5001/api/v0' as Options);
 
 const Description: React.FC = () => {
   const [poll, setPoll] = useRecoilState(Poll);
   const refInput = useRef<HTMLInputElement>(null);
   const refText = useRef<HTMLTextAreaElement>(null);
-
+  // Lưu link ảnh
+  async function handleChangeImg(e: any) {
+    const file = e.target.files[0];
+    try {
+      const added = await client.add(file);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setPoll({ ...poll, img_url: url });
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
+  }
   return (
     <div>
       {/* Title input */}
@@ -22,20 +35,38 @@ const Description: React.FC = () => {
         value={poll.title}
       />
       {/* Upload file input */}
-      {/* <div className="w-full h-[94px] mt-11 border-[1px] border-primary-80 border-dashed rounded-2xl relative">
+      <div
+        className={`w-full h-[94px] mt-11 border-[1px] border-primary-80 border-dashed rounded-2xl relative ${
+          poll.img_url ? 'invisible' : ''
+        }`}
+      >
         <label className="h-full flex justify-center items-center flex-col opacity-80">
           <IoImageOutline className="w-10 h-10" />
           Add a cover
         </label>
-        <input type="file" disabled={true} className="w-full h-full opacity-0 absolute top-0 outline-none" />
-      </div> */}
-      <div className="mt-8">
-        <img src={desImage} title="Description image" />
+        <input
+          type="file"
+          className="w-full h-full opacity-0 absolute top-0 outline-none z-100 cursor-pointer"
+          onChange={handleChangeImg}
+        />
       </div>
+      {poll.img_url ? (
+        <div className="mt-[60px] absolute top-14  rounded-xl overflow-hidden bg-primary">
+          <img src={poll.img_url} title="Description image" className="w-[366px] h-[300px] z-100 cover" />
+          <IoClose
+            className="absolute text-black top-1 right-1 z-100 top-0 bg-orange-50 rounded cursor-pointer"
+            onClick={() => {
+              setPoll({ ...poll, img_url: null });
+            }}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
       <textarea
         ref={refText}
         placeholder="Write a vote description"
-        className="w-full bg-transparent mt-8 h-1/2 overflow-hidden outline-none"
+        className="w-full bg-transparent mt-52 h-1/2 overflow-hidden outline-none"
         onChange={() => {
           setPoll({ ...poll, description: refText.current?.value ? refText.current?.value : '' });
         }}
@@ -44,5 +75,22 @@ const Description: React.FC = () => {
     </div>
   );
 };
+
+const votedPolls = [
+  {
+    id: 1,
+    listCri: [
+      {
+        nameCri: 'Dep trai',
+        nameUser: 'Manh',
+      },
+      {
+        nameCri: 'Dep trai',
+        nameUser: 'Manh',
+      },
+    ],
+  },
+  {},
+];
 
 export default Description;

@@ -5,7 +5,7 @@ import Description from './Description';
 import { Answer } from './Answer';
 import Setting from './Setting';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { Poll } from '../../recoil/create-poll/PollsState';
+import { Poll, PollsCall } from '../../recoil/create-poll/PollsState';
 import { nextState } from '../../utils/CreatePollHandle';
 import { IoRocket } from 'react-icons/io5';
 import { UserInfo } from '../../recoil/users/UserInfo';
@@ -25,6 +25,7 @@ const CreatePoll: React.FC = () => {
         created_by: userInfo.id,
         title: poll.title,
         description: poll.description,
+
         start_at: new Date().getTime(),
         end_at: poll.end_at,
         poll_option_id: poll.poll_option_id,
@@ -65,7 +66,7 @@ const CreatePoll: React.FC = () => {
               outline={false}
               upcase={false}
               group={true}
-              idDisable={!poll.title || !poll.description}
+              idDisable={!poll.title || !poll.description || !poll.img_url}
               handle={() => {
                 setSwitchContentState({
                   description: false,
@@ -97,7 +98,7 @@ const CreatePoll: React.FC = () => {
             upcase={true}
             handle={() => {
               const newState = nextState(switchContentState);
-              if (switchContentState.description && (!poll.title || !poll.description)) {
+              if (switchContentState.description && (!poll.title || !poll.description || !poll.img_url)) {
                 alert('Please enter title and description!');
                 return;
               } else if (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) {

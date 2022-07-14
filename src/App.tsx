@@ -6,7 +6,6 @@ import DefaultLayout from './components/Layout/DefaultLayout';
 import CreateOptions from './pages/CreateOptions';
 import Organization from './pages/Organization';
 import CreateCriteria from './pages/CreateCriteria';
-import VoteResult from './pages/Organization/VoteResult';
 import { useEffect } from 'react';
 import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/CriteriaStates';
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
@@ -30,8 +29,21 @@ const App: React.FC = () => {
       setOptions(allOptions);
       const allPolls = await getAllPolls();
       setPolls(allPolls);
+      // console.log(allPolls);
+
       const allUsers = await getAllUsers();
       setListUsers(allUsers);
+      // await window.contract.create_user({
+      //   args: {
+      //     name: 'Duong NH',
+      //     role: 'Admin',
+      //     email: 'test@gmail.com',
+      //     blockchain_type: 'Near',
+      //     wallet_address: 'duongnh.testnet',
+      //   },
+      //   gas: '300000000000000', // attached GAS (optional)
+      //   amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
+      // });
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });

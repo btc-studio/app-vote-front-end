@@ -64,8 +64,8 @@ const VoteResult: React.FC<props> = ({ pollId }) => {
                 {index === 0 ? <div className="px-[2px] bg-green-600 font-bold rounded mr-1">#1</div> : <></>}
                 {index === 1 ? <div className="px-[2px] bg-blue-600 font-bold rounded mr-1">#2</div> : <></>}
                 {index === 2 ? <div className="px-[2px] bg-orange-600 font-bold rounded mr-1">#3</div> : <></>}
-                <h1 className={`mr-4 w-40 ${index > 2 ? 'ml-6' : ''}`}>{vote.userName}</h1>
-                <p className="w-20 flex">
+                <h1 className={`mr-4 w-60 ${index > 2 ? 'ml-6' : ''}`}>{vote.userName}</h1>
+                <p className="w-40 flex ml-1">
                   Total: {vote.total} <IoRocket className="ml-2" />
                 </p>
               </div>

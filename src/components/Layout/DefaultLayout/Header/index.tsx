@@ -14,7 +14,12 @@ function Header() {
         {/* login */}
         {!window.walletConnection.isSignedIn() ? (
           <div className="h-[40px] flex items-center text-[20px]">
-            <button onClick={login} className="w-[150px] h-[100%] font-semibold cursor-pointer hover:opacity-[0.8] ">
+            <button
+              onClick={() => {
+                login();
+              }}
+              className="w-[150px] h-[100%] font-semibold cursor-pointer hover:opacity-[0.8] "
+            >
               Sign In
             </button>
             <button className="w-[150px] h-[100%] rounded-full font-semibold bg-[rgba(255,255,255,0.3)] cursor-pointer text-[#0EA5E9] hover:opacity-[0.8] ">
@@ -24,7 +29,9 @@ function Header() {
         ) : (
           <div
             className="min-w-[200px] h-[40px] py-[8px] px-[16px] text-[20px] flex items-center justify-around rounded-full bg-[rgba(255,255,255,0.3)] cursor-pointer"
-            onClick={logout}
+            onClick={() => {
+              logout();
+            }}
           >
             <IoWallet className="text-[24px] mr-[25px]" />
             <p className="mr-[17px]">{window.accountId}</p>

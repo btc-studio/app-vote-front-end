@@ -43,15 +43,19 @@ const CreateOptions: React.FC = () => {
       <Modal title="Create options" avatar={true} icon={<IoPeople className="mt-1 mr-2"></IoPeople>}>
         {content.create ? <Create /> : <></>}
         {content.list ? <List data={optionsCall} /> : <></>}
-        <Button
-          group={false}
-          outline={true}
-          title="Create"
-          upcase={true}
-          active={false}
-          css="absolute bottom-20 right-9 "
-          handle={handleCreateOption}
-        />
+        {content.create ? (
+          <Button
+            group={false}
+            outline={true}
+            title="Create"
+            upcase={true}
+            active={false}
+            css="absolute bottom-20 right-9 "
+            handle={handleCreateOption}
+          />
+        ) : (
+          <></>
+        )}
         <div className=" w-[364px] flex absolute bottom-0 py-3 border-t-[1px] border-primary-60 justify-center">
           <BtnGroup>
             <Button

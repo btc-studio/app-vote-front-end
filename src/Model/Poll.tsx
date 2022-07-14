@@ -5,6 +5,7 @@ export interface PollModel {
   criteria_ids?: number[];
   poll_option_id: number | undefined;
   created_by?: number;
+  img_url?: string | null;
   start_at?: number;
   end_at?: number | string;
   updated_at?: Date;

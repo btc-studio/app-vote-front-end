@@ -11,7 +11,7 @@ const Polls: React.FC<props> = ({ setContent, setPollId }) => {
   const polls = useRecoilValue(PollsCall);
 
   return (
-    <div className="flex w-full flex-wrap mt-4 justify-center">
+    <div className="flex w-full flex-wrap mt-4 justify-item-start">
       {polls &&
         polls.map((poll) => {
           let endDate: string;
