@@ -14,12 +14,17 @@ const Polls: React.FC<props> = ({ setContent, setPollId }) => {
     <div className="flex w-full flex-wrap mt-4 justify-center">
       {polls &&
         polls.map((poll) => {
+          let endDate: string;
+          if ((new Date(poll.end_at as number).getFullYear() as number) > 1970)
+            endDate = new Date(poll.end_at as number).toISOString().split('T')[0];
+          else endDate = '';
           return (
             <AnswerCard
               css="mr-10 mb-6"
               key={poll.id}
               title={poll.title}
               content={poll.description}
+              note={endDate}
               handle={() => {
                 setContent({
                   orverview: false,

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Create from './Create';
 import List from './List';
 import { useRecoilValue } from 'recoil';
-import { Option } from '../../recoil/create-options/OptionsState';
+import { Option, OptionsCall } from '../../recoil/create-options/OptionsState';
 import { UserInfo } from '../../recoil/users/UserInfo';
 interface content {
   create: boolean;
@@ -15,6 +15,7 @@ interface content {
 const CreateOptions: React.FC = () => {
   const [content, setContent] = useState<content>({ create: true, list: false });
   const option = useRecoilValue(Option);
+  const optionsCall = useRecoilValue(OptionsCall);
   const user = useRecoilValue(UserInfo);
   const handleCreateOption = () => {
     const createOption = async () => {
@@ -41,7 +42,7 @@ const CreateOptions: React.FC = () => {
     <div>
       <Modal title="Create options" avatar={true} icon={<IoPeople className="mt-1 mr-2"></IoPeople>}>
         {content.create ? <Create /> : <></>}
-        {content.list ? <List /> : <></>}
+        {content.list ? <List data={optionsCall} /> : <></>}
         <Button
           group={false}
           outline={true}

@@ -5,12 +5,13 @@ interface props {
   content: string | undefined;
   handle?: any;
   css?: string;
+  note?: string | undefined | number;
 }
 
-const AnswerCard: React.FC<props> = ({ title, content, handle, css }) => {
+const AnswerCard: React.FC<props> = ({ title, content, handle, css, note }) => {
   return (
     <div
-      className={`w-[300px] h-[126px] bg-primary-20 rounded-lg p-3 flex cursor-pointer ${css}`}
+      className={`w-[300px] h-[126px] bg-primary-20 rounded-lg p-3 flex relative cursor-pointer ${css}`}
       onClick={() => handle()}
     >
       <div className="h-12 w-12 rounded-3xl bg-transparent mr-4">
@@ -20,6 +21,7 @@ const AnswerCard: React.FC<props> = ({ title, content, handle, css }) => {
         <h2 className="text-white text-base font-bold">{title}</h2>
         <div className="text-primary-40 text-sm font-normal">{content}</div>
       </div>
+      <div className="absolute bottom-1 right-2 text-sm text-primary-30 italic">{note}</div>
     </div>
   );
 };
