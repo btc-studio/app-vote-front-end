@@ -17,7 +17,7 @@ const List: React.FC<propsList> = ({ data }) => {
           let listUsersOptions: string[] = item.user_ids?.map((userId) => getNameUser(userId, listUsers)) as string[];
           return (
             <div key={index} title={listUsersOptions.join(', ')} className="hover:bg-primary-20 hover:rounded-xl">
-              <Item order={item.created_by} id={index + 1} description={item.description as string} css="h-20" />
+              <Item order={item.created_by} id={index + 1} description={item.description as string} css="h-16" />
             </div>
           );
         })}

@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import AnswerCard from '../../components/AnswerCard/AnswerCard';
 import { PollsCall } from '../../recoil/create-poll/PollsState';
+import { yyyymmdd } from '../../utils/HandleDate';
 
 interface props {
   setContent: Function;
@@ -16,7 +17,8 @@ const Polls: React.FC<props> = ({ setContent, setPollId }) => {
         polls.map((poll) => {
           let endDate: string;
           if ((new Date(poll.end_at as number).getFullYear() as number) > 1970)
-            endDate = new Date(poll.end_at as number).toISOString().split('T')[0];
+            endDate = yyyymmdd(new Date(poll.end_at as number));
+          // endDate = new Date(poll.end_at as number).toISOString().split('T')[0];
           else endDate = '';
           return (
             <AnswerCard

@@ -7,7 +7,6 @@ import { useRecoilValue } from 'recoil';
 function Sidebar() {
   const userInfo = useRecoilValue(UserInfo);
 
-  const isAdmin: boolean = userInfo.role === 'Admin';
   return (
     <div className="w-[199px] min-h-[200px]">
       <>
@@ -19,7 +18,7 @@ function Sidebar() {
         >
           <BsStars className="mr-[8px] text-[32px]" /> Trending
         </Link>
-        {isAdmin && (
+        {userInfo.role === 'Admin' && (
           <>
             <Link
               to={'/createpoll'}
@@ -48,7 +47,7 @@ function Sidebar() {
           </>
         )}
       </>
-      {!window.walletConnection.isSignedIn() ? (
+      {!window.walletConnection.isSignedIn() || !userInfo.role ? (
         <>
           <hr className="w-[80%] my-[32px] border-[rgba(255,255,255,0.4)] " />
           <button
