@@ -29,30 +29,29 @@ const App: React.FC = () => {
       setOptions(allOptions);
       const allPolls = await getAllPolls();
       setPolls(allPolls);
-      // console.log(allPolls);
-
       const allUsers = await getAllUsers();
-      setListUsers(allUsers);
-      // await window.contract.create_user({
-      //   args: {
-      //     name: 'Duong NH',
-      //     role: 'Admin',
-      //     email: 'test@gmail.com',
-      //     blockchain_type: 'Near',
-      //     wallet_address: 'duongnh.testnet',
-      //   },
-      //   gas: '300000000000000', // attached GAS (optional)
-      //   amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
-      // });
+      const newAllUsers = allUsers.map((user: any) => {
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          walletAddress: user.user_wallet.wallet_address,
+        };
+      });
+      setListUsers(newAllUsers);
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
-      setUserInfo({
-        id: userData.id,
-        name: userData.name,
-        email: userData.email,
-        role: userData.role,
-      });
+      if (userData) {
+        setUserInfo({
+          id: userData.id,
+          name: userData.name,
+          email: userData.email,
+          role: userData.role,
+          walletAddress: userData.user_wallet.wallet_address,
+        });
+      }
     };
     if (window.accountId) {
       getUserInfo(window.accountId);

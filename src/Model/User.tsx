@@ -3,4 +3,5 @@ export interface UserInfoModel {
   name: string | null;
   email: string | null;
   role: string | null;
+  walletAddress: string | null;
 }

@@ -6,6 +6,7 @@ import AnswerOptions from './AnswerOptions';
 import VoteResult from './VoteResult';
 import { useState } from 'react';
 import Polls from './Polls';
+import Members from './Members';
 function Organization() {
   const [content, setContent] = useState<{
     orverview: boolean;
@@ -13,7 +14,7 @@ function Organization() {
     polls: boolean;
     answerOptions: boolean;
     voteResult: boolean;
-  }>({ orverview: false, members: false, polls: true, answerOptions: false, voteResult: false });
+  }>({ orverview: false, members: true, polls: false, answerOptions: false, voteResult: false });
   const [pollId, setPollId] = useState<number | undefined>();
   return (
     <div className="flex flex-col pb-8">
@@ -22,6 +23,28 @@ function Organization() {
       <div className=" mt-[42px] px-56 border-b-[1px] border-primary-20">
         <Avatar name="BTC Studio" size="big" />
         <div className="flex mt-4">
+          {/* Members */}
+          <div
+            className="mr-8 relative"
+            onClick={() => {
+              setContent({
+                orverview: false,
+                members: true,
+                polls: false,
+                answerOptions: false,
+                voteResult: false,
+              });
+            }}
+          >
+            <Item
+              title="Members"
+              icon={<IoPeopleOutline />}
+              active={content.members}
+              fontSize="md"
+              line={content.members}
+            />
+          </div>
+          {/* List polls ans result */}
           <div
             className="mr-8 relative"
             onClick={() => {
@@ -36,6 +59,7 @@ function Organization() {
           >
             <Item title="Polls" icon={<IoBeerOutline />} active={content.polls} fontSize="md" line={content.polls} />
           </div>
+          {/* List answer options */}
           <div
             className="mr-8 relative"
             onClick={() => {
@@ -61,6 +85,7 @@ function Organization() {
       {/* Content */}
       <div className="w-full px-56">
         {content.answerOptions && <AnswerOptions />}
+        {content.members && <Members />}
         {content.polls && !content.voteResult && <Polls setContent={setContent} setPollId={setPollId} />}
         {content.polls && content.voteResult && <VoteResult pollId={pollId as number} />}
       </div>
