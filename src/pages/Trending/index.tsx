@@ -53,6 +53,8 @@ function Trending() {
     };
     getAllCriterias();
   }, []);
+  console.log(allPolls);
+
   return (
     <div className="min-w-[669px] min-h-[754px]  ">
       {allPolls.length !== 0 ? (

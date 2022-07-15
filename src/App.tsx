@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/CriteriaStates';
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
 import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { IsMemberState, UserInfo } from './recoil/UserInfo';
 
 const App: React.FC = () => {
@@ -18,7 +18,7 @@ const App: React.FC = () => {
   const setOptions = useSetRecoilState(OptionsCall);
   const setPolls = useSetRecoilState(PollsCall);
   const setUserInfo = useSetRecoilState(UserInfo);
-  const setIsMember = useSetRecoilState(IsMemberState);
+  const [isMember, setIsMember] = useRecoilState(IsMemberState);
 
   // Get all criterias, options, info of user logined
   useEffect(() => {
@@ -65,23 +65,25 @@ const App: React.FC = () => {
               </DefaultLayout>
             }
           />
-          <Route
-            path="/createpoll"
-            element={
-              <DefaultLayout>
-                <CreatePoll />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/createCriteria"
-            element={
-              <DefaultLayout>
-                <CreateCriteria />
-              </DefaultLayout>
-            }
-          />
-          {/* <Route
+          {isMember === true ? (
+            <>
+              <Route
+                path="/createpoll"
+                element={
+                  <DefaultLayout>
+                    <CreatePoll />
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/createCriteria"
+                element={
+                  <DefaultLayout>
+                    <CreateCriteria />
+                  </DefaultLayout>
+                }
+              />
+              {/* <Route
             path="/yourpolls"
             element={
               <DefaultLayout>
@@ -89,7 +91,18 @@ const App: React.FC = () => {
               </DefaultLayout>
             }
           /> */}
-          <Route path="/organization" element={<Organization />} />
+              <Route path="/organization" element={<Organization />} />
+            </>
+          ) : (
+            <Route
+              path="/"
+              element={
+                <DefaultLayout>
+                  <Trending />
+                </DefaultLayout>
+              }
+            />
+          )}
         </Routes>
       </div>
     </Router>
