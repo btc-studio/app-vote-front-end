@@ -13,7 +13,7 @@ function Organization() {
     <div className="flex flex-col pb-8">
       <Header />
       {/* Tag menu */}
-      <div className=" px-56 border-b-[1px] border-primary-20 mt-8">
+      <div className=" px-56 border-b-[1px] border-primary-20 mt-[4.5rem]">
         <Avatar name="BTC Studio" size="big" />
         <div className="flex mt-4">
           <div
