@@ -56,7 +56,7 @@ export const HomeVote = (props: Props) => {
   }, [arrUserId, allUser]);
 
   const handleVoted = async () => {
-    await selected.map((item: selectOption) => {
+    const sendVote = await selected.map((item: selectOption) => {
       window.contract.vote({
         poll_id: pollId,
         criteria_id: item.criteria_id,
@@ -71,12 +71,7 @@ export const HomeVote = (props: Props) => {
 
       return newArrVoted;
     });
-    // setSelected((prev: any) => {
-    //   const newArrSelected = [...prev, selected];
-    //   const jsonSelected = JSON.stringify(newArrSelected);
-    //   localStorage.setItem('pollSelected', jsonSelected);
-    //   return newArrSelected;
-    // });
+    return sendVote;
   };
 
   return (

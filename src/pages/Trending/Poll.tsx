@@ -9,6 +9,7 @@ import { HomeVote } from './TrendingStates/HomeVote';
 import { useRecoilValue } from 'recoil';
 import { allUserState, findUserbyId } from '../../recoil/trending/AllUser';
 import { selectOption } from '../../recoil/trending/Selected';
+import { IsMemberState } from '../../recoil/UserInfo';
 
 interface Props {
   pollInfo: any;
@@ -26,13 +27,11 @@ function Poll(props: Props) {
   const storageIdVoted = localStorage.getItem('IdPollIsVoted');
   const localStorageIsVoted = JSON.parse(storageIdVoted as string);
   const [isVoted, setIsVoted] = useState<number[]>(localStorageIsVoted || []);
-  // get selected from localStorage
-  // const storageSelected = localStorage.getItem('pollSelected');
-  // const localStorageSelected = JSON.parse(storageSelected as string);
-  // console.log(localStorageSelected);
   const [selected, setSelected] = useState<selectOption[]>([]);
   const [resultById, setResultById] = useState<ResultInterface[]>([]);
+  const isMember = useRecoilValue(IsMemberState);
 
+  let Today = new Date();
   const HandleSetHomeState = (state: string) => {
     setHomeState(state);
   };
@@ -60,7 +59,7 @@ function Poll(props: Props) {
   };
 
   return (
-    <div className="mb-[5rem] ">
+    <div className="mb-[5rem] " hidden={pollInfo.end_at < Today}>
       <div className="min-w-[229px] h-[75px] flex items-center ">
         <div className="w-[75px] h-[75px] bg-[#fff]  mr-[14px] rounded-full flex justify-center items-center relative overflow-hidden">
           <img className="absolute bottom-0" src={people} alt="people" />
@@ -76,7 +75,7 @@ function Poll(props: Props) {
           {/* content vote */}
 
           {checkIsVoted(pollInfo.id) ? (
-            <HomeResult criteriaIds={pollInfo.criteria_ids} resultById={resultById} selected={selected} />
+            <HomeResult criteriaIds={pollInfo.criteria_ids} pollDescription={pollInfo.description} />
           ) : (
             <>
               {homeState === 'description' && (
@@ -101,7 +100,7 @@ function Poll(props: Props) {
           <div className="flex w-[100%]  justify-center items-center">
             <div className="min-w-[96px] min-h-[40px] flex items-center p-[4px] text-[14px] bg-[rgba(255,255,255,0.2)] rounded-md">
               <button
-                disabled={checkIsVoted(pollInfo.id)}
+                disabled={checkIsVoted(pollInfo.id) || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  mr-[4px] rounded-[6px] ${
                   homeState === 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 }`}
@@ -110,7 +109,7 @@ function Poll(props: Props) {
                 Description
               </button>
               <button
-                disabled={!window.walletConnection.isSignedIn() || checkIsVoted(pollInfo.id)}
+                disabled={!window.walletConnection.isSignedIn() || checkIsVoted(pollInfo.id) || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  rounded-[6px] flex items-center justify-center ${
                   homeState !== 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 } `}
@@ -122,25 +121,25 @@ function Poll(props: Props) {
           </div>
         </div>
         {/* Extra info */}
-        <div className="flex-[1] h-[100%] pl-[20px]">
-          <div className="text-[16px] font-[400] py-[20px] min-w-[200px] text-[rgba(255,255,225,0.4)]">
-            <p className="flex items-center mb-[28px]">
-              <IoShieldCheckmark className="text-[#11DBC5] text-[24px] mr-[6px]" />
+        <div className="flex-[1] h-[100%] pl-[20px] ">
+          <div className="text-sm font-[400] py-[20px] min-w-[200px] text-[rgba(255,255,225,0.4)]">
+            <p className="flex items-center mb-3">
+              <IoShieldCheckmark className="text-[#11DBC5] text-xl mr-[6px]" />
               trust in NEAR Blockchain
             </p>
-            <p className="flex items-center mb-[28px]">
-              <IoPizza className="text-[rgba(255,255,255,0.8)] text-[24px] mr-[6px]" />
+            <p className="flex items-center mb-3">
+              <IoPizza className="text-[rgba(255,255,255,0.8)] text-xl mr-[6px]" />
               {getTotalVote()} users has voted
             </p>
             <div>
               <p className="flex items-center">
-                <IoMegaphone className="text-[rgba(255,255,255,0.8)] text-[24px] mr-[6px]" />
+                <IoMegaphone className="text-[rgba(255,255,255,0.8)] text-xl mr-[6px]" />
                 quick view result
               </p>
               <div className="ml-[30px] mt-[13px]">
                 {resultById.map((result: ResultInterface, index) => (
-                  <p key={index}>
-                    #{index + 1} <span> {findUserbyId(result.user_id, allUser)}</span>
+                  <p key={index} className="mb-1">
+                    # {index + 1} <span> {findUserbyId(result.user_id, allUser)}</span>
                   </p>
                 ))}
               </div>

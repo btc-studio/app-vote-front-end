@@ -26,7 +26,6 @@ export const HomeDescription = (props: Props) => {
           </div>
           <div className="text-[14px]  font-[400] leading-[26px]">
             <p className="mb-[8px]">{pollDescription}</p>
-
             {criteriaIds &&
               getCriteriasById(criteriaIds, allCriteria).map((criteria: any, index) => (
                 <p key={index}>

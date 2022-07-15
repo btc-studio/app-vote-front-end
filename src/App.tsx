@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Trending from './pages/Trending';
 import CreatePoll from './pages/CreatePoll';
 import DefaultLayout from './components/Layout/DefaultLayout';
-import YourPolls from './pages/YourPolls';
+// import YourPolls from './pages/YourPolls';
 import Organization from './pages/Organization';
 import CreateCriteria from './pages/CreateCriteria';
 import { useEffect } from 'react';
@@ -11,13 +11,14 @@ import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/Criter
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
 import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useSetRecoilState } from 'recoil';
-import { UserInfo } from './recoil/UserInfo';
+import { IsMemberState, UserInfo } from './recoil/UserInfo';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
   const setOptions = useSetRecoilState(OptionsCall);
   const setPolls = useSetRecoilState(PollsCall);
   const setUserInfo = useSetRecoilState(UserInfo);
+  const setIsMember = useSetRecoilState(IsMemberState);
 
   // Get all criterias, options, info of user logined
   useEffect(() => {
@@ -35,13 +36,15 @@ const App: React.FC = () => {
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
-
-      setUserInfo({
-        id: userData.id,
-        name: userData.name,
-        email: userData.email,
-        role: userData.role,
-      });
+      if (userData) {
+        setUserInfo({
+          id: userData.id,
+          name: userData.name,
+          email: userData.email,
+          role: userData.role,
+        });
+        setIsMember(true);
+      }
     };
     if (window.accountId) {
       getUserInfo(window.accountId);
