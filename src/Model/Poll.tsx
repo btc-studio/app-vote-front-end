@@ -9,6 +9,7 @@ export interface PollModel {
   end_at?: number | string;
   updated_at?: Date;
   created_at?: Date;
+  img_url?: string;
 }
 
 export interface OptionModel {

@@ -41,6 +41,7 @@ export async function initContract() {
       'get_all_result',
       'get_all_results_by_poll_id',
       'get_user_by_wallet_address',
+      'is_voted',
     ],
     // Change methods can modify the state. But you don't receive the returned value when called.
     changeMethods: [

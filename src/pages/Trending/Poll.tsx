@@ -9,7 +9,7 @@ import { HomeVote } from './TrendingStates/HomeVote';
 import { useRecoilValue } from 'recoil';
 import { allUserState, findUserbyId } from '../../recoil/trending/AllUser';
 import { selectOption } from '../../recoil/trending/Selected';
-import { IsMemberState } from '../../recoil/UserInfo';
+import { IsMemberState, UserInfo } from '../../recoil/UserInfo';
 
 interface Props {
   pollInfo: any;
@@ -23,24 +23,18 @@ function Poll(props: Props) {
   const { pollInfo } = props;
   const [homeState, setHomeState] = useState('description');
   const allUser = useRecoilValue(allUserState);
-  //get Id poll isVoted from localStorage
-  const storageIdVoted = localStorage.getItem('IdPollIsVoted');
-  const localStorageIsVoted = JSON.parse(storageIdVoted as string);
-  const [isVoted, setIsVoted] = useState<number[]>(localStorageIsVoted || []);
   const [selected, setSelected] = useState<selectOption[]>([]);
   const [resultById, setResultById] = useState<ResultInterface[]>([]);
+  const [totalVote, setTotalVote] = useState<number>();
   const isMember = useRecoilValue(IsMemberState);
+  const [checkUserVoted, setCheckUserVoted] = useState<boolean>(false);
+  const userInfo = useRecoilValue(UserInfo);
 
   let Today = new Date();
   const HandleSetHomeState = (state: string) => {
     setHomeState(state);
   };
 
-  const checkIsVoted = (id: number) => {
-    let voted = isVoted.some((item: any) => item === id);
-
-    return voted;
-  };
   useEffect(() => {
     const getResultById = async () => {
       const ResultById = await window.contract.get_all_results_by_poll_id({ poll_id: pollInfo.id });
@@ -49,14 +43,35 @@ function Poll(props: Props) {
     getResultById();
   }, [pollInfo.id]);
 
-  const getTotalVote = () => {
-    let newTotal = 0;
-    // eslint-disable-next-line array-callback-return
-    resultById.map((result: ResultInterface) => {
-      newTotal = newTotal + result.total_vote;
-    });
-    return newTotal;
-  };
+  useEffect(() => {
+    const checkVoted = async () => {
+      if (userInfo.id !== null) {
+        const voted = await window.contract.is_voted({
+          user_id: userInfo.id,
+          poll_id: pollInfo.id,
+        });
+        console.log(voted);
+
+        setCheckUserVoted(voted);
+      }
+    };
+    checkVoted();
+    if (checkUserVoted === true) {
+      setHomeState('result');
+    }
+  }, [userInfo.id, pollInfo.id, checkUserVoted]);
+
+  useEffect(() => {
+    const getTotalVote = () => {
+      let newTotal = 0;
+      // eslint-disable-next-line array-callback-return
+      resultById.map((result: ResultInterface) => {
+        newTotal = newTotal + result.total_vote;
+      });
+      setTotalVote(newTotal);
+    };
+    getTotalVote();
+  }, [resultById]);
 
   return (
     <div className="mb-[5rem] " hidden={pollInfo.end_at < Today}>
@@ -74,22 +89,26 @@ function Poll(props: Props) {
           </h1>
           {/* content vote */}
 
-          {checkIsVoted(pollInfo.id) ? (
+          {homeState === 'result' ? (
             <HomeResult criteriaIds={pollInfo.criteria_ids} pollDescription={pollInfo.description} />
           ) : (
             <>
               {homeState === 'description' && (
-                <HomeDescription pollDescription={pollInfo.description} criteriaIds={pollInfo.criteria_ids} />
+                <HomeDescription
+                  pollDescription={pollInfo.description}
+                  criteriaIds={pollInfo.criteria_ids}
+                  imgUrl={pollInfo.img_url}
+                />
               )}
               {homeState === 'vote' && (
                 <HomeVote
                   pollId={pollInfo.id}
                   optionId={pollInfo.poll_option_id}
                   criteriaIds={pollInfo.criteria_ids}
-                  setHomeState={setHomeState}
-                  setIsVoted={setIsVoted}
                   selected={selected}
                   setSelected={setSelected}
+                  setCheckUserVoted={setCheckUserVoted}
+                  setHomeState={setHomeState}
                 />
               )}
             </>
@@ -100,7 +119,7 @@ function Poll(props: Props) {
           <div className="flex w-[100%]  justify-center items-center">
             <div className="min-w-[96px] min-h-[40px] flex items-center p-[4px] text-[14px] bg-[rgba(255,255,255,0.2)] rounded-md">
               <button
-                disabled={checkIsVoted(pollInfo.id) || isMember === false}
+                disabled={checkUserVoted === true || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  mr-[4px] rounded-[6px] ${
                   homeState === 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 }`}
@@ -109,7 +128,7 @@ function Poll(props: Props) {
                 Description
               </button>
               <button
-                disabled={!window.walletConnection.isSignedIn() || checkIsVoted(pollInfo.id) || isMember === false}
+                disabled={!window.walletConnection.isSignedIn() || checkUserVoted === true || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  rounded-[6px] flex items-center justify-center ${
                   homeState !== 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 } `}
@@ -129,7 +148,7 @@ function Poll(props: Props) {
             </p>
             <p className="flex items-center mb-3">
               <IoPizza className="text-[rgba(255,255,255,0.8)] text-xl mr-[6px]" />
-              {getTotalVote()} users has voted
+              {totalVote} users has voted
             </p>
             <div>
               <p className="flex items-center">

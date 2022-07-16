@@ -5,8 +5,8 @@ import { CriteriaModel } from '../../../Model/Poll';
 import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
 
 interface Props {
-  criteriaIds: number[];
-  pollDescription: string;
+  criteriaIds?: number[] | undefined;
+  pollDescription?: string | undefined;
 }
 export const HomeResult = (props: Props) => {
   const { pollDescription, criteriaIds } = props;
