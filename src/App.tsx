@@ -10,8 +10,8 @@ import { useEffect } from 'react';
 import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/CriteriaStates';
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
 import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
-import { useSetRecoilState } from 'recoil';
-import { UserInfo, getAllUsers, ListUsers } from './recoil/users/UserInfo';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { UserInfo, getAllUsers, ListUsers, IsMemberState } from './recoil/users/UserInfo';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
@@ -19,7 +19,7 @@ const App: React.FC = () => {
   const setPolls = useSetRecoilState(PollsCall);
   const setUserInfo = useSetRecoilState(UserInfo);
   const setListUsers = useSetRecoilState(ListUsers);
-
+  const [isMember, setIsMember] = useRecoilState(IsMemberState);
   // Get all criterias, options, info of user logined
   useEffect(() => {
     const getPolls = async () => {
@@ -51,6 +51,7 @@ const App: React.FC = () => {
           role: userData.role,
           walletAddress: userData.user_wallet.wallet_address,
         });
+        setIsMember(true);
       }
     };
     if (window.accountId) {
@@ -95,6 +96,14 @@ const App: React.FC = () => {
             }
           />
           <Route path="/organization" element={<Organization />} />
+          {/* <Route
+            path="/"
+            element={
+              <DefaultLayout>
+                <Trending />
+              </DefaultLayout>
+            }
+          /> */}
         </Routes>
       </div>
     </Router>

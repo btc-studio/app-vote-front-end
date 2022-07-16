@@ -11,6 +11,12 @@ export const ListUsers = atom({
   key: 'LIST_USERS',
   default: initListUsers,
 });
+
+export const IsMemberState = atom({
+  key: 'isMember',
+  default: false,
+});
+
 export const getAllUsers = async () => {
   try {
     // BE API

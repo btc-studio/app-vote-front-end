@@ -8,41 +8,41 @@ function Sidebar() {
   const userInfo = useRecoilValue(UserInfo);
 
   return (
-    <div className="w-[199px] min-h-[200px]">
+    <div className="w-[199px] min-h-[200px] fixed ">
       <>
         <Link
           to={'/'}
-          className={`flex items-center mb-[20px] font-bold text-[20px] ${
+          className={`flex items-center mb-[20px] font-bold text-base ${
             window.location.pathname === '/' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
           }`}
         >
-          <BsStars className="mr-[8px] text-[32px]" /> Trending
+          <BsStars className="mr-[8px] text-2xl" /> Trending
         </Link>
         {userInfo.role === 'Admin' && (
           <>
             <Link
               to={'/createpoll'}
-              className={`flex items-center mb-[20px] font-bold text-[20px] ${
+              className={`flex items-center mb-[20px] font-bold text-base ${
                 window.location.pathname === '/createpoll' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
               }`}
             >
-              <IoBeer className="mr-[8px] text-[32px]" /> Create a poll
+              <IoBeer className="mr-[8px] text-2xl" /> Create a poll
             </Link>
             <Link
               to={'/createCriteria'}
-              className={`flex items-center mb-[20px] font-bold text-[20px] ${
+              className={`flex items-center mb-[20px] font-bold text-base ${
                 window.location.pathname === '/createCriteria' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
               }`}
             >
-              <IoPaperPlane className="mr-[8px] text-[32px]" /> Create criterias
+              <IoPaperPlane className="mr-[8px] text-2xl" /> Create criterias
             </Link>
             <Link
               to={'/createOptions'}
-              className={`flex items-center mb-[20px] font-bold text-[20px] ${
+              className={`flex items-center mb-[20px] font-bold text-base ${
                 window.location.pathname === '/createOptions' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
               }`}
             >
-              <IoPeople className="mr-[8px] text-[32px]" /> Create options
+              <IoPeople className="mr-[8px] text-2xl" /> Create options
             </Link>
           </>
         )}
@@ -62,11 +62,11 @@ function Sidebar() {
         <>
           <Link
             to={'/organization'}
-            className={`flex items-center mb-[20px] font-bold text-[20px] ${
+            className={`flex items-center mb-[20px] font-bold text-base ${
               window.location.pathname === '/organization' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
             }`}
           >
-            <IoIceCream className="mr-[8px] text-[32px]" />
+            <IoIceCream className="mr-[8px] text-2xl" />
             Organization
           </Link>
         </>
