@@ -2,40 +2,42 @@ import { BsStars, BsLightningChargeFill } from 'react-icons/bs';
 import { IoBeer, IoIceCream, IoFastFood, IoPaperPlane } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { login } from '../../../../near/utils';
-import { UserInfo } from '../../../../recoil/UserInfo';
+import { IsMemberState, UserInfo } from '../../../../recoil/UserInfo';
 import { useRecoilValue } from 'recoil';
 function Sidebar() {
   const userInfo = useRecoilValue(UserInfo);
   const isAdmin: boolean = userInfo.role === 'Admin';
+  const isMember = useRecoilValue(IsMemberState);
   return (
-    <div className="w-[199px] min-h-[200px]">
+    <div className="w-[199px] min-h-[200px] fixed ">
       <>
         <Link
           to={'/'}
-          className={`flex items-center mb-[20px] font-bold text-[20px] ${
+          className={`flex items-center mb-[20px] font-bold text-base ${
             window.location.pathname === '/' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
           }`}
         >
-          <BsStars className="mr-[8px] text-[32px]" /> Trending
+          <BsStars className="mr-[8px] text-2xl" /> Trending
         </Link>
+
         {isAdmin && (
           <Link
             to={'/createpoll'}
-            className={`flex items-center mb-[20px] font-bold text-[20px] ${
+            className={`flex items-center mb-[20px] font-bold text-base ${
               window.location.pathname === '/createpoll' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
             }`}
           >
-            <IoBeer className="mr-[8px] text-[32px]" /> Create a poll
+            <IoBeer className="mr-[8px] text-2xl" /> Create a poll
           </Link>
         )}
         {isAdmin && (
           <Link
             to={'/createCriteria'}
-            className={`flex items-center mb-[20px] font-bold text-[20px] ${
+            className={`flex items-center mb-[20px] font-bold text-base ${
               window.location.pathname === '/createCriteria' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
             }`}
           >
-            <IoPaperPlane className="mr-[8px] text-[32px]" /> Create criterias
+            <IoPaperPlane className="mr-[8px] text-2xl" /> Create criterias
           </Link>
         )}
       </>
@@ -52,24 +54,28 @@ function Sidebar() {
         </>
       ) : (
         <>
-          <Link
+          {isMember === true && (
+            <>
+              {/* <Link
             to={'/yourpolls'}
-            className={`flex items-center mb-[20px] font-bold text-[20px] ${
+            className={`flex items-center mb-[20px] font-bold text-base ${
               window.location.pathname === '/yourpolls' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
             }`}
           >
-            <IoFastFood className="mr-[8px] text-[32px]" />
+            <IoFastFood className="mr-[8px] text-2xl" />
             Your polls
-          </Link>
-          <Link
-            to={'/organization'}
-            className={`flex items-center mb-[20px] font-bold text-[20px] ${
-              window.location.pathname === '/organization' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
-            }`}
-          >
-            <IoIceCream className="mr-[8px] text-[32px]" />
-            Organization
-          </Link>
+          </Link> */}
+              <Link
+                to={'/organization'}
+                className={`flex items-center mb-[20px] font-bold text-base ${
+                  window.location.pathname === '/organization' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+                }`}
+              >
+                <IoIceCream className="mr-[8px] text-2xl" />
+                Organization
+              </Link>
+            </>
+          )}
         </>
       )}
     </div>

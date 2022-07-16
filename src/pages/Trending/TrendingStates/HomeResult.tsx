@@ -1,9 +1,20 @@
 import { IoShieldCheckmark } from 'react-icons/io5';
-import people from '../../../assets/images/people.svg';
-export const HomeResult = () => {
+import { useRecoilValue } from 'recoil';
+// import people from '../../../assets/images/people.svg';
+import { CriteriaModel } from '../../../Model/Poll';
+import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
+
+interface Props {
+  criteriaIds?: number[] | undefined;
+  pollDescription?: string | undefined;
+}
+export const HomeResult = (props: Props) => {
+  const { pollDescription, criteriaIds } = props;
+  const allCriteria = useRecoilValue(allCriteriaState);
+
   return (
     <section className="min-h-[472px] w-[366px]">
-      <div className="w-[373px] h-[101px] py-[15px] mb-[34px] rounded-[8px] bg-[rgba(255,255,255,0.3)] flex flex-col justify-center items-center">
+      <div className=" h-[100px] py-[15px] mb-[34px] rounded-[8px] bg-[rgba(255,255,255,0.3)] flex flex-col justify-center items-center">
         <div className="flex items-center justify-center mb-[8px]">
           <IoShieldCheckmark className="text-[42px] text-[#11DBC5] mr-[13px]" />
           <p className="text-[24px] font-[400]">Voted</p>
@@ -11,13 +22,14 @@ export const HomeResult = () => {
         <p className="text-[14px] font-[400]">Your vote is saved on NEAR Blockchain</p>
       </div>
       <div>
-        <p className="text-[16px] font-bold">#1 Lực sĩ - người gánh đồng đội trên lưng</p>
-        <div className="flex items-center w-[100%] h-[40px] rounded-[8px] bg-[rgba(17,219,197,0.4)] px-[14px] py-[4px] mt-[10px]">
-          <img src={people} className="w-[24px] h-[24px]" alt="" />
-          <div>
-            <p className="text-[14px] font-bold text-[#fff]">Nam Bùi</p>
-            <p className="text-[8px]">Team lead dự án Full-Kaiten</p>
-          </div>
+        <div className="text-[14px]  font-[400] leading-[26px]">
+          <p className="mb-[8px]">{pollDescription}</p>
+          {criteriaIds &&
+            getCriteriasById(criteriaIds, allCriteria).map((criteria: CriteriaModel, index) => (
+              <p key={index}>
+                # {index + 1} {criteria.description}
+              </p>
+            ))}
         </div>
       </div>
     </section>
