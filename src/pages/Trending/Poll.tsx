@@ -50,7 +50,6 @@ function Poll(props: Props) {
           user_id: userInfo.id,
           poll_id: pollInfo.id,
         });
-        console.log(voted);
 
         setCheckUserVoted(voted);
       }
