@@ -41,9 +41,9 @@ const Members: React.FC = () => {
     }
   };
   return (
-    <div className="relative flex mt-8 justify-center">
+    <div className="relative flex mt-4 justify-center">
       {!createAccount && (
-        <table className="text-center m-0">
+        <table className="animate-fadeIn text-center m-0">
           <thead>
             <tr>
               <th className="border border-slate-300 px-4 py-2">#</th>
@@ -69,7 +69,7 @@ const Members: React.FC = () => {
         </table>
       )}
       {createAccount ? (
-        <div className="px-4 py-6 bg-primary-10 rounded-xl right-0 top-0 relative">
+        <div className="animate-fadeIn px-4 py-6 bg-primary-10 rounded-xl right-0 top-0 relative">
           <div
             className="absolute right-1 top-1 p-1 bg-primary-20 rounded-3xl cursor-pointer hover:bg-primary-50"
             onClick={() => {

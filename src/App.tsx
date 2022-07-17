@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Trending from './pages/Trending';
 import CreatePoll from './pages/CreatePoll';
 import DefaultLayout from './components/Layout/DefaultLayout';
+import OnlyHeader from './components/Layout/OnlyHeader';
 import CreateOptions from './pages/CreateOptions';
 import Organization from './pages/Organization';
 import CreateCriteria from './pages/CreateCriteria';
@@ -12,6 +13,7 @@ import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState
 import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { UserInfo, getAllUsers, ListUsers, IsMemberState } from './recoil/users/UserInfo';
+import Error from './pages/Error';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
@@ -28,7 +30,11 @@ const App: React.FC = () => {
       const allOptions = await getAllOptions();
       setOptions(allOptions);
       const allPolls = await getAllPolls();
-      setPolls(allPolls);
+      setPolls(
+        allPolls.sort((a: any, b: any) => {
+          return b.end_at - a.end_at;
+        }),
+      );
       const allUsers = await getAllUsers();
       const newAllUsers = allUsers.map((user: any) => {
         return {
@@ -96,14 +102,14 @@ const App: React.FC = () => {
             }
           />
           <Route path="/organization" element={<Organization />} />
-          {/* <Route
-            path="/"
+          <Route
+            path="/:somestring"
             element={
-              <DefaultLayout>
-                <Trending />
-              </DefaultLayout>
+              <OnlyHeader>
+                <Error />
+              </OnlyHeader>
             }
-          /> */}
+          />
         </Routes>
       </div>
     </Router>

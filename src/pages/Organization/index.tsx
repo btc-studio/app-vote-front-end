@@ -20,7 +20,7 @@ function Organization() {
     <div className="flex flex-col pb-8">
       <Header />
       {/* Tag menu */}
-      <div className=" px-56 border-b-[1px] border-primary-20 mt-[4.5rem] mt-20">
+      <div className=" px-56 border-b-[1px] border-primary-20 mt-20">
         <Avatar name="BTC Studio" size="big" />
         <div className="flex mt-4">
           {/* Members */}
@@ -83,7 +83,7 @@ function Organization() {
         </div>
       </div>
       {/* Content */}
-      <div className="w-full px-56">
+      <div className="w-full px-56 mt-2">
         {content.answerOptions && <AnswerOptions />}
         {content.members && <Members />}
         {content.polls && !content.voteResult && <Polls setContent={setContent} setPollId={setPollId} />}

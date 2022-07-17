@@ -6,9 +6,10 @@ interface props {
   handle?: any;
   css?: string;
   note?: string | undefined | number;
+  children?: JSX.Element | JSX.Element[];
 }
 
-const AnswerCard: React.FC<props> = ({ title, content, handle, css, note }) => {
+const AnswerCard: React.FC<props> = ({ title, content, handle, css, note, children }) => {
   return (
     <div
       className={`w-[300px] h-[126px] bg-primary-20 rounded-lg p-3 flex relative cursor-pointer ${css}`}
@@ -21,7 +22,7 @@ const AnswerCard: React.FC<props> = ({ title, content, handle, css, note }) => {
         <h2 className="text-white text-base font-bold">{title}</h2>
         <div className="text-primary-40 text-sm font-normal">{content}</div>
       </div>
-      <div className="absolute bottom-1 right-2 text-sm text-primary-30 italic">{note}</div>
+      <div>{children}</div>
     </div>
   );
 };
