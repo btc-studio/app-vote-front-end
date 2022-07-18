@@ -39,3 +39,4 @@ export const HomeDescription = (props: Props) => {
     </section>
   );
 };
+export default HomeDescription;

@@ -45,3 +45,16 @@ export const convertHoursSeconds = function (hours: string): number {
   var second: number = (arrInt[0] * 60 + arrInt[1]) * 60 * 1000;
   return second;
 };
+
+export const yyyymmdd = function (date: Date): string {
+  var yyyy: string = date.getFullYear().toString();
+  var mm: string = (date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1).toString(); // getMonth() is zero-based
+  var dd: string = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()).toString();
+  return ''.concat(yyyy).concat('-').concat(mm).concat('-').concat(dd);
+};
+export const yyyymmddhhmm = function (date: Date) {
+  var yyyymmddS: string = yyyymmdd(date);
+  var hh: string = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()).toString();
+  var min: string = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()).toString();
+  return ''.concat(yyyymmddS).concat(' ').concat(hh).concat(':').concat(min);
+};

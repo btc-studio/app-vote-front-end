@@ -1,5 +1,5 @@
 import Modal from '../../components/Modal/Modal';
-import { IoBookmark } from 'react-icons/io5';
+import { IoPaperPlane, IoRefresh } from 'react-icons/io5';
 import BtnGroup from '../../components/BtnGroup/BtnGroup';
 import Button from '../../components/Button/Button';
 import Create from './Create';
@@ -7,7 +7,8 @@ import List from './List';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { CriteriasCall, Criterias, getAllCriterias } from '../../recoil/create-criterias/CriteriaStates';
-
+import { useRecoilValue } from 'recoil';
+import { UserInfo } from '../../recoil/users/UserInfo';
 interface content {
   create: boolean;
   list: boolean;
@@ -15,6 +16,7 @@ interface content {
 const CreateCriteria: React.FC = () => {
   const [criteriasCall, setCriteriasCall] = useRecoilState(CriteriasCall);
   const [criterias, setCriterias] = useRecoilState(Criterias);
+  const userInfo = useRecoilValue(UserInfo);
 
   const [content, setContent] = useState<content>({ create: true, list: false });
   useEffect(() => {
@@ -27,26 +29,55 @@ const CreateCriteria: React.FC = () => {
   }, []);
   return (
     <div>
-      <Modal title="Create criterias" avatar={true} icon={<IoBookmark className="mt-1 mr-2"></IoBookmark>}>
-        {content.create ? <Create /> : <></>}
+      <Modal title="Create criterias" avatar={true} icon={<IoPaperPlane className="mt-1 mr-2"></IoPaperPlane>}>
+        {criterias.length > 0 && content.create ? (
+          <button
+            className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-30 rounded text-white mr-2 absolute right-8 top-11"
+            title="Remove all"
+            onClick={() => setCriterias([])}
+          >
+            <IoRefresh className="" />
+          </button>
+        ) : (
+          <></>
+        )}
+        {content.create ? <Create userId={userInfo.id as number} /> : <></>}
         {content.list ? <List data={criteriasCall} /> : <></>}
         {/* ------ Control ------ */}
         {criterias.length > 0 && content.create ? (
           <Button
-            title="Delete all"
+            title="Create all"
             outline={true}
             upcase={true}
             active={false}
             css="absolute bottom-20 right-10"
-            handle={() => {
-              setCriterias([]);
+            handle={async () => {
+              try {
+                const newList = criterias.filter((item) => {
+                  return item.description !== '';
+                });
+                const newListString = newList.map((item) => item.description);
+                if (newList.length > 0) {
+                  console.log(newListString);
+                  await window.contract.create_criteria({
+                    args: {
+                      created_by: userInfo.id,
+                      descriptions: newListString,
+                    },
+                    gas: '300000000000000', // attached GAS (optional)
+                    amount: '100000000000000000000000', // attached deposit in yoctoNEAR (optional)
+                  });
+                }
+              } catch (error) {
+                alert(error);
+              }
             }}
           />
         ) : (
           <></>
         )}
 
-        <div className=" w-[364px] flex absolute bottom-0 py-3 justify-center border-t-[1px] border-primary-60 justify-center">
+        <div className=" w-[364px] flex absolute bottom-0 py-3 border-t-[1px] border-primary-60 justify-center">
           <BtnGroup>
             <Button
               title="Create"

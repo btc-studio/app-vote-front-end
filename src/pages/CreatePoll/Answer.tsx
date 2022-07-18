@@ -1,4 +1,4 @@
-import { IoAdd, IoPencil, IoChevronDown, IoChevronUp, IoRefresh } from 'react-icons/io5';
+import { IoAdd, IoChevronDown, IoChevronUp, IoRefresh } from 'react-icons/io5';
 import Avatar from '../../components/Avatar/Avatar';
 import { useState } from 'react';
 import { OptionsCall } from '../../recoil/create-options/OptionsState';
@@ -35,7 +35,7 @@ const ItemCheck: React.FC<propsItemCheck> = ({ id, description }) => {
         }}
         checked={check}
       />
-      <label htmlFor={`criteria-${id}`} className="font-medium text-xl cursor-pointer">
+      <label htmlFor={`criteria-${id}`} className="font-medium text-base cursor-pointer">
         {description}
       </label>
     </div>
@@ -59,12 +59,15 @@ const Answer: React.FC = () => {
       <div className="mt-6 flex justify-between mb-1">
         <label>Choose Answer options</label>
         <div className="flex">
-          <button className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded mr-2 text-primary-80">
+          {/* <button className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded mr-2 text-primary-80">
             <IoPencil className="" />
-          </button>
-          <button className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded text-primary-80">
+          </button> */}
+          <Link
+            to={'/createOptions'}
+            className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded text-primary-80"
+          >
             <IoAdd />
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -104,7 +107,7 @@ const Answer: React.FC = () => {
 
       {/* List tiêu chí */}
       <div className="mt-10 flex justify-between mb-1 flex-col">
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-1">
           <label>Choose Answer Criterias</label>
           <div className="flex ">
             <button
@@ -139,4 +142,4 @@ const Answer: React.FC = () => {
   );
 };
 
-export default Answer;
+export { Answer, ItemCheck };

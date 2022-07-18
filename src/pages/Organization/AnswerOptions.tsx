@@ -5,10 +5,10 @@ import { OptionsCall } from '../../recoil/create-options/OptionsState';
 const AnswerOptions: React.FC = () => {
   const options = useRecoilValue(OptionsCall);
   return (
-    <div className="grid grid-cols-3 gap-y-10 mt-[42px]">
+    <div className="flex w-full flex-wrap mt-4">
       {options &&
         options.map((option) => {
-          return <AnswerCard key={option.id} title={option.title} content={option.description} />;
+          return <AnswerCard css="mr-10 mb-6" key={option.id} title={option.title} content={option.description} />;
         })}
     </div>
   );

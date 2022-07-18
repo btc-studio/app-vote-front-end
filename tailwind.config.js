@@ -20,6 +20,21 @@ module.exports = {
         greenL: '#22C55E',
         blueN: '#3B82F6',
       },
+      animation: {
+        fadeIn: 'show 0.5s ease',
+      },
+      keyframes: {
+        show: {
+          'from': {
+            left: '100px',
+            opacity: 0
+          },
+          'to': {
+            left: 0,
+            opacity: 1
+          }
+        }
+      },
     },
   },
   plugins: [],

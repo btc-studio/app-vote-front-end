@@ -12,7 +12,6 @@ interface props {
 }
 
 const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
-  const [checkAnonymous, setCheckAnonymous] = useState<any>(true);
   const [poll, setPoll] = useRecoilState(Poll);
   const options = useRecoilValue(OptionsCall);
   const [hours, setHours] = useState<string>('');
@@ -22,8 +21,8 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
   }, [options]);
   return (
     <>
-      <h2 className="mt-10 text-2xl font-bold text-white">Setting</h2>
-      <div className="mt-5 w-full h-[194px] rounded-lg bg-primary-10 px-3 py-4">
+      <h2 className="mt-10 text-xl font-bold text-white">Setting</h2>
+      <div className="mt-5 w-full h-[160px] rounded-lg bg-primary-10 px-6 py-8">
         {/* End Date */}
         <div>
           <div className="flex items-center w-full">
@@ -49,7 +48,7 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
               />
             </div>
           </div>
-          <div className="flex justify-between ml-8 mt-3">
+          <div className="flex justify-between mt-6">
             <input
               type="time"
               value={hours}
@@ -59,7 +58,7 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
                 let hoursStr = e.target.value;
                 let second: number = convertHoursSeconds(hoursStr);
                 setHours(hoursStr);
-                setPoll({ ...poll, end_at: second + (convertDateSeconds(date) | 0) });
+                setPoll({ ...poll, end_at: second + convertDateSeconds(date) });
               }}
             />
             <input
@@ -71,13 +70,13 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
                 let dateStr = e.target.value;
                 let second: number = convertDateSeconds(dateStr);
                 setDate(dateStr);
-                setPoll({ ...poll, end_at: second + (convertHoursSeconds(hours) | 0) });
+                setPoll({ ...poll, end_at: second + convertHoursSeconds(hours) });
               }}
             />
           </div>
         </div>
         {/* Anonymous */}
-        <div className="mt-4 py-1">
+        {/* <div className="mt-4 py-1">
           <div className="flex items-center w-full">
             <div className="p-[2px] rounded bg-orangeN">
               <IoEyeOffOutline className="text-orangeN bg-white rounded-full " />
@@ -98,9 +97,9 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
         {/* Who can vote */}
-        <div className="mt-0 ">
+        {/* <div className="mt-0 ">
           <div className="flex items-center w-full">
             <div className="p-[2px] rounded bg-blueN">
               <IoGlobeOutline className="text-blueN bg-white rounded-full " />
@@ -110,11 +109,11 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
               <select name="employee" className="bg-transparent rounded-xl text-sm">
                 <option value={1}>Organization</option>
                 {/* <option value={2}>Organization2</option>
-                <option value={3}>Organization3</option> */}
+                <option value={3}>Organization3</option> 
               </select>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

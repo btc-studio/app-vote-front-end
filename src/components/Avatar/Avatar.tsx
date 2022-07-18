@@ -2,7 +2,7 @@ import { avatarIcon } from '../../assets/images';
 
 interface props {
   name?: string;
-  size: string;
+  size: string; // big or small
   note?: string;
   css?: string;
 }

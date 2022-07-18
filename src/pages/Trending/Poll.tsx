@@ -9,7 +9,8 @@ import { HomeVote } from './TrendingStates/HomeVote';
 import { useRecoilValue } from 'recoil';
 import { allUserState, findUserbyId } from '../../recoil/trending/AllUser';
 import { selectOption } from '../../recoil/trending/Selected';
-import { IsMemberState, UserInfo } from '../../recoil/UserInfo';
+import { IsMemberState, UserInfo } from '../../recoil/users/UserInfo';
+import Avatar from '../../components/Avatar/Avatar';
 
 interface Props {
   pollInfo: any;
@@ -74,13 +75,7 @@ function Poll(props: Props) {
 
   return (
     <div className="mb-[5rem] " hidden={pollInfo.end_at < Today}>
-      <div className="min-w-[229px] h-[75px] flex items-center ">
-        <div className="w-[75px] h-[75px] bg-[#fff]  mr-[14px] rounded-full flex justify-center items-center relative overflow-hidden">
-          <img className="absolute bottom-0" src={people} alt="people" />
-        </div>
-        <p className="text-[24px] font-semibold ">BTC Studio</p>
-      </div>
-
+      <Avatar size="big" name="BTC Studio" />
       <div className="flex min-w-[434px]  h-[100%] mt-[33px] ">
         <div className="w-[65%] h-[100%] bg-[rgba(255,255,255,0.2)] px-[30px] py-[20px] rounded-[16px]">
           <h1 className="flex items-center text-[24px] font-semibold mb-[20px]">

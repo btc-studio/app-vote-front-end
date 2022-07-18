@@ -13,7 +13,7 @@ interface props {
 const Button: React.FC<props> = ({ title, icon, upcase, active, outline, group, css, handle, idDisable }) => {
   return (
     <button
-      className={`flex items-center font-semibold  text-center text-[14px] leading-[26px] rounded-lg 
+      className={`flex items-center font-semibold  text-center text-sm leading-[26px] rounded-lg 
         `}
       onClick={
         handle

@@ -14,7 +14,7 @@ const Modal: React.FC<props> = ({ title, children, avatar, icon }) => {
       <div className="p-[34px] w-[434px] h-[648px] rounded-2xl bg-primary-20 relative">
         <div className="text-2xl font-bold text-white text-start flex ">
           {title && (
-            <h1 className="flex text-start">
+            <h1 className="flex text-start text-xl">
               {icon}
               {title}
             </h1>

@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Trending from './pages/Trending';
 import CreatePoll from './pages/CreatePoll';
 import DefaultLayout from './components/Layout/DefaultLayout';
-// import YourPolls from './pages/YourPolls';
+import OnlyHeader from './components/Layout/OnlyHeader';
+import CreateOptions from './pages/CreateOptions';
 import Organization from './pages/Organization';
 import CreateCriteria from './pages/CreateCriteria';
 import { useEffect } from 'react';
@@ -11,28 +12,40 @@ import { getAllCriterias, CriteriasCall } from './recoil/create-criterias/Criter
 import { getAllOptions, OptionsCall } from './recoil/create-options/OptionsState';
 import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { IsMemberState, UserInfo } from './recoil/UserInfo';
+import { UserInfo, getAllUsers, ListUsers, IsMemberState } from './recoil/users/UserInfo';
+import Error from './pages/Error';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
   const setOptions = useSetRecoilState(OptionsCall);
   const setPolls = useSetRecoilState(PollsCall);
   const setUserInfo = useSetRecoilState(UserInfo);
+  const setListUsers = useSetRecoilState(ListUsers);
   const [isMember, setIsMember] = useRecoilState(IsMemberState);
-
   // Get all criterias, options, info of user logined
   useEffect(() => {
-    const getCriterias = async () => {
+    const getPolls = async () => {
       const allCriterias = await getAllCriterias();
       setCriteriasCall(allCriterias);
-    };
-    const getOptions = async () => {
       const allOptions = await getAllOptions();
       setOptions(allOptions);
-    };
-    const getPolls = async () => {
       const allPolls = await getAllPolls();
-      setPolls(allPolls);
+      setPolls(
+        allPolls.sort((a: any, b: any) => {
+          return b.end_at - a.end_at;
+        }),
+      );
+      const allUsers = await getAllUsers();
+      const newAllUsers = allUsers.map((user: any) => {
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          walletAddress: user.user_wallet.wallet_address,
+        };
+      });
+      setListUsers(newAllUsers);
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
@@ -42,6 +55,7 @@ const App: React.FC = () => {
           name: userData.name,
           email: userData.email,
           role: userData.role,
+          walletAddress: userData.user_wallet.wallet_address,
         });
         setIsMember(true);
       }
@@ -50,8 +64,6 @@ const App: React.FC = () => {
       getUserInfo(window.accountId);
     }
     getPolls();
-    getOptions();
-    getCriterias();
   }, []);
   return (
     <Router>
@@ -65,44 +77,39 @@ const App: React.FC = () => {
               </DefaultLayout>
             }
           />
-          {isMember === true ? (
-            <>
-              <Route
-                path="/createpoll"
-                element={
-                  <DefaultLayout>
-                    <CreatePoll />
-                  </DefaultLayout>
-                }
-              />
-              <Route
-                path="/createCriteria"
-                element={
-                  <DefaultLayout>
-                    <CreateCriteria />
-                  </DefaultLayout>
-                }
-              />
-              {/* <Route
-            path="/yourpolls"
+          <Route
+            path="/createpoll"
             element={
               <DefaultLayout>
-                <YourPolls />
+                <CreatePoll />
               </DefaultLayout>
             }
-          /> */}
-              <Route path="/organization" element={<Organization />} />
-            </>
-          ) : (
-            <Route
-              path="/"
-              element={
-                <DefaultLayout>
-                  <Trending />
-                </DefaultLayout>
-              }
-            />
-          )}
+          />
+          <Route
+            path="/createCriteria"
+            element={
+              <DefaultLayout>
+                <CreateCriteria />
+              </DefaultLayout>
+            }
+          />
+          <Route
+            path="/createOptions"
+            element={
+              <DefaultLayout>
+                <CreateOptions />
+              </DefaultLayout>
+            }
+          />
+          <Route path="/organization" element={<Organization />} />
+          <Route
+            path="/:somestring"
+            element={
+              <OnlyHeader>
+                <Error />
+              </OnlyHeader>
+            }
+          />
         </Routes>
       </div>
     </Router>

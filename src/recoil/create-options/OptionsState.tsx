@@ -1,10 +1,15 @@
 import { atom } from 'recoil';
 import { OptionModel } from '../../Model/Poll';
 import request from '../../utils/request';
-const initialOptionsState: OptionModel[] = [];
-export const OptionsCall = atom({
+const initialOptionsState: OptionModel = { title: '', user_ids: [] };
+export const Option = atom({
   key: 'OPTIONS',
   default: initialOptionsState,
+});
+const initialOptionsCallState: OptionModel[] = [];
+export const OptionsCall = atom({
+  key: 'OPTIONS_CALL',
+  default: initialOptionsCallState,
 });
 
 export const getAllOptions = async () => {
@@ -16,6 +21,6 @@ export const getAllOptions = async () => {
     const options = await window.contract.get_all_poll_options();
     return options;
   } catch (error) {
-    console.log('Error options axios: ', error);
+    console.log('Error call API options: ', error);
   }
 };

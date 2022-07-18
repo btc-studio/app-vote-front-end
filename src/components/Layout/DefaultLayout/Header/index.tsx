@@ -24,7 +24,9 @@ function Header() {
         ) : (
           <div
             className="min-w-[200px] h-[40px] py-[8px] px-[16px] text-[20px] flex items-center justify-around rounded-full bg-[rgba(255,255,255,0.3)] cursor-pointer"
-            onClick={logout}
+            onClick={() => {
+              logout();
+            }}
           >
             <IoWallet className="text-lg mr-[25px]" />
             <p className="mr-[17px] text-sm">{window.accountId}</p>

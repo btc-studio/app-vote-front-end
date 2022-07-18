@@ -3,11 +3,18 @@ import { avatarIcon } from '../../assets/images/index';
 interface props {
   title: string | undefined;
   content: string | undefined;
+  handle?: any;
+  css?: string;
+  note?: string | undefined | number;
+  children?: JSX.Element | JSX.Element[];
 }
 
-const AnswerCard: React.FC<props> = ({ title, content }) => {
+const AnswerCard: React.FC<props> = ({ title, content, handle, css, note, children }) => {
   return (
-    <div className="w-[300px] h-[126px] bg-primary-20 rounded-lg p-3 flex cursor-pointer">
+    <div
+      className={`w-[300px] h-[126px] bg-primary-20 rounded-lg p-3 flex relative cursor-pointer ${css}`}
+      onClick={handle}
+    >
       <div className="h-12 w-12 rounded-3xl bg-transparent mr-4">
         <img src={avatarIcon} alt="icon" className="w-full h-full" />
       </div>
@@ -15,6 +22,7 @@ const AnswerCard: React.FC<props> = ({ title, content }) => {
         <h2 className="text-white text-base font-bold">{title}</h2>
         <div className="text-primary-40 text-sm font-normal">{content}</div>
       </div>
+      <div>{children}</div>
     </div>
   );
 };

@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { IoSave } from 'react-icons/io5';
 import { useRecoilValue } from 'recoil';
 import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
-// import { listPolls } from '../../../recoil/trending/AllPoll';
 import { allUserState } from '../../../recoil/trending/AllUser';
 import { selectOption } from '../../../recoil/trending/Selected';
-import { UserInfo } from '../../../recoil/UserInfo';
-// import api from '../../../utils/request';
+import { UserInfo } from '../../../recoil/users/UserInfo';
 import { SelectionBox } from './SelectionBox';
 
 export interface criterias {
@@ -18,7 +16,6 @@ export interface criterias {
 }
 
 interface Props {
-  // pollOptionId: number;
   pollId: number;
   criteriaIds: number[];
   optionId: number;
