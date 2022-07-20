@@ -79,10 +79,9 @@ export const HomeVote = (props: Props) => {
     <section className="min-h-[472px] w-[366px]  relative">
       {loading === true ? (
         <div className="flex justify-center items-center">
-          <p>
-            {' '}
-            <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg> Voting....
-          </p>
+          <div>
+            <svg className="animate-spin h-5 w-5 mr-3 " viewBox="0 0 24 24"></svg> Voting....
+          </div>
         </div>
       ) : (
         <>

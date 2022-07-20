@@ -115,7 +115,9 @@ function Poll(props: Props) {
               <button
                 disabled={checkUserVoted === true || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  mr-[4px] rounded-[6px] ${
-                  homeState === 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
+                  homeState === 'description' || homeState === 'result' || checkUserVoted === true
+                    ? 'bg-[rgba(255,255,255,0.4)]'
+                    : 'text-[rgba(255,255,255,0.4)]'
                 }`}
                 onClick={() => HandleSetHomeState('description')}
               >
@@ -124,7 +126,7 @@ function Poll(props: Props) {
               <button
                 disabled={!window.walletConnection.isSignedIn() || checkUserVoted === true || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  rounded-[6px] flex items-center justify-center ${
-                  homeState !== 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
+                  homeState === 'vote' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 } `}
                 onClick={() => HandleSetHomeState('vote')}
               >
