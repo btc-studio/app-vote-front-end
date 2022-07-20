@@ -58,17 +58,17 @@ const Answer: React.FC = () => {
     <>
       <div className="mt-6 flex justify-between mb-1">
         <label>Choose Answer options</label>
-        <div className="flex">
-          {/* <button className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded mr-2 text-primary-80">
+        {/* <div className="flex">
+          <button className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded mr-2 text-primary-80">
             <IoPencil className="" />
-          </button> */}
+          </button>
           <Link
             to={'/createOptions'}
             className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded text-primary-80"
           >
             <IoAdd />
           </Link>
-        </div>
+        </div> */}
       </div>
 
       {/* ====== Options ======= */}
@@ -119,13 +119,13 @@ const Answer: React.FC = () => {
             >
               <IoRefresh />
             </button>
-            <Link
+            {/* <Link
               to={'/createCriteria'}
               className="w-[18px] h-[18px] flex justify-center items-center p-[2px] bg-primary-20 rounded text-primary-80"
               title="Add criteria"
             >
               <IoAdd />
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className="max-h-[340px] overflow-auto">

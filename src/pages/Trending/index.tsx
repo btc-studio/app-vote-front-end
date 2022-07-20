@@ -26,7 +26,7 @@ function Trending() {
 
   useEffect(() => {
     const getAllPolls = async () => {
-      const ListPoll = await window.contract.get_all_polls();
+      const ListPoll = await window.contract.get_all_polls({ limit: 20 });
       if (window.accountId !== undefined) {
         setAllPolls(
           ListPoll.sort((a: any, b: any) => {

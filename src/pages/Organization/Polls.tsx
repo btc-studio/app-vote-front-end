@@ -46,7 +46,7 @@ const Polls: React.FC<props> = ({ setContent, setPollId }) => {
                 }}
               >
                 {expire ? (
-                  <div className="absolute bottom-1 left-2 text-sm text-primary-30">Expire</div>
+                  <div className="absolute bottom-1 left-2 text-sm text-primary-30">Expried</div>
                 ) : (
                   <div className="absolute bottom-1 left-2 text-sm text-primary-30">Available</div>
                 )}

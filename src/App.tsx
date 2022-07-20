@@ -19,7 +19,7 @@ const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
   const setOptions = useSetRecoilState(OptionsCall);
   const setPolls = useSetRecoilState(PollsCall);
-  const setUserInfo = useSetRecoilState(UserInfo);
+  const [userInfo, setUserInfo] = useRecoilState(UserInfo);
   const setListUsers = useSetRecoilState(ListUsers);
   const [isMember, setIsMember] = useRecoilState(IsMemberState);
   // Get all criterias, options, info of user logined
@@ -30,6 +30,8 @@ const App: React.FC = () => {
       const allOptions = await getAllOptions();
       setOptions(allOptions);
       const allPolls = await getAllPolls();
+      console.log(allPolls);
+
       setPolls(
         allPolls.sort((a: any, b: any) => {
           return b.end_at - a.end_at;
@@ -77,31 +79,35 @@ const App: React.FC = () => {
               </DefaultLayout>
             }
           />
-          <Route
-            path="/createpoll"
-            element={
-              <DefaultLayout>
-                <CreatePoll />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/createCriteria"
-            element={
-              <DefaultLayout>
-                <CreateCriteria />
-              </DefaultLayout>
-            }
-          />
-          <Route
-            path="/createOptions"
-            element={
-              <DefaultLayout>
-                <CreateOptions />
-              </DefaultLayout>
-            }
-          />
-          <Route path="/organization" element={<Organization />} />
+          {userInfo.role === 'Admin' && (
+            <>
+              <Route
+                path="/createpoll"
+                element={
+                  <DefaultLayout>
+                    <CreatePoll />
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/createCriteria"
+                element={
+                  <DefaultLayout>
+                    <CreateCriteria />
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/createOptions"
+                element={
+                  <DefaultLayout>
+                    <CreateOptions />
+                  </DefaultLayout>
+                }
+              />
+            </>
+          )}
+          {isMember && <Route path="/organization" element={<Organization />} />}
           <Route
             path="/:somestring"
             element={
