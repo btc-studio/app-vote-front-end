@@ -1,6 +1,5 @@
 import { IoShieldCheckmark } from 'react-icons/io5';
 import { useRecoilValue } from 'recoil';
-// import people from '../../../assets/images/people.svg';
 import { CriteriaModel } from '../../../Model/Poll';
 import { allCriteriaState, getCriteriasById } from '../../../recoil/trending/AllCriteria';
 

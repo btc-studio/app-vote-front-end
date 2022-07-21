@@ -70,6 +70,17 @@ const App: React.FC = () => {
   return (
     <Router>
       <div>
+        {/* <button
+          onClick={async () => {
+            try {
+              await window.contract.delete_poll({ poll_id: 12 });
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          Delete poll
+        </button> */}
         <Routes>
           <Route
             path="/"
