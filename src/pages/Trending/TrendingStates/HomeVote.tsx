@@ -19,7 +19,7 @@ interface Props {
   pollId: number;
   criteriaIds: number[];
   optionId: number;
-  setCheckUserVoted: React.Dispatch<React.SetStateAction<boolean>>;
+  // setCheckUserVoted: React.Dispatch<React.SetStateAction<boolean>>;
   selected: selectOption[];
   setSelected: React.Dispatch<React.SetStateAction<selectOption[]>>;
   setHomeState: React.Dispatch<React.SetStateAction<string>>;
@@ -62,16 +62,21 @@ export const HomeVote = (props: Props) => {
       newArrSelected.push({ criteria_id: select.criteria_id, user_id: select.id });
     });
     if (userInfo.id !== null) {
-      await window.contract.vote({
-        args: {
-          voted_user_id: userInfo.id,
-          poll_id: pollId,
-          criteria_user_array: newArrSelected,
-        },
-        gas: '300000000000000', // attached GAS (optional)
-      });
-      setLoading(false);
-      setHomeState('result');
+      try {
+        await window.contract.vote({
+          args: {
+            voted_user_id: userInfo.id,
+            poll_id: pollId,
+            criteria_user_array: newArrSelected,
+          },
+          gas: '300000000000000', // attached GAS (optional)
+        });
+        setLoading(false);
+        setHomeState('result');
+      } catch (error) {
+        console.log('Error vote: ', error);
+        setLoading(false);
+      }
     }
   };
 

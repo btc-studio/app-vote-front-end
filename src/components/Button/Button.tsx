@@ -32,7 +32,7 @@ const Button: React.FC<props> = ({ title, icon, upcase, active, outline, group, 
           ${outline ? 'border-[1px] border-white' : ''}  text-white   	
           ${group ? 'px-2 py-[4px] text-opacity-50 hover:text-opacity-100' : 'px-5 py-[6px] hover:text-opacity-50'} 
           ${active ? 'bg-primary-30 text-opacity-100 text-white' : ''}
-          ${idDisable ? 'hover:text-opacity-50 cursor-not-allowed' : ''}
+          ${idDisable ? 'hover:text-opacity-100 cursor-not-allowed' : ''}
           ${css}
         `}
       >

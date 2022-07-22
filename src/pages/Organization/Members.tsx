@@ -1,17 +1,26 @@
 import Button from '../../components/Button/Button';
-import { ListUsers } from '../../recoil/users/UserInfo';
 import { useRecoilValue } from 'recoil';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
-import { UserInfo } from '../../recoil/users/UserInfo';
-import { validateEmail, validateNearAddress } from '../../utils/ValidInput';
+import { UserInfo, ListUsers } from '../../recoil/users/UserInfo';
+import { validateEmail, validateNearAddress, validateUserName } from '../../utils/ValidInput';
 
 const Members: React.FC = () => {
   const listUsers = useRecoilValue(ListUsers);
   const userInfo = useRecoilValue(UserInfo);
-
-  const [invalidMail, setInvalidMail] = useState<boolean>(false);
-  const [invalidNear, setInvalidNear] = useState<boolean>(false);
+  const walletInput = useRef<HTMLInputElement>(null);
+  const [invalidUserName, setInvalidUserName] = useState<{ state: boolean; message: string | null }>({
+    state: false,
+    message: null,
+  });
+  const [invalidMail, setInvalidMail] = useState<{ state: boolean; message: string | null }>({
+    state: false,
+    message: null,
+  });
+  const [invalidNear, setInvalidNear] = useState<{ state: boolean; message: string | null }>({
+    state: false,
+    message: null,
+  });
   const [createAccount, setCreateAccount] = useState<boolean>(false);
   const [account, setAccount] = useState<{
     name: string | undefined;
@@ -25,8 +34,10 @@ const Members: React.FC = () => {
     walletAddress: undefined,
   });
   const handleCreateAccount = async () => {
-    if (account.name && account.walletAddress && account.email && !invalidMail && !invalidNear) {
-      console.log(account);
+    if (invalidUserName.state === false && invalidMail.state === false && invalidNear.state === false) {
+      console.log(invalidUserName, invalidMail, invalidNear);
+      // console.log({ ...account, walletAddress: account.walletAddress + '.testnet' });
+      return;
       await window.contract.create_user({
         args: {
           name: account?.name,
@@ -69,7 +80,8 @@ const Members: React.FC = () => {
         </table>
       )}
       {createAccount ? (
-        <div className="animate-fadeIn px-4 py-6 bg-primary-10 rounded-xl right-0 top-0 relative">
+        <div className="animate-fadeIn w-96 px-4 py-6 bg-primary-10 rounded-xl right-0 top-0 relative">
+          <h1 className="text-xl mb-4 font-bold">Add member account</h1>
           <div
             className="absolute right-1 top-1 p-1 bg-primary-20 rounded-3xl cursor-pointer hover:bg-primary-50"
             onClick={() => {
@@ -80,31 +92,41 @@ const Members: React.FC = () => {
                 email: undefined,
                 walletAddress: undefined,
               });
-              setInvalidMail(false);
-              setInvalidNear(false);
+              setInvalidMail({ state: false, message: null });
+              setInvalidNear({ state: false, message: null });
+              setInvalidUserName({ state: false, message: null });
             }}
           >
             <IoClose />
           </div>
+          {/* User name */}
           <div>
-            <label htmlFor="user-name">User name</label>
+            <label htmlFor="user-name" className="flex items-center">
+              User name *
+              {invalidUserName.state && <p className="text-xs text-red-500 ml-3 mt-1">{invalidUserName.message}</p>}
+            </label>
             <input
-              className="h-10 w-full bg-primary-20 rounded-lg py-2 px-4 outline-none mt-1"
+              className={`h-10 w-full bg-primary-20 rounded-lg py-2 px-4 outline-none mt-1 ${
+                invalidUserName.state ? 'border-2 border-red-500' : ''
+              }`}
               id="user-name"
               value={account.name ? account.name : ''}
               onChange={(e) => {
                 setAccount({ ...account, name: e.target.value });
               }}
+              onBlur={(e) => {
+                setInvalidUserName(validateUserName(e.target.value));
+              }}
             />
           </div>
+          {/* Email */}
           <div className="mt-3">
             <label htmlFor="email" className="flex items-center">
-              Email
-              {invalidMail && <p className="text-xs text-red-500 ml-3 mt-1">* Invalid email!</p>}
+              Email *{invalidMail.state && <p className="text-xs text-red-500 ml-3 mt-1">{invalidMail.message}</p>}
             </label>
             <input
               className={`h-10 w-full bg-primary-20 rounded-lg py-2 px-4 outline-none mt-1 ${
-                invalidMail ? 'border-2 border-red-500' : ''
+                invalidMail.state ? 'border-2 border-red-500' : ''
               }`}
               id="email"
               value={account.email ? account.email : ''}
@@ -112,20 +134,21 @@ const Members: React.FC = () => {
                 setAccount({ ...account, email: e.target.value });
               }}
               onBlur={(e) => {
-                if (!validateEmail(e.target.value)) setInvalidMail(true);
-                else setInvalidMail(false);
+                setInvalidMail(validateEmail(e.target.value));
               }}
             />
           </div>
-          <div className="mt-3">
+          {/* Wallet Address */}
+          <div className="mt-3 relative">
             <label htmlFor="wallet-address" className="flex items-center">
-              Wallet address
-              {invalidNear && <p className="text-xs text-red-500 ml-3 mt-1">* Invalid near address!</p>}
+              Wallet address *
+              {invalidNear.state && <p className="text-xs text-red-500 ml-3 mt-1">{invalidNear.message}</p>}
             </label>
             <input
-              placeholder=".testnet"
-              className={`h-10 w-full bg-primary-20 rounded-lg py-2 px-4 outline-none mt-1 ${
-                invalidNear ? 'border-2 border-red-500' : ''
+              // placeholder=".testnet"
+              ref={walletInput}
+              className={`z-100 h-10 w-full bg-primary-20 rounded-lg py-2 px-4 outline-none mt-1 ${
+                invalidNear.state ? 'border-2 border-red-500' : ''
               }`}
               id="wallet-address"
               value={account.walletAddress ? account.walletAddress : ''}
@@ -133,39 +156,48 @@ const Members: React.FC = () => {
                 setAccount({ ...account, walletAddress: e.target.value });
               }}
               onBlur={(e) => {
-                if (!validateNearAddress(e.target.value)) setInvalidNear(true);
-                else setInvalidNear(false);
+                const walletAddress = e.target.value;
+                const checkExist = listUsers.find((user) => {
+                  return user.walletAddress === walletAddress;
+                });
+                if (checkExist) {
+                  setInvalidNear({ state: true, message: 'Wallet address was exist!' });
+                } else setInvalidNear(validateNearAddress(walletAddress));
               }}
             />
+            <span className={`absolute left-0 text-primary-50 left-4 bottom-2 flex`}>
+              {<p className="text-transparent">{account.walletAddress}</p>}.testnet
+            </span>
           </div>
+          {/* Role */}
           <div className="mt-2 mb-8 flex">
-            <div className="mr-4">
-              <label htmlFor="admin">Admin</label>
-              <input
-                type="radio"
-                id="admin"
-                value="Admin"
-                name="role"
-                className="ml-2"
-                checked={account.role === 'Admin'}
-                onChange={(e) => {
-                  setAccount({ ...account, role: e.target.value });
-                }}
-              />
-            </div>
             <div>
-              <label htmlFor="user">Employee</label>
               <input
                 type="radio"
                 id="user"
                 name="role"
                 value="Employee"
-                className="ml-2"
+                className="mr-2"
                 checked={account.role === 'Employee'}
                 onChange={(e) => {
                   setAccount({ ...account, role: e.target.value });
                 }}
               />
+              <label htmlFor="user">Employee</label>
+            </div>
+            <div className="ml-4">
+              <input
+                type="radio"
+                id="admin"
+                value="Admin"
+                name="role"
+                className="mr-2"
+                checked={account.role === 'Admin'}
+                onChange={(e) => {
+                  setAccount({ ...account, role: e.target.value });
+                }}
+              />
+              <label htmlFor="admin">Admin</label>
             </div>
           </div>
           <Button
@@ -174,6 +206,7 @@ const Members: React.FC = () => {
             outline={true}
             active={false}
             group={false}
+            idDisable={invalidMail.state || invalidNear.state || invalidUserName.state}
             css="absolute right-4 bottom-2 "
             handle={handleCreateAccount}
           />
