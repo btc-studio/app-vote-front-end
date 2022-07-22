@@ -26,7 +26,7 @@ function Poll(props: Props) {
   const allUser = useRecoilValue(allUserState);
   const [selected, setSelected] = useState<selectOption[]>([]);
   const [resultById, setResultById] = useState<ResultInterface[]>([]);
-  const [totalVote, setTotalVote] = useState<number>();
+  const [totalVote, setTotalVote] = useState<number>(0);
   const isMember = useRecoilValue(IsMemberState);
   const [checkUserVoted, setCheckUserVoted] = useState<boolean>(false);
   const userInfo = useRecoilValue(UserInfo);
@@ -68,10 +68,10 @@ function Poll(props: Props) {
       resultById.map((result: ResultInterface) => {
         newTotal = newTotal + result.total_vote;
       });
-      setTotalVote(newTotal);
+      if (checkUserVoted === true) setTotalVote(Math.floor(newTotal / pollInfo.criteria_ids.length));
     };
     getTotalVote();
-  }, [resultById]);
+  }, [resultById, checkUserVoted]);
 
   return (
     <div className="mb-[5rem] " hidden={pollInfo.end_at < Today}>
@@ -115,7 +115,9 @@ function Poll(props: Props) {
               <button
                 disabled={checkUserVoted === true || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  mr-[4px] rounded-[6px] ${
-                  homeState === 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
+                  homeState === 'description' || homeState === 'result' || checkUserVoted === true
+                    ? 'bg-[rgba(255,255,255,0.4)]'
+                    : 'text-[rgba(255,255,255,0.4)]'
                 }`}
                 onClick={() => HandleSetHomeState('description')}
               >
@@ -124,7 +126,7 @@ function Poll(props: Props) {
               <button
                 disabled={!window.walletConnection.isSignedIn() || checkUserVoted === true || isMember === false}
                 className={`min-w-[88px] min-h-[32px]  rounded-[6px] flex items-center justify-center ${
-                  homeState !== 'description' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
+                  homeState === 'vote' ? 'bg-[rgba(255,255,255,0.4)]' : 'text-[rgba(255,255,255,0.4)]'
                 } `}
                 onClick={() => HandleSetHomeState('vote')}
               >
@@ -150,7 +152,7 @@ function Poll(props: Props) {
                 quick view result
               </p>
               <div className="ml-[30px] mt-[13px]">
-                {resultById.map((result: ResultInterface, index) => (
+                {resultById.slice(0, 3).map((result: ResultInterface, index) => (
                   <p key={index} className="mb-1">
                     # {index + 1} <span> {findUserbyId(result.user_id, allUser)}</span>
                   </p>
