@@ -26,7 +26,7 @@ function Poll(props: Props) {
   const allUser = useRecoilValue(allUserState);
   const [selected, setSelected] = useState<selectOption[]>([]);
   const [resultById, setResultById] = useState<ResultInterface[]>([]);
-  const [totalVote, setTotalVote] = useState<number>();
+  const [totalVote, setTotalVote] = useState<number>(0);
   const isMember = useRecoilValue(IsMemberState);
   const [checkUserVoted, setCheckUserVoted] = useState<boolean>(false);
   const userInfo = useRecoilValue(UserInfo);
@@ -68,10 +68,10 @@ function Poll(props: Props) {
       resultById.map((result: ResultInterface) => {
         newTotal = newTotal + result.total_vote;
       });
-      setTotalVote(newTotal);
+      if (checkUserVoted === true) setTotalVote(Math.floor(newTotal / pollInfo.criteria_ids.length));
     };
     getTotalVote();
-  }, [resultById]);
+  }, [resultById, checkUserVoted]);
 
   return (
     <div className="mb-[5rem] " hidden={pollInfo.end_at < Today}>
@@ -152,7 +152,7 @@ function Poll(props: Props) {
                 quick view result
               </p>
               <div className="ml-[30px] mt-[13px]">
-                {resultById.map((result: ResultInterface, index) => (
+                {resultById.slice(0, 3).map((result: ResultInterface, index) => (
                   <p key={index} className="mb-1">
                     # {index + 1} <span> {findUserbyId(result.user_id, allUser)}</span>
                   </p>
