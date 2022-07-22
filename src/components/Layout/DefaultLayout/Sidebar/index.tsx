@@ -2,11 +2,11 @@ import { BsStars, BsLightningChargeFill } from 'react-icons/bs';
 import { IoBeer, IoIceCream, IoPeople, IoPaperPlane } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { login } from '../../../../near/utils';
-import { UserInfo } from '../../../../recoil/users/UserInfo';
+import { UserInfo, IsMemberState } from '../../../../recoil/users/UserInfo';
 import { useRecoilValue } from 'recoil';
 function Sidebar() {
   const userInfo = useRecoilValue(UserInfo);
-
+  const isMember = useRecoilValue(IsMemberState);
   return (
     <div className="w-[199px] min-h-[200px] fixed ">
       <>
@@ -47,7 +47,7 @@ function Sidebar() {
           </>
         )}
       </>
-      {!window.walletConnection.isSignedIn() || !userInfo.role ? (
+      {!window.walletConnection.isSignedIn() && (
         <>
           <hr className="w-[80%] my-[32px] border-[rgba(255,255,255,0.4)] " />
           <button
@@ -58,18 +58,17 @@ function Sidebar() {
           </button>
           <p className="text-[10px] text-[rgba(255,255,255,0.6)] my-[8px]">It’s Free Now</p>
         </>
-      ) : (
-        <>
-          <Link
-            to={'/organization'}
-            className={`flex items-center mb-[20px] font-bold text-base ${
-              window.location.pathname === '/organization' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
-            }`}
-          >
-            <IoIceCream className="mr-[8px] text-2xl" />
-            Organization
-          </Link>
-        </>
+      )}
+      {isMember && (
+        <Link
+          to={'/organization'}
+          className={`flex items-center mb-[20px] font-bold text-base ${
+            window.location.pathname === '/organization' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+          }`}
+        >
+          <IoIceCream className="mr-[8px] text-2xl" />
+          Organization
+        </Link>
       )}
     </div>
   );
