@@ -42,7 +42,7 @@ function Poll(props: Props) {
       setResultById(ResultById);
     };
     getResultById();
-  }, [pollInfo.id]);
+  }, [pollInfo.id, checkUserVoted]);
 
   useEffect(() => {
     const checkVoted = async () => {
@@ -68,7 +68,7 @@ function Poll(props: Props) {
       resultById.map((result: ResultInterface) => {
         newTotal = newTotal + result.total_vote;
       });
-      if (checkUserVoted === true) setTotalVote(Math.floor(newTotal / pollInfo.criteria_ids.length));
+      if (checkUserVoted) setTotalVote(Math.floor(newTotal / pollInfo.criteria_ids.length));
     };
     getTotalVote();
   }, [resultById, checkUserVoted]);
