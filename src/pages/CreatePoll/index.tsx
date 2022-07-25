@@ -18,7 +18,7 @@ const CreatePoll: React.FC = () => {
   const [checkDate, setCheckDate] = useState<any>(true);
   const handlePostPoll = async () => {
     await window.contract.create_poll({
-      callbackUrl: 'https://poll-btcs.vercel.app/',
+      callbackUrl: window.origin,
       args: {
         criteria_ids: poll.criteria_ids,
         created_by: userInfo.id,
