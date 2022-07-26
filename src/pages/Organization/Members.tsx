@@ -195,19 +195,21 @@ const Members: React.FC = () => {
         </div>
       ) : (
         <>
-          <div hidden={userInfo.role !== 'Admin'} className="flex w-full justify-between mb-4">
+          <div className="flex w-full justify-between mb-4">
             <h1 className="text-2xl font-semibold">Members</h1>
-            <Button
-              title="Add account"
-              upcase={true}
-              group={false}
-              outline={true}
-              active={false}
-              css=""
-              handle={() => {
-                setCreateAccount(true);
-              }}
-            />
+            <div hidden={userInfo.role !== 'Admin'}>
+              <Button
+                title="Add account"
+                upcase={true}
+                group={false}
+                outline={true}
+                active={false}
+                css=""
+                handle={() => {
+                  setCreateAccount(true);
+                }}
+              />
+            </div>
           </div>
           <table className="animate-fadeIn text-center m-0">
             <thead>
