@@ -19,7 +19,7 @@ interface Props {
   pollId: number;
   criteriaIds: number[];
   optionId: number;
-  // setCheckUserVoted: React.Dispatch<React.SetStateAction<boolean>>;
+  setCheckUserVoted: React.Dispatch<React.SetStateAction<boolean>>;
   selected: selectOption[];
   setSelected: React.Dispatch<React.SetStateAction<selectOption[]>>;
   setHomeState: React.Dispatch<React.SetStateAction<string>>;
@@ -29,7 +29,7 @@ interface users {
   name: string;
 }
 export const HomeVote = (props: Props) => {
-  const { criteriaIds, pollId, optionId, selected, setSelected, setHomeState } = props;
+  const { criteriaIds, pollId, optionId, selected, setSelected, setCheckUserVoted, setHomeState } = props;
   const [userOptions, setUserOptions] = useState<users[]>([]);
   const allCriteria = useRecoilValue(allCriteriaState);
   const [arrUserId, setArrUserId] = useState<number[]>([]);
@@ -62,21 +62,17 @@ export const HomeVote = (props: Props) => {
       newArrSelected.push({ criteria_id: select.criteria_id, user_id: select.id });
     });
     if (userInfo.id !== null) {
-      try {
-        await window.contract.vote({
-          args: {
-            voted_user_id: userInfo.id,
-            poll_id: pollId,
-            criteria_user_array: newArrSelected,
-          },
-          gas: '300000000000000', // attached GAS (optional)
-        });
-        setLoading(false);
-        setHomeState('result');
-      } catch (error) {
-        console.log('Error vote: ', error);
-        setLoading(false);
-      }
+      await window.contract.vote({
+        args: {
+          voted_user_id: userInfo.id,
+          poll_id: pollId,
+          criteria_user_array: newArrSelected,
+        },
+        gas: '300000000000000', // attached GAS (optional)
+      });
+      setLoading(false);
+      setHomeState('result');
+      setCheckUserVoted(true);
     }
   };
 
@@ -84,10 +80,9 @@ export const HomeVote = (props: Props) => {
     <section className="min-h-[472px] w-[366px]  relative">
       {loading === true ? (
         <div className="flex justify-center items-center">
-          <p>
-            {' '}
-            <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg> Voting....
-          </p>
+          <div>
+            <svg className="animate-spin h-5 w-5 mr-3 " viewBox="0 0 24 24"></svg> Voting....
+          </div>
         </div>
       ) : (
         <>

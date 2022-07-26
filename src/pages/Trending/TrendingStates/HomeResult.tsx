@@ -22,7 +22,9 @@ export const HomeResult = (props: Props) => {
       </div>
       <div>
         <div className="text-[14px]  font-[400] leading-[26px]">
-          <p className="mb-[8px]">{pollDescription}</p>
+          <div className="mb-[8px]">
+            {pollDescription && pollDescription.split('\n').map((i, key) => <div key={key}>{i}</div>)}
+          </div>
           {criteriaIds &&
             getCriteriasById(criteriaIds, allCriteria).map((criteria: CriteriaModel, index) => (
               <p key={index}>

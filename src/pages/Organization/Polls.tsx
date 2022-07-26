@@ -33,7 +33,7 @@ const Polls: React.FC<props> = ({ setContent, setPollId }) => {
                 css={`mr-10 mb-6 ${expire ? '' : 'border-2	 hover:shadow-md hover:shadow-white hover:bg-primary-30 '}`}
                 key={poll.id}
                 title={poll.title}
-                content={poll.description}
+                content={''}
                 handle={() => {
                   setContent({
                     orverview: false,
