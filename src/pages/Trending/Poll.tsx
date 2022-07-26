@@ -68,7 +68,7 @@ function Poll(props: Props) {
       resultById.map((result: ResultInterface) => {
         newTotal = newTotal + result.total_vote;
       });
-      if (checkUserVoted) setTotalVote(Math.floor(newTotal / pollInfo.criteria_ids.length));
+      setTotalVote(Math.floor(newTotal / pollInfo.criteria_ids.length));
     };
     getTotalVote();
   }, [resultById, checkUserVoted]);

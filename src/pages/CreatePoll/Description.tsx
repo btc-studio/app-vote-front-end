@@ -10,6 +10,7 @@ const Description: React.FC = () => {
   const [poll, setPoll] = useRecoilState(Poll);
   const refInput = useRef<HTMLInputElement>(null);
   const refText = useRef<HTMLTextAreaElement>(null);
+
   // Lưu link ảnh
   async function handleChangeImg(e: any) {
     const file = e.target.files[0];
@@ -71,7 +72,7 @@ const Description: React.FC = () => {
       <textarea
         ref={refText}
         placeholder="Write a vote description"
-        className="w-full bg-transparent mt-52 h-1/2 overflow-hidden outline-none"
+        className="w-full  mt-52 h-3/4  bg-primary-20 outline-none rounded-md p-2 overflow-y-auto"
         onChange={() => {
           setPoll({ ...poll, description: refText.current?.value ? refText.current?.value : '' });
         }}

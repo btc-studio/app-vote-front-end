@@ -56,7 +56,7 @@ const VoteResult: React.FC<props> = ({ pollId }) => {
             <p className="ml-2">End: {endAt}</p>
           </div>
         </div>
-        <p>{poll?.description}</p>
+        <div>{poll?.description && poll?.description.split('\n').map((i, key) => <div key={key}>{i}</div>)}</div>
       </div>
       <div className="mt-4">
         {listUserVote ? (
