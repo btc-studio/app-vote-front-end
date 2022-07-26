@@ -15,7 +15,8 @@ const CreatePoll: React.FC = () => {
   const [switchContentState, setSwitchContentState] = useState({ description: true, answer: false, setting: false });
   const userInfo = useRecoilValue(UserInfo);
   const [poll] = useRecoilState(Poll);
-  const [checkDate, setCheckDate] = useState<any>(true);
+
+  const [validDate, setValidDate] = useState<{ date: boolean; hours: boolean }>({ date: false, hours: false });
   const handlePostPoll = async () => {
     await window.contract.create_poll({
       callbackUrl: window.origin,
@@ -42,7 +43,7 @@ const CreatePoll: React.FC = () => {
       >
         {switchContentState.description ? <Description /> : <></>}
         {switchContentState.answer ? <Answer /> : <></>}
-        {switchContentState.setting ? <Setting checkDate={checkDate} setCheckDate={setCheckDate} /> : <></>}
+        {switchContentState.setting ? <Setting validDate={validDate} setValidDate={setValidDate} /> : <></>}
         <div className=" w-[364px] flex absolute bottom-0 py-3 justify-between border-t-[1px] border-primary-60">
           <BtnGroup>
             <Button
@@ -95,6 +96,11 @@ const CreatePoll: React.FC = () => {
             active={false}
             outline={true}
             upcase={true}
+            // idDisable={
+            //   (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) ||
+            //   (switchContentState.setting && (!validDate.date || !validDate.hours)) ||
+            //   (switchContentState.description && (!poll.title || !poll.description || !poll.img_url))
+            // }
             handle={() => {
               const newState = nextState(switchContentState);
               if (switchContentState.description && (!poll.title || !poll.description || !poll.img_url)) {
@@ -103,8 +109,8 @@ const CreatePoll: React.FC = () => {
               } else if (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) {
                 alert('Please select criterias!');
                 return;
-              } else if (switchContentState.setting && poll.end_at === 0 && checkDate) {
-                alert('Please enter the end date!');
+              } else if (switchContentState.setting && (!validDate.date || !validDate.hours)) {
+                alert('Please select calendar!');
                 return;
               } else {
                 setSwitchContentState(newState);

@@ -8,7 +8,14 @@ const AnswerOptions: React.FC = () => {
     <div className="flex w-full flex-wrap mt-4">
       {options &&
         options.map((option) => {
-          return <AnswerCard css="mr-10 mb-6" key={option.id} title={option.title} content={option.description} />;
+          return (
+            <AnswerCard
+              css="mr-10 mb-6 cursor-default"
+              key={option.id}
+              title={option.title}
+              content={option.description}
+            />
+          );
         })}
     </div>
   );
