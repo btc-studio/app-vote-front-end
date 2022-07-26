@@ -38,7 +38,7 @@ export async function initContract() {
       'get_poll_by_id',
       'get_all_poll_options',
       'get_poll_option_by_id',
-      'get_all_result',
+      'get_all_results',
       'get_all_results_by_poll_id',
       'get_user_by_wallet_address',
       'is_voted',

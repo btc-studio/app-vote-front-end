@@ -26,11 +26,11 @@ module.exports = {
       keyframes: {
         show: {
           'from': {
-            left: '100px',
+            right: '300px',
             opacity: 0
           },
           'to': {
-            left: 0,
+            right: "50%",
             opacity: 1
           }
         }

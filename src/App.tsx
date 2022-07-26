@@ -14,6 +14,7 @@ import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { UserInfo, getAllUsers, ListUsers, IsMemberState } from './recoil/users/UserInfo';
 import Error from './pages/Error';
+import { log } from 'console';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
@@ -30,13 +31,13 @@ const App: React.FC = () => {
       const allOptions = await getAllOptions();
       setOptions(allOptions);
       const allPolls = await getAllPolls();
-
       setPolls(
         allPolls.sort((a: any, b: any) => {
           return b.end_at - a.end_at;
         }),
       );
       const allUsers = await getAllUsers();
+
       const newAllUsers = allUsers.map((user: any) => {
         return {
           id: user.id,
@@ -69,6 +70,17 @@ const App: React.FC = () => {
   return (
     <Router>
       <div>
+        {/* <button
+          onClick={async () => {
+            try {
+              await window.contract.delete_poll({ poll_id: 14 });
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          Delete poll
+        </button> */}
         <Routes>
           <Route
             path="/"

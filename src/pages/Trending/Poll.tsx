@@ -51,7 +51,6 @@ function Poll(props: Props) {
           user_id: userInfo.id,
           poll_id: pollInfo.id,
         });
-
         setCheckUserVoted(voted);
       }
     };
@@ -62,9 +61,10 @@ function Poll(props: Props) {
   }, [userInfo.id, pollInfo.id, checkUserVoted]);
 
   useEffect(() => {
-    const getTotalVote = () => {
+    const getTotalVote = async () => {
       let newTotal = 0;
       // eslint-disable-next-line array-callback-return
+
       resultById.map((result: ResultInterface) => {
         newTotal = newTotal + result.total_vote;
       });

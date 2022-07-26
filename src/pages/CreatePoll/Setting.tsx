@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import { IoTimeOutline, IoEyeOffOutline, IoGlobeOutline } from 'react-icons/io5';
-import Switch from 'react-switch';
 import { Poll } from '../../recoil/create-poll/PollsState';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { convertDate, convertHours, convertDateSeconds, convertHoursSeconds } from '../../utils/HandleDate';
 import { OptionsCall } from '../../recoil/create-options/OptionsState';
 
 interface props {
-  checkDate: boolean;
-  setCheckDate: Function;
+  validDate: any;
+  setValidDate: Function;
 }
 
-const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
+const Setting: React.FC<props> = ({ validDate, setValidDate }) => {
   const [poll, setPoll] = useRecoilState(Poll);
   const options = useRecoilValue(OptionsCall);
   const [hours, setHours] = useState<string>('');
@@ -31,7 +30,7 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
             </div>
             <div className="ml-2 flex justify-between flex-1 items-center">
               <span className="text-sm">End Date</span>
-              <Switch
+              {/* <Switch
                 width={31}
                 height={18}
                 checked={checkDate}
@@ -45,17 +44,18 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
                 checkedIcon={false}
                 onColor={'#11DBC5'}
                 className="mt-1"
-              />
+              /> */}
             </div>
           </div>
           <div className="flex justify-between mt-6">
             <input
               type="time"
               value={hours}
-              disabled={!checkDate}
               className="bg-primary-20 text-sm flex-2 mr-3 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
                 let hoursStr = e.target.value;
+                if (!hoursStr) setValidDate({ ...validDate, hours: false });
+                else setValidDate({ ...validDate, hours: true });
                 let second: number = convertHoursSeconds(hoursStr);
                 setHours(hoursStr);
                 setPoll({ ...poll, end_at: second + convertDateSeconds(date) });
@@ -63,11 +63,13 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
             />
             <input
               type="date"
-              disabled={!checkDate}
+              min={convertDate(new Date().getTime() + 24 * 3600 * 1000)}
               value={date}
               className="bg-primary-20 text-sm flex-1 h-10 py-2 px-3 rounded-lg"
               onChange={(e) => {
                 let dateStr = e.target.value;
+                if (!dateStr) setValidDate({ ...validDate, date: false });
+                else setValidDate({ ...validDate, date: true });
                 let second: number = convertDateSeconds(dateStr);
                 setDate(dateStr);
                 setPoll({ ...poll, end_at: second + convertHoursSeconds(hours) });
@@ -75,45 +77,6 @@ const Setting: React.FC<props> = ({ checkDate, setCheckDate }) => {
             />
           </div>
         </div>
-        {/* Anonymous */}
-        {/* <div className="mt-4 py-1">
-          <div className="flex items-center w-full">
-            <div className="p-[2px] rounded bg-orangeN">
-              <IoEyeOffOutline className="text-orangeN bg-white rounded-full " />
-            </div>
-            <div className="ml-2 flex justify-between flex-1 items-center py-2 border-t-[1px] border-primary-20">
-              <span className="text-sm">Anonymous Poll</span>
-              <Switch
-                width={31}
-                height={18}
-                checked={checkAnonymous}
-                onChange={() => {
-                  setCheckAnonymous(!checkAnonymous);
-                }}
-                uncheckedIcon={false}
-                checkedIcon={false}
-                onColor={'#11DBC5'}
-                className="mt-1"
-              />
-            </div>
-          </div>
-        </div> */}
-        {/* Who can vote */}
-        {/* <div className="mt-0 ">
-          <div className="flex items-center w-full">
-            <div className="p-[2px] rounded bg-blueN">
-              <IoGlobeOutline className="text-blueN bg-white rounded-full " />
-            </div>
-            <div className="ml-2 flex justify-between flex-1 items-center py-2 border-t-[1px] border-primary-20">
-              <span className="text-sm">Who can vote</span>
-              <select name="employee" className="bg-transparent rounded-xl text-sm">
-                <option value={1}>Organization</option>
-                {/* <option value={2}>Organization2</option>
-                <option value={3}>Organization3</option> 
-              </select>
-            </div>
-          </div>
-        </div> */}
       </div>
     </>
   );
