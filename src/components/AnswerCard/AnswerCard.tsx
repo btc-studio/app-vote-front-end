@@ -20,7 +20,9 @@ const AnswerCard: React.FC<props> = ({ title, content, handle, css, note, childr
       </div>
       <div>
         <h2 className="text-white text-base font-bold">{title}</h2>
-        <div className="text-primary-40 text-sm font-normal">{content}</div>
+        <div className="text-primary-40 text-sm font-normal">
+          {content && content.split('\n').map((i, key) => <div key={key}>{i}</div>)}
+        </div>
       </div>
       <div>{children}</div>
     </div>

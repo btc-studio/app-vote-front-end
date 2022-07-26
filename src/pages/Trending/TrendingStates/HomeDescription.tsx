@@ -26,7 +26,13 @@ export const HomeDescription = (props: Props) => {
             <img src={imgUrl ? imgUrl : descriptionImage} alt="" className="w-[363px] h-[241px] object-cover " />
           </div>
           <div className="text-[14px]  font-[400] leading-[26px]">
-            <p className="mb-[8px]">{pollDescription}</p>
+            <div className="mb-[8px] max-h-[80px] overflow-y-auto ">
+              <div>
+                {pollDescription.split('\n').map((i, key) => (
+                  <div key={key}>{i}</div>
+                ))}
+              </div>
+            </div>
             {criteriaIds &&
               getCriteriasById(criteriaIds, allCriteria).map((criteria: any, index) => (
                 <p key={index}>

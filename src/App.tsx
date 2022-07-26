@@ -30,7 +30,6 @@ const App: React.FC = () => {
       const allOptions = await getAllOptions();
       setOptions(allOptions);
       const allPolls = await getAllPolls();
-      console.log(allPolls);
 
       setPolls(
         allPolls.sort((a: any, b: any) => {

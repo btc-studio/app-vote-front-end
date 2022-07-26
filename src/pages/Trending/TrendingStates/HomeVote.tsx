@@ -29,7 +29,7 @@ interface users {
   name: string;
 }
 export const HomeVote = (props: Props) => {
-  const { criteriaIds, pollId, optionId, selected, setSelected, setHomeState } = props;
+  const { criteriaIds, pollId, optionId, selected, setSelected, setCheckUserVoted, setHomeState } = props;
   const [userOptions, setUserOptions] = useState<users[]>([]);
   const allCriteria = useRecoilValue(allCriteriaState);
   const [arrUserId, setArrUserId] = useState<number[]>([]);
@@ -72,6 +72,7 @@ export const HomeVote = (props: Props) => {
       });
       setLoading(false);
       setHomeState('result');
+      setCheckUserVoted(true);
     }
   };
 
