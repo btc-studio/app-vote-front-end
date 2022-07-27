@@ -34,9 +34,15 @@ const CreateOptions: React.FC = () => {
         console.log(error);
       }
     };
-    if (option.description && option.title && option.user_ids && option.user_ids.length > 0) {
+    if (!option.title) {
+      alert('Please enter title!');
+    } else if (!option.user_ids || option.user_ids.length <= 0) {
+      alert('Please choose people!');
+    } else if (!option.description) {
+      alert('Please enter description!');
+    } else {
       createOption();
-    } else alert('Please enter all!');
+    }
   };
   return (
     <div>

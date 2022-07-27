@@ -30,21 +30,6 @@ const Setting: React.FC<props> = ({ validDate, setValidDate }) => {
             </div>
             <div className="ml-2 flex justify-between flex-1 items-center">
               <span className="text-sm">End Date</span>
-              {/* <Switch
-                width={31}
-                height={18}
-                checked={checkDate}
-                onChange={() => {
-                  setCheckDate(!checkDate);
-                  setPoll({ ...poll, end_at: 0 });
-                  setHours('');
-                  setDate('');
-                }}
-                uncheckedIcon={false}
-                checkedIcon={false}
-                onColor={'#11DBC5'}
-                className="mt-1"
-              /> */}
             </div>
           </div>
           <div className="flex justify-between mt-6">
