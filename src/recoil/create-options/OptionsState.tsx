@@ -18,7 +18,7 @@ export const getAllOptions = async () => {
     // const options = await request.get('/options');
     // return options.data.data;
     // NEAR API
-    const options = await window.contract.get_all_poll_options();
+    const options = await window.contract.get_all_poll_options({ limit: 100 });
     return options;
   } catch (error) {
     console.log('Error call API options: ', error);

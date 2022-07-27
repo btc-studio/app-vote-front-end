@@ -14,11 +14,12 @@ function Header() {
         {/* login */}
         {!window.walletConnection.isSignedIn() ? (
           <div className="h-[40px] flex items-center text-base">
-            <button onClick={login} className="w-[150px] h-[100%] font-semibold cursor-pointer hover:opacity-[0.8] ">
+            {/* <button className="w-[150px] h-[100%] font-semibold cursor-pointer hover:opacity-[0.8] ">Sign Up</button> */}
+            <button
+              onClick={login}
+              className="w-[150px] h-[100%] rounded-full font-semibold bg-[rgba(255,255,255,0.3)] cursor-pointer text-[#0EA5E9] hover:opacity-[0.8] "
+            >
               Sign In
-            </button>
-            <button className="w-[150px] h-[100%] rounded-full font-semibold bg-[rgba(255,255,255,0.3)] cursor-pointer text-[#0EA5E9] hover:opacity-[0.8] ">
-              Sign Up
             </button>
           </div>
         ) : (

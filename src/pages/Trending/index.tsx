@@ -26,7 +26,7 @@ function Trending() {
 
   useEffect(() => {
     const getAllPolls = async () => {
-      const ListPoll = await window.contract.get_all_polls({ limit: 20 });
+      const ListPoll = await window.contract.get_all_polls({ limit: 100 });
       if (window.accountId !== undefined) {
         setAllPolls(
           ListPoll.sort((a: any, b: any) => {
@@ -41,14 +41,14 @@ function Trending() {
   }, []);
   useEffect(() => {
     const getAllUser = async () => {
-      const ListUser = await window.contract.get_all_users();
+      const ListUser = await window.contract.get_all_users({ limit: 100 });
       setAllUser(ListUser);
     };
     getAllUser();
   }, []);
   useEffect(() => {
     const getAllCriterias = async () => {
-      const allCriterias = await window.contract.get_all_criterias();
+      const allCriterias = await window.contract.get_all_criterias({ limit: 100 });
       setListCriterias(allCriterias);
     };
     getAllCriterias();

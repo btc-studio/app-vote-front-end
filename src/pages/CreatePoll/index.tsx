@@ -96,11 +96,6 @@ const CreatePoll: React.FC = () => {
             active={false}
             outline={true}
             upcase={true}
-            // idDisable={
-            //   (switchContentState.answer && (!poll.criteria_ids || poll.criteria_ids.length <= 0)) ||
-            //   (switchContentState.setting && (!validDate.date || !validDate.hours)) ||
-            //   (switchContentState.description && (!poll.title || !poll.description || !poll.img_url))
-            // }
             handle={() => {
               const newState = nextState(switchContentState);
               if (switchContentState.description && (!poll.title || !poll.description || !poll.img_url)) {
@@ -110,7 +105,13 @@ const CreatePoll: React.FC = () => {
                 alert('Please select criterias!');
                 return;
               } else if (switchContentState.setting && (!validDate.date || !validDate.hours)) {
-                alert('Please select calendar!');
+                if (!validDate.date && !validDate.hours) {
+                  alert('Please select calendar and hours!');
+                } else if (!validDate.hours) {
+                  alert('Please select hours!');
+                } else if (!validDate.date) {
+                  alert('Please select calendar!');
+                }
                 return;
               } else {
                 setSwitchContentState(newState);

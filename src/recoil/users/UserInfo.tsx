@@ -23,7 +23,7 @@ export const getAllUsers = async () => {
     // let allCriterias = await request.get('criterias');
     // return allCriterias.data.criterias;
     // NEAR API
-    const allUsers = await window.contract.get_all_users({ limit: 20 });
+    const allUsers = await window.contract.get_all_users({ limit: 100 });
     return allUsers;
   } catch (error) {
     console.warn('Error call API Users: ', error);
