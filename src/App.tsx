@@ -27,9 +27,17 @@ const App: React.FC = () => {
   useEffect(() => {
     const getPolls = async () => {
       const allCriterias = await getAllCriterias();
-      setCriteriasCall(allCriterias);
+      setCriteriasCall(
+        allCriterias.sort((a: any, b: any) => {
+          return b.created_at - a.created_at;
+        }),
+      );
       const allOptions = await getAllOptions();
-      setOptions(allOptions);
+      setOptions(
+        allOptions.sort((a: any, b: any) => {
+          return b.created_at - a.created_at;
+        }),
+      );
       const allPolls = await getAllPolls();
       setPolls(
         allPolls.sort((a: any, b: any) => {
@@ -70,17 +78,6 @@ const App: React.FC = () => {
   return (
     <Router>
       <div>
-        {/* <button
-          onClick={async () => {
-            try {
-              await window.contract.delete_poll({ poll_id: 14 });
-            } catch (error) {
-              console.log(error);
-            }
-          }}
-        >
-          Delete poll
-        </button> */}
         <Routes>
           <Route
             path="/"
@@ -93,7 +90,7 @@ const App: React.FC = () => {
           {userInfo.role === 'Admin' && (
             <>
               <Route
-                path="/createpoll"
+                path="/create-poll"
                 element={
                   <DefaultLayout>
                     <CreatePoll />
@@ -101,18 +98,34 @@ const App: React.FC = () => {
                 }
               />
               <Route
-                path="/createCriteria"
+                path="/create-criteria"
                 element={
                   <DefaultLayout>
-                    <CreateCriteria />
+                    <CreateCriteria create={true} list={false} />
                   </DefaultLayout>
                 }
               />
               <Route
-                path="/createOptions"
+                path="/all-criterias"
                 element={
                   <DefaultLayout>
-                    <CreateOptions />
+                    <CreateCriteria create={false} list={true} />
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/create-options"
+                element={
+                  <DefaultLayout>
+                    <CreateOptions create={true} list={false} />
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/all-options"
+                element={
+                  <DefaultLayout>
+                    <CreateOptions create={false} list={true} />
                   </DefaultLayout>
                 }
               />

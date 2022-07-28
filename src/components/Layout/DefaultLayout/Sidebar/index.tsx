@@ -21,7 +21,7 @@ function Sidebar() {
         {userInfo.role === 'Admin' && (
           <>
             <Link
-              to={'/createpoll'}
+              to={'/create-poll'}
               className={`flex items-center mb-[20px] font-bold text-base ${
                 window.location.pathname === '/createpoll' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
               }`}
@@ -29,7 +29,7 @@ function Sidebar() {
               <IoBeer className="mr-[8px] text-2xl" /> Create a poll
             </Link>
             <Link
-              to={'/createCriteria'}
+              to={'/create-criteria'}
               className={`flex items-center mb-[20px] font-bold text-base ${
                 window.location.pathname === '/createCriteria' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
               }`}
@@ -37,7 +37,7 @@ function Sidebar() {
               <IoPaperPlane className="mr-[8px] text-2xl" /> Create criterias
             </Link>
             <Link
-              to={'/createOptions'}
+              to={'/create-options'}
               className={`flex items-center mb-[20px] font-bold text-base ${
                 window.location.pathname === '/createOptions' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
               }`}
