@@ -77,7 +77,8 @@ function Poll(props: Props) {
     <div className="mb-[5rem] " hidden={pollInfo.end_at < Today}>
       <Avatar size="big" name="BTC Studio" />
       <div className="flex min-w-[434px]  h-[100%] mt-[33px] ">
-        <div className="w-[65%] h-[100%] bg-[rgba(255,255,255,0.2)] px-[30px] py-[20px] rounded-[16px]">
+        {/* Hello */}
+        <div className="w-[58%] h-full bg-primary-20 px-[30px] py-[20px] rounded-[16px]">
           <h1 className="flex items-start text-[24px] font-semibold mb-[20px]">
             <IoRocket className="text-[32px] mr-[10px]" /> {pollInfo.title}
           </h1>

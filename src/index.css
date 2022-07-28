@@ -39,3 +39,15 @@ option {
   border-radius: 100vh;
   border: 3px solid #909395;
 }
+.modal-vote::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: transparent;
+  margin: 40px 0 24px;
+}
+.modal-vote::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 100vh;
+  border: 3px solid #909395;
+  margin-top: 20px;
+  height: 20px;
+}

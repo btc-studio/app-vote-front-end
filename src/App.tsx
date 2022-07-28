@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Trending from './pages/Trending';
 import CreatePoll from './pages/CreatePoll';
@@ -45,7 +45,6 @@ const App: React.FC = () => {
         }),
       );
       const allUsers = await getAllUsers();
-
       const newAllUsers = allUsers.map((user: any) => {
         return {
           id: user.id,
@@ -75,6 +74,7 @@ const App: React.FC = () => {
     }
     getPolls();
   }, []);
+
   return (
     <Router>
       <div>
@@ -98,7 +98,7 @@ const App: React.FC = () => {
                 }
               />
               <Route
-                path="/create-criteria"
+                path="/create-criterias"
                 element={
                   <DefaultLayout>
                     <CreateCriteria create={true} list={false} />

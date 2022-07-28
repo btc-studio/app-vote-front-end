@@ -75,7 +75,13 @@ const CreateCriteria: React.FC<props> = ({ create, list }) => {
             upcase={true}
             active={false}
             css="absolute bottom-20 right-10"
-            handle={handleCreateCriteria}
+            handle={() => {
+              if (criterias.some((item) => item.description)) {
+                handleCreateCriteria();
+              } else {
+                alert('Please enter criteria!');
+              }
+            }}
           />
         ) : (
           <></>
@@ -83,7 +89,7 @@ const CreateCriteria: React.FC<props> = ({ create, list }) => {
 
         <div className=" w-[364px] flex absolute bottom-0 py-3 border-t-[1px] border-primary-60 justify-center">
           <BtnGroup>
-            <Link to="/create-criteria">
+            <Link to="/create-criterias">
               <Button title="Create" outline={false} upcase={false} group={true} active={create} />
             </Link>
             <Link to="/all-criterias">

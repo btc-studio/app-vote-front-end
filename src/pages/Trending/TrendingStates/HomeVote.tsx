@@ -77,7 +77,7 @@ export const HomeVote = (props: Props) => {
   };
 
   return (
-    <section className="min-h-[472px] w-[366px]  relative">
+    <section className="min-h-[472px] w-full relative">
       {loading === true ? (
         <div className="flex justify-center items-center">
           <div>
@@ -85,7 +85,7 @@ export const HomeVote = (props: Props) => {
           </div>
         </div>
       ) : (
-        <>
+        <div className="modal-vote max-h-[400px] overflow-y-auto">
           {criteriaIds &&
             getCriteriasById(criteriaIds, allCriteria).map((criteria: criterias, index: number) => (
               <div className="mb-[40px] w-[100%]" key={criteria.id}>
@@ -113,7 +113,7 @@ export const HomeVote = (props: Props) => {
           >
             <IoSave className="text-[16px] mr-[9px]" /> save
           </button>
-        </>
+        </div>
       )}
     </section>
   );
