@@ -58,6 +58,7 @@ const App: React.FC = () => {
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
+
       if (userData) {
         setUserInfo({
           id: userData.id,
@@ -67,6 +68,15 @@ const App: React.FC = () => {
           walletAddress: userData.user_wallet.wallet_address,
         });
         setIsMember(true);
+      } else {
+        setUserInfo({
+          id: null,
+          name: null,
+          email: null,
+          role: 'aaa',
+          walletAddress: accountId as string,
+        });
+        setIsMember(false);
       }
     };
     if (window.accountId) {
@@ -132,14 +142,16 @@ const App: React.FC = () => {
             </>
           )}
           {isMember && <Route path="/organization" element={<Organization />} />}
-          <Route
-            path="/:somestring"
-            element={
-              <OnlyHeader>
-                <Error />
-              </OnlyHeader>
-            }
-          />
+          {(userInfo.role || !window.accountId) && (
+            <Route
+              path="/:somestring"
+              element={
+                <OnlyHeader>
+                  <Error />
+                </OnlyHeader>
+              }
+            />
+          )}
         </Routes>
       </div>
     </Router>
