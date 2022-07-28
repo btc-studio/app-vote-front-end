@@ -65,9 +65,9 @@ function Sidebar() {
       )}
       {isMember && (
         <Link
-          to={'/organization'}
+          to={'/organization/members'}
           className={`flex items-center mb-[20px] font-bold text-base ${
-            window.location.pathname === '/organization' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+            window.location.pathname === '/organization/member' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
           }`}
         >
           <IoIceCream className="mr-[8px] text-2xl" />

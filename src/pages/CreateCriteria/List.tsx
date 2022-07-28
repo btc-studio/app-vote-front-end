@@ -29,7 +29,7 @@ export const Item: React.FC<propsItem> = ({ order, id, description, css }) => {
 
 const List: React.FC<propsList> = ({ data }) => {
   return (
-    <div className="mt-4 max-h-[480px]	overflow-auto">
+    <div className="list-criterias mt-4 max-h-[480px] overflow-auto">
       {data &&
         data.map((item, index) => (
           <Item key={item.id} order={item.created_by} id={index + 1} description={item.description} />

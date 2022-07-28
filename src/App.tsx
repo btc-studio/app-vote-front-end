@@ -14,7 +14,6 @@ import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { UserInfo, getAllUsers, ListUsers, IsMemberState } from './recoil/users/UserInfo';
 import Error from './pages/Error';
-import { log } from 'console';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
@@ -58,7 +57,6 @@ const App: React.FC = () => {
     };
     const getUserInfo = async (accountId: String) => {
       const userData = await window.contract.get_user_by_wallet_address({ wallet_address: accountId });
-
       if (userData) {
         setUserInfo({
           id: userData.id,
@@ -141,10 +139,46 @@ const App: React.FC = () => {
               />
             </>
           )}
-          {isMember && <Route path="/organization" element={<Organization />} />}
+          {isMember && (
+            <Route path="/organization">
+              <Route
+                path="members"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: true, polls: false, answerOptions: false, voteResult: false }}
+                  />
+                }
+              />
+              <Route
+                path="answer-options"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: false, polls: false, answerOptions: true, voteResult: false }}
+                  />
+                }
+              />
+              <Route
+                path="polls"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: false, polls: true, answerOptions: false, voteResult: false }}
+                  />
+                }
+              />
+              <Route
+                path="vote-results/:pollId"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: false, polls: false, answerOptions: false, voteResult: true }}
+                  />
+                }
+              />
+            </Route>
+          )}
+
           {(userInfo.role || !window.accountId) && (
             <Route
-              path="/:somestring"
+              path="*"
               element={
                 <OnlyHeader>
                   <Error />
