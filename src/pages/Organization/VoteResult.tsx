@@ -5,15 +5,15 @@ import { useRecoilValue } from 'recoil';
 import { IoRocket, IoTrophy } from 'react-icons/io5';
 import { getNameUser } from '../../utils/GetUser';
 import { yyyymmddhhmm } from '../../utils/HandleDate';
-interface props {
-  pollId: number;
-}
+import { useParams } from 'react-router-dom';
+
 interface userVote {
   userName: string;
   total: number;
 }
 
-const VoteResult: React.FC<props> = ({ pollId }) => {
+const VoteResult: React.FC = () => {
+  const { pollId } = useParams();
   const [poll, setPoll] = useState<PollModel>();
   const listUsers = useRecoilValue(ListUsers);
   const [listUserVote, setListUserVote] = useState<userVote[]>([]);
@@ -29,8 +29,10 @@ const VoteResult: React.FC<props> = ({ pollId }) => {
 
   useEffect(() => {
     const getPoll = async () => {
-      const pollGet = await window.contract.get_poll_by_id({ poll_id: pollId });
-      const result = await window.contract.get_all_results_by_poll_id({ poll_id: pollId });
+      const pollGet = await window.contract.get_poll_by_id({ poll_id: parseInt(pollId as string) });
+      console.log(pollGet);
+
+      const result = await window.contract.get_all_results_by_poll_id({ poll_id: parseInt(pollId as string) });
 
       const listUserVoteMap = await result.map((item: any) => {
         return {

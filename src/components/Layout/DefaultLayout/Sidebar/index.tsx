@@ -21,25 +21,29 @@ function Sidebar() {
         {userInfo.role === 'Admin' && (
           <>
             <Link
-              to={'/createpoll'}
+              to={'/create-poll'}
               className={`flex items-center mb-[20px] font-bold text-base ${
-                window.location.pathname === '/createpoll' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+                window.location.pathname === '/create-poll' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
               }`}
             >
               <IoBeer className="mr-[8px] text-2xl" /> Create a poll
             </Link>
             <Link
-              to={'/createCriteria'}
+              to={'/create-criterias'}
               className={`flex items-center mb-[20px] font-bold text-base ${
-                window.location.pathname === '/createCriteria' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+                window.location.pathname === '/create-criterias' || window.location.pathname === '/all-criterias'
+                  ? 'text-[#fff]'
+                  : 'text-[rgba(255,255,255,0.6)]'
               }`}
             >
               <IoPaperPlane className="mr-[8px] text-2xl" /> Create criterias
             </Link>
             <Link
-              to={'/createOptions'}
+              to={'/create-options'}
               className={`flex items-center mb-[20px] font-bold text-base ${
-                window.location.pathname === '/createOptions' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+                window.location.pathname === '/create-options' || window.location.pathname === '/all-options'
+                  ? 'text-[#fff]'
+                  : 'text-[rgba(255,255,255,0.6)]'
               }`}
             >
               <IoPeople className="mr-[8px] text-2xl" /> Create options
@@ -61,9 +65,9 @@ function Sidebar() {
       )}
       {isMember && (
         <Link
-          to={'/organization'}
+          to={'/organization/members'}
           className={`flex items-center mb-[20px] font-bold text-base ${
-            window.location.pathname === '/organization' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
+            window.location.pathname === '/organization/member' ? 'text-[#fff]' : 'text-[rgba(255,255,255,0.6)]'
           }`}
         >
           <IoIceCream className="mr-[8px] text-2xl" />

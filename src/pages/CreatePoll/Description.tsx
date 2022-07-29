@@ -72,7 +72,7 @@ const Description: React.FC = () => {
       <textarea
         ref={refText}
         placeholder="Write a vote description"
-        className="w-full  mt-52 h-32 bg-primary-20 outline-none rounded-md p-2 overflow-y-auto"
+        className="w-full  mt-52 max-h-32 min-h-32 bg-primary-10 outline-none rounded-xl p-2 overflow-y-auto"
         onChange={() => {
           setPoll({ ...poll, description: refText.current?.value ? refText.current?.value : '' });
         }}

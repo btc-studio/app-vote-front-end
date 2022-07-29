@@ -16,6 +16,7 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order, userId }) => 
   const handleCreateCriteria = async (title: string) => {
     try {
       await window.contract.create_criteria({
+        callbackUrl: window.origin + '/all-criterias',
         args: {
           created_by: userId,
           descriptions: [title],
@@ -27,16 +28,6 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order, userId }) => 
       alert(error);
     }
   };
-  // const handleCreateCriteria = (title: string) => {
-  //   axios
-  //     .post('http://api.app-vote.ai-studio-work.net/v1/criterias', {
-  //       id: 5,
-  //       created_by: 1,
-  //       description: title,
-  //     })
-  //     .then((res) => console.log('Data: ', res.data))
-  //     .catch((err) => console.log(err));
-  // };
 
   return (
     <div className="flex justify-between mb-4 items-center pr-1">
@@ -60,6 +51,8 @@ const CriteriaItem: React.FC<propsCriteriaItem> = ({ title, order, userId }) => 
           onClick={() => {
             if (title) {
               handleCreateCriteria(title);
+            } else {
+              alert('Please enter criteria!');
             }
           }}
         />

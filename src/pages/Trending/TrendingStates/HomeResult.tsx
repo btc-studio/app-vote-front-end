@@ -12,7 +12,7 @@ export const HomeResult = (props: Props) => {
   const allCriteria = useRecoilValue(allCriteriaState);
 
   return (
-    <section className="min-h-[472px] w-[366px]">
+    <section className="min-h-[400px] w-[366px]">
       <div className=" h-[100px] py-[15px] mb-[34px] rounded-[8px] bg-[rgba(255,255,255,0.3)] flex flex-col justify-center items-center">
         <div className="flex items-center justify-center mb-[8px]">
           <IoShieldCheckmark className="text-[42px] text-[#11DBC5] mr-[13px]" />

@@ -8,12 +8,13 @@ import List from './List';
 import { useRecoilValue } from 'recoil';
 import { Option, OptionsCall } from '../../recoil/create-options/OptionsState';
 import { UserInfo } from '../../recoil/users/UserInfo';
-interface content {
+import { Link } from 'react-router-dom';
+interface props {
   create: boolean;
   list: boolean;
 }
-const CreateOptions: React.FC = () => {
-  const [content, setContent] = useState<content>({ create: true, list: false });
+const CreateOptions: React.FC<props> = ({ create, list }) => {
+  // const [content, setContent] = useState<content>({ create: true, list: false });
   const option = useRecoilValue(Option);
   const optionsCall = useRecoilValue(OptionsCall);
   const user = useRecoilValue(UserInfo);
@@ -21,6 +22,7 @@ const CreateOptions: React.FC = () => {
     const createOption = async () => {
       try {
         await window.contract.create_poll_option({
+          callbackUrl: window.origin + '/all-options',
           args: {
             created_by: user.id,
             title: option.title,
@@ -47,9 +49,9 @@ const CreateOptions: React.FC = () => {
   return (
     <div>
       <Modal title="Create options" avatar={true} icon={<IoPeople className="mt-1 mr-2"></IoPeople>}>
-        {content.create ? <Create /> : <></>}
-        {content.list ? <List data={optionsCall} /> : <></>}
-        {content.create ? (
+        {create ? <Create /> : <></>}
+        {list ? <List data={optionsCall} /> : <></>}
+        {create ? (
           <Button
             group={false}
             outline={true}
@@ -64,26 +66,12 @@ const CreateOptions: React.FC = () => {
         )}
         <div className=" w-[364px] flex absolute bottom-0 py-3 border-t-[1px] border-primary-60 justify-center">
           <BtnGroup>
-            <Button
-              title="Create"
-              outline={false}
-              upcase={false}
-              group={true}
-              active={content.create}
-              handle={() => {
-                setContent({ create: true, list: false });
-              }}
-            />
-            <Button
-              title="List Options"
-              outline={false}
-              upcase={false}
-              group={true}
-              active={content.list}
-              handle={() => {
-                setContent({ create: false, list: true });
-              }}
-            />
+            <Link to="/create-options">
+              <Button title="Create" outline={false} upcase={false} group={true} active={create} />
+            </Link>
+            <Link to="/all-options">
+              <Button title="List Options" outline={false} upcase={false} group={true} active={list} />
+            </Link>
           </BtnGroup>
         </div>
       </Modal>

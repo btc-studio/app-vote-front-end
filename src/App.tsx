@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Trending from './pages/Trending';
 import CreatePoll from './pages/CreatePoll';
@@ -14,7 +14,6 @@ import { PollsCall, getAllPolls } from './recoil/create-poll/PollsState';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { UserInfo, getAllUsers, ListUsers, IsMemberState } from './recoil/users/UserInfo';
 import Error from './pages/Error';
-import { log } from 'console';
 
 const App: React.FC = () => {
   const setCriteriasCall = useSetRecoilState(CriteriasCall);
@@ -27,9 +26,17 @@ const App: React.FC = () => {
   useEffect(() => {
     const getPolls = async () => {
       const allCriterias = await getAllCriterias();
-      setCriteriasCall(allCriterias);
+      setCriteriasCall(
+        allCriterias.sort((a: any, b: any) => {
+          return b.created_at - a.created_at;
+        }),
+      );
       const allOptions = await getAllOptions();
-      setOptions(allOptions);
+      setOptions(
+        allOptions.sort((a: any, b: any) => {
+          return b.created_at - a.created_at;
+        }),
+      );
       const allPolls = await getAllPolls();
       setPolls(
         allPolls.sort((a: any, b: any) => {
@@ -37,7 +44,6 @@ const App: React.FC = () => {
         }),
       );
       const allUsers = await getAllUsers();
-
       const newAllUsers = allUsers.map((user: any) => {
         return {
           id: user.id,
@@ -60,6 +66,15 @@ const App: React.FC = () => {
           walletAddress: userData.user_wallet.wallet_address,
         });
         setIsMember(true);
+      } else {
+        setUserInfo({
+          id: null,
+          name: null,
+          email: null,
+          role: 'aaa',
+          walletAddress: accountId as string,
+        });
+        setIsMember(false);
       }
     };
     if (window.accountId) {
@@ -67,20 +82,10 @@ const App: React.FC = () => {
     }
     getPolls();
   }, []);
+
   return (
     <Router>
       <div>
-        {/* <button
-          onClick={async () => {
-            try {
-              await window.contract.delete_poll({ poll_id: 14 });
-            } catch (error) {
-              console.log(error);
-            }
-          }}
-        >
-          Delete poll
-        </button> */}
         <Routes>
           <Route
             path="/"
@@ -93,7 +98,7 @@ const App: React.FC = () => {
           {userInfo.role === 'Admin' && (
             <>
               <Route
-                path="/createpoll"
+                path="/create-poll"
                 element={
                   <DefaultLayout>
                     <CreatePoll />
@@ -101,32 +106,86 @@ const App: React.FC = () => {
                 }
               />
               <Route
-                path="/createCriteria"
+                path="/create-criterias"
                 element={
                   <DefaultLayout>
-                    <CreateCriteria />
+                    <CreateCriteria create={true} list={false} />
                   </DefaultLayout>
                 }
               />
               <Route
-                path="/createOptions"
+                path="/all-criterias"
                 element={
                   <DefaultLayout>
-                    <CreateOptions />
+                    <CreateCriteria create={false} list={true} />
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/create-options"
+                element={
+                  <DefaultLayout>
+                    <CreateOptions create={true} list={false} />
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/all-options"
+                element={
+                  <DefaultLayout>
+                    <CreateOptions create={false} list={true} />
                   </DefaultLayout>
                 }
               />
             </>
           )}
-          {isMember && <Route path="/organization" element={<Organization />} />}
-          <Route
-            path="/:somestring"
-            element={
-              <OnlyHeader>
-                <Error />
-              </OnlyHeader>
-            }
-          />
+          {isMember && (
+            <Route path="/organization">
+              <Route
+                path="members"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: true, polls: false, answerOptions: false, voteResult: false }}
+                  />
+                }
+              />
+              <Route
+                path="answer-options"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: false, polls: false, answerOptions: true, voteResult: false }}
+                  />
+                }
+              />
+              <Route
+                path="polls"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: false, polls: true, answerOptions: false, voteResult: false }}
+                  />
+                }
+              />
+              <Route
+                path="vote-results/:pollId"
+                element={
+                  <Organization
+                    state={{ orverview: false, members: false, polls: false, answerOptions: false, voteResult: true }}
+                  />
+                }
+              />
+            </Route>
+          )}
+
+          {(userInfo.role || !window.accountId) && (
+            <Route
+              path="*"
+              element={
+                <OnlyHeader>
+                  <Error />
+                </OnlyHeader>
+              }
+            />
+          )}
         </Routes>
       </div>
     </Router>

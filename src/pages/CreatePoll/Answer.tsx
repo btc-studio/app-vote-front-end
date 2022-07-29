@@ -84,7 +84,7 @@ const Answer: React.FC = () => {
         </div>
         {/* Thay thế cho select option */}
         <div
-          className="w-full absolute top-10 left-0 bg-greenL rounded-xl overflow-hidden"
+          className="w-full absolute top-10 left-0 bg-greenL rounded-xl overflow-hidden max-h-48 overflow-y-auto"
           hidden={!(hideOptions && true)}
         >
           {options &&

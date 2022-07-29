@@ -35,8 +35,6 @@ const Members: React.FC = () => {
   });
   const handleCreateAccount = async () => {
     if (invalidUserName.state === false && invalidMail.state === false && invalidNear.state === false) {
-      // console.log({ ...account, walletAddress: account.walletAddress + '.testnet' });
-      // return;
       await window.contract.create_user({
         args: {
           name: account?.name,

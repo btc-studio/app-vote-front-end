@@ -26,4 +26,5 @@ export interface CriteriaModel {
   id?: number;
   created_by?: number;
   description: string;
+  created_at?: number;
 }

@@ -7,15 +7,13 @@ import VoteResult from './VoteResult';
 import { useState } from 'react';
 import Polls from './Polls';
 import Members from './Members';
-function Organization() {
-  const [content, setContent] = useState<{
-    orverview: boolean;
-    members: boolean;
-    polls: boolean;
-    answerOptions: boolean;
-    voteResult: boolean;
-  }>({ orverview: false, members: true, polls: false, answerOptions: false, voteResult: false });
-  const [pollId, setPollId] = useState<number | undefined>();
+import { Link } from 'react-router-dom';
+
+interface props {
+  state: { orverview: boolean; members: boolean; polls: boolean; answerOptions: boolean; voteResult: boolean };
+}
+
+const Organization: React.FC<props> = ({ state }) => {
   return (
     <div className="flex flex-col pb-8">
       <Header />
@@ -24,73 +22,46 @@ function Organization() {
         <Avatar name="BTC Studio" size="big" />
         <div className="flex mt-4">
           {/* Members */}
-          <div
-            className="mr-8 relative"
-            onClick={() => {
-              setContent({
-                orverview: false,
-                members: true,
-                polls: false,
-                answerOptions: false,
-                voteResult: false,
-              });
-            }}
-          >
+          <Link to="/organization/members" className="mr-8 relative">
             <Item
               title="Members"
               icon={<IoPeopleOutline />}
-              active={content.members}
+              active={state.members}
               fontSize="md"
-              line={content.members}
+              line={state.members}
             />
-          </div>
+          </Link>
           {/* List polls ans result */}
-          <div
-            className="mr-8 relative"
-            onClick={() => {
-              setContent({
-                orverview: false,
-                members: false,
-                polls: true,
-                answerOptions: false,
-                voteResult: false,
-              });
-            }}
-          >
-            <Item title="Polls" icon={<IoBeerOutline />} active={content.polls} fontSize="md" line={content.polls} />
-          </div>
+          <Link to="/organization/polls" className="mr-8 relative">
+            <Item
+              title="Polls"
+              icon={<IoBeerOutline />}
+              active={state.polls || state.voteResult}
+              fontSize="md"
+              line={state.polls}
+            />
+          </Link>
           {/* List answer options */}
-          <div
-            className="mr-8 relative"
-            onClick={() => {
-              setContent({
-                orverview: false,
-                members: false,
-                polls: false,
-                answerOptions: true,
-                voteResult: false,
-              });
-            }}
-          >
+          <Link to="/organization/answer-options" className="mr-8 relative">
             <Item
               title="Answer Options"
               icon={<IoAlbumsOutline />}
-              active={content.answerOptions}
+              active={state.answerOptions}
               fontSize="md"
-              line={content.answerOptions}
+              line={state.answerOptions}
             />
-          </div>
+          </Link>
         </div>
       </div>
       {/* Content */}
       <div className="w-full px-56 mt-2">
-        {content.answerOptions && <AnswerOptions />}
-        {content.members && <Members />}
-        {content.polls && !content.voteResult && <Polls setContent={setContent} setPollId={setPollId} />}
-        {content.polls && content.voteResult && <VoteResult pollId={pollId as number} />}
+        {state.answerOptions && <AnswerOptions />}
+        {state.members && <Members />}
+        {state.polls && <Polls />}
+        {state.voteResult && <VoteResult />}
       </div>
     </div>
   );
-}
+};
 
 export default Organization;
